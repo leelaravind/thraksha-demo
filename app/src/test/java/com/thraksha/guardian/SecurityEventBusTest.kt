@@ -3,15 +3,13 @@ package com.thraksha.guardian
 import com.thraksha.guardian.security.events.SecurityEvent
 import com.thraksha.guardian.security.events.SecurityEventBus
 import com.thraksha.guardian.security.events.Severity
-import kotlinx.coroutines.CompletableDeferred
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class SecurityEventBusTest {
 
     @Test
@@ -22,18 +20,13 @@ class SecurityEventBusTest {
             details = "test",
             confidence = 90,
         )
-        val received = CompletableDeferred<SecurityEvent>()
-
-        val job = backgroundScope.launch {
-            SecurityEventBus.events.collect { received.complete(it) }
+        // UNDISPATCHED: the collector subscribes synchronously (suspends at first())
+        // before we emit, so there is no subscribe/emit race and no replay dependency.
+        val received = async(start = CoroutineStart.UNDISPATCHED) {
+            SecurityEventBus.events.first()
         }
-        advanceUntilIdle()          // let the collector subscribe
-
         SecurityEventBus.emit(expected)
-        advanceUntilIdle()          // let the collector process
-
         assertEquals(expected, received.await())
-        job.cancel()
     }
 
     @Test

@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "rules": [
+    {
+      "id": "high-risk-install",
+      "name": "High-risk app install",
+      "category": "install",
+      "severity": "HIGH",
+      "enabled": true,
+      "params": {}
+    },
+    {
+      "id": "accessibility-abuse",
+      "name": "Accessibility service abuse",
+      "category": "privilege",
+      "severity": "CRITICAL",
+      "enabled": true,
+      "params": {}
+    },
+    {
+      "id": "stalkerware-profile",
+      "name": "Stalkerware permission profile",
+      "category": "profile",
+      "severity": "CRITICAL",
+      "enabled": true,
+      "params": {}
+    },
+    {
+      "id": "screen-capture-misuse",
+      "name": "Screen capture / projection misuse",
+      "category": "privacy",
+      "severity": "HIGH",
+      "enabled": true,
+      "params": {}
+    },
+    {
+      "id": "malicious-vpn",
+      "name": "Malicious VPN / traffic redirection",
+      "category": "network",
+      "severity": "HIGH",
+      "enabled": true,
+      "params": {}
+    },
+    {
+      "id": "c2-beaconing",
+      "name": "Command-and-control beaconing",
+      "category": "network",
+      "severity": "CRITICAL",
+      "enabled": true,
+      "params": {}
+    },
+    {
+      "id": "boot-foreground-persistence",
+      "name": "Boot / foreground persistence abuse",
+      "category": "persistence",
+      "severity": "MEDIUM",
+      "enabled": true,
+      "params": {}
+    },
+    {
+      "id": "notification-clipboard-harvest",
+      "name": "Notification / clipboard harvesting",
+      "category": "privacy",
+      "severity": "HIGH",
+      "enabled": true,
+      "params": {}
+    },
+    {
+      "id": "sim-swap",
+      "name": "SIM swap / subscription change",
+      "category": "telephony",
+      "severity": "CRITICAL",
+      "enabled": true,
+      "params": {}
+    },
+    {
+      "id": "usb-debugging-enabled",
+      "name": "USB debugging enabled",
+      "category": "config",
+      "severity": "MEDIUM",
+      "enabled": true,
+      "params": {}
+    },
+    {
+      "id": "baseband-2g-risk",
+      "name": "2G / baseband downgrade risk",
+      "category": "network",
+      "severity": "MEDIUM",
+      "enabled": true,
+      "params": {}
+    },
+    {
+      "id": "background-location-scan",
+      "name": "Background location / device scanning",
+      "category": "privacy",
+      "severity": "MEDIUM",
+      "enabled": true,
+      "params": {}
+    }
+  ]
+}
