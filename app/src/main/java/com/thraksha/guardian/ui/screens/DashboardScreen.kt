@@ -24,17 +24,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.thraksha.guardian.security.ThrakshaDeviceAdminReceiver
+import com.thraksha.guardian.data.config.ConfigStore
+import com.thraksha.guardian.data.config.ExecutionMode
+import com.thraksha.guardian.data.db.AuditEntity
+import com.thraksha.guardian.data.db.DatabaseProvider
+import com.thraksha.guardian.security.PrivilegeLevel
+import com.thraksha.guardian.security.SecurityCapability
+import com.thraksha.guardian.security.events.SecurityEvent
+import com.thraksha.guardian.security.events.SecurityEventBus
+import com.thraksha.guardian.security.events.Severity
 import com.thraksha.guardian.services.ThrakshaAccessibilityService
 import com.thraksha.guardian.services.ThrakshaNotificationListener
 import com.thraksha.guardian.services.ThrakshaVpnService
 import com.thraksha.guardian.ui.theme.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 private fun openSettingsPage(context: Context, action: String) {
     try {
@@ -62,22 +74,13 @@ fun DashboardScreen(
         if (result.resultCode == Activity.RESULT_OK) {
             ThrakshaVpnService.start(context)
             vpnRunning = true
-            Toast.makeText(
-                context,
-                "VPN started — check notification",
-                Toast.LENGTH_SHORT,
-            ).show()
+            Toast.makeText(context, "VPN started — check notification", Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(
-                context,
-                "VPN permission denied",
-                Toast.LENGTH_SHORT,
-            ).show()
+            Toast.makeText(context, "VPN permission denied", Toast.LENGTH_SHORT).show()
         }
     }
 
     var pulseScale by remember { mutableStateOf(1f) }
-
     val animatedPulse by animateFloatAsState(
         targetValue = pulseScale,
         animationSpec = infiniteRepeatable(
@@ -86,7 +89,6 @@ fun DashboardScreen(
         ),
         label = "pulse"
     )
-
     LaunchedEffect(Unit) {
         while (true) {
             pulseScale = 1.05f
@@ -94,6 +96,18 @@ fun DashboardScreen(
             pulseScale = 1f
             delay(2000)
         }
+    }
+
+    // --- Foundation state (Phase 2 spine) ---
+    val auditDao = remember { DatabaseProvider.get(context).auditDao() }
+    val recentEvents by auditDao.observeRecent(10).collectAsState(initial = emptyList())
+    val privilegeLevel by produceState(initialValue = PrivilegeLevel.NORMAL) {
+        value = SecurityCapability.currentLevel(context)
+    }
+    val executionMode by produceState<ExecutionMode?>(initialValue = null) {
+        val config = ConfigStore(context)
+        config.ensureDefaults()
+        value = config.getExecutionMode()
     }
 
     Column(
@@ -127,44 +141,44 @@ fun DashboardScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
-                        imageVector = Icons.Default.Warning,
-                        contentDescription = "Setup incomplete",
+                        imageVector = Icons.Default.Shield,
+                        contentDescription = "Guardian",
                         tint = GoldenYellow,
                         modifier = Modifier.size(64.dp)
                     )
                 }
 
                 Text(
-                    text = "SETUP INCOMPLETE",
-                    fontSize = 24.sp,
+                    text = "FOUNDATION ACTIVE",
+                    fontSize = 22.sp,
                     fontWeight = FontWeight.Black,
                     color = GoldenYellow,
                     letterSpacing = 2.sp
                 )
 
                 Text(
-                    text = "Complete Day 4 setup to activate",
-                    fontSize = 14.sp,
+                    text = "Encrypted store · signed rulepack · audit chain",
+                    fontSize = 13.sp,
                     fontWeight = FontWeight.Medium,
                     color = TextSecondaryDark
                 )
             }
         }
 
-        // Security metrics unavailable until Day 6
-        Box(
+        // Foundation status: privilege level + execution mode
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(20.dp))
                 .background(CardSurfaceDark)
                 .padding(20.dp),
-            contentAlignment = Alignment.Center
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Text(
-                text = "Waiting for Security Guardian (Day 6)",
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Medium,
-                color = TextSecondaryDark
+            StatusRow("Privilege level", privilegeLevel.name)
+            StatusRow("Execution mode", executionMode?.name ?: "…")
+            StatusRow(
+                "Enforcement",
+                if (privilegeLevel == PrivilegeLevel.DEVICE_OWNER) "Available" else "Unavailable",
             )
         }
 
@@ -185,12 +199,30 @@ fun DashboardScreen(
                 letterSpacing = 1.5.sp
             )
 
-            // === SERVICE TESTING SECTION ===
+            // Emit a test event onto the bus -> audit log -> DB -> the feed below updates.
+            Button(
+                onClick = {
+                    SecurityEventBus.tryEmit(
+                        SecurityEvent.ThreatDetected(
+                            signalId = "high-risk-install",
+                            severity = Severity.HIGH,
+                            details = "manual test event",
+                            confidence = 90,
+                        ),
+                    )
+                    Toast.makeText(context, "Emitted test threat event", Toast.LENGTH_SHORT).show()
+                },
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(containerColor = GoldenYellow),
+            ) {
+                Text("Emit Test Threat Event", color = Color.Black, fontWeight = FontWeight.Bold)
+            }
+
             Text(
                 text = "SERVICE TESTS",
                 style = MaterialTheme.typography.titleMedium,
                 color = GoldenYellow,
-                modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
+                modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
             )
 
             Button(
@@ -246,11 +278,7 @@ fun DashboardScreen(
                     } else {
                         ThrakshaVpnService.stop(context)
                         vpnRunning = false
-                        Toast.makeText(
-                            context,
-                            "VPN stopped",
-                            Toast.LENGTH_SHORT,
-                        ).show()
+                        Toast.makeText(context, "VPN stopped", Toast.LENGTH_SHORT).show()
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
@@ -264,27 +292,18 @@ fun DashboardScreen(
 
             Button(
                 onClick = {
-                    val isDeviceOwner = ThrakshaDeviceAdminReceiver.isDeviceOwner(context)
-                    val dpm = ThrakshaDeviceAdminReceiver.getDevicePolicyManager(context)
-                    val isAdminActive = dpm.isAdminActive(
-                        ThrakshaDeviceAdminReceiver.getComponentName(context),
-                    )
-                    when {
-                        isDeviceOwner -> {
-                            Toast.makeText(
-                                context,
-                                "Device Owner (Level 4) - Lockdown ready",
-                                Toast.LENGTH_SHORT,
-                            ).show()
-                        }
-                        isAdminActive -> {
-                            Toast.makeText(
-                                context,
-                                "Device Admin (Level 3) - Active",
-                                Toast.LENGTH_SHORT,
-                            ).show()
-                        }
-                        else -> {
+                    when (SecurityCapability.currentLevel(context)) {
+                        PrivilegeLevel.DEVICE_OWNER -> Toast.makeText(
+                            context,
+                            "Device Owner (Level 4) - Lockdown ready",
+                            Toast.LENGTH_SHORT,
+                        ).show()
+                        PrivilegeLevel.DEVICE_ADMIN -> Toast.makeText(
+                            context,
+                            "Device Admin (Level 3) - Active",
+                            Toast.LENGTH_SHORT,
+                        ).show()
+                        PrivilegeLevel.NORMAL -> {
                             openSettingsPage(
                                 context,
                                 android.provider.Settings.ACTION_SECURITY_SETTINGS,
@@ -306,11 +325,7 @@ fun DashboardScreen(
             Button(
                 onClick = {
                     if (ThrakshaNotificationListener.isRunning()) {
-                        Toast.makeText(
-                            context,
-                            "Notification Listener active",
-                            Toast.LENGTH_SHORT,
-                        ).show()
+                        Toast.makeText(context, "Notification Listener active", Toast.LENGTH_SHORT).show()
                     } else {
                         openSettingsPage(
                             context,
@@ -331,22 +346,16 @@ fun DashboardScreen(
 
             Button(
                 onClick = {
-                    scope.launch {
-                        val accessibility = ThrakshaAccessibilityService.isRunning()
-                        val notification = ThrakshaNotificationListener.isRunning()
-                        val deviceAdmin = ThrakshaDeviceAdminReceiver.isDeviceOwner(context) ||
-                            ThrakshaDeviceAdminReceiver.getDevicePolicyManager(context)
-                                .isAdminActive(
-                                    ThrakshaDeviceAdminReceiver.getComponentName(context),
-                                )
-                        val status = """
-                            Accessibility: ${if (accessibility) "OK" else "OFF"}
-                            Notification: ${if (notification) "OK" else "OFF"}
-                            Device Admin: ${if (deviceAdmin) "OK" else "OFF"}
-                            VPN: ${if (vpnRunning) "OK" else "OFF"}
-                        """.trimIndent()
-                        Toast.makeText(context, status, Toast.LENGTH_LONG).show()
-                    }
+                    val accessibility = ThrakshaAccessibilityService.isRunning()
+                    val notification = ThrakshaNotificationListener.isRunning()
+                    val privileged = SecurityCapability.currentLevel(context) != PrivilegeLevel.NORMAL
+                    val status = """
+                        Accessibility: ${if (accessibility) "OK" else "OFF"}
+                        Notification: ${if (notification) "OK" else "OFF"}
+                        Device Admin: ${if (privileged) "OK" else "OFF"}
+                        VPN: ${if (vpnRunning) "OK" else "OFF"}
+                    """.trimIndent()
+                    Toast.makeText(context, status, Toast.LENGTH_LONG).show()
                 },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
@@ -357,26 +366,51 @@ fun DashboardScreen(
             }
         }
 
-        // Activity Feed
+        // Live audit feed (from the encrypted audit_log via the event bus)
         Column(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Text(
-                text = "RECENT ACTIVITY",
+                text = "RECENT SECURITY EVENTS",
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Black,
                 color = TextSecondaryDark,
                 letterSpacing = 1.5.sp
             )
 
-            ActivityItem(
-                title = "Accessibility Service - Not Configured",
-                time = "Setup required",
-                icon = Icons.Default.Warning,
-                iconColor = GoldenYellow
-            )
+            if (recentEvents.isEmpty()) {
+                ActivityItem(
+                    title = "No events yet",
+                    time = "Emit a test event to populate the audit chain",
+                    icon = Icons.Default.Info,
+                    iconColor = TextSecondaryDark,
+                )
+            } else {
+                recentEvents.forEach { entry ->
+                    ActivityItem(
+                        title = entry.details,
+                        time = "${entry.type} · ${formatTime(entry.timestamp)}",
+                        icon = if (entry.type == "THREAT") Icons.Default.Warning else Icons.Default.CheckCircle,
+                        iconColor = if (entry.type == "THREAT") GoldenYellow else StrongGreen,
+                    )
+                }
+            }
         }
+    }
+}
+
+private fun formatTime(epochMillis: Long): String =
+    SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date(epochMillis))
+
+@Composable
+fun StatusRow(label: String, value: String) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+    ) {
+        Text(text = label, fontSize = 14.sp, color = TextSecondaryDark)
+        Text(text = value, fontSize = 14.sp, fontWeight = FontWeight.SemiBold, color = TextWhite)
     }
 }
 
@@ -384,7 +418,7 @@ fun DashboardScreen(
 fun ActivityItem(
     title: String,
     time: String,
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    icon: ImageVector,
     iconColor: Color
 ) {
     Row(
