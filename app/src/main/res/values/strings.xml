@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Thraksha Guardian</string>
+    <string name="accessibility_service_description">Thraksha Guardian uses Accessibility to automate device tasks and enhance security. This is not a disability assistance tool.</string>
+    <string name="vpn_notification_channel_name">Thraksha VPN Monitor</string>
+    <string name="vpn_notification_channel_description">Network monitoring via local VPN</string>
+    <string name="vpn_notification_title">Thraksha VPN Monitor</string>
+    <string name="vpn_notification_text">Thraksha network monitoring active</string>
+</resources>

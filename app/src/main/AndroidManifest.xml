@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.thraksha.guardian">
+
+    <!-- Connectivity — used by the local VpnService network checkpoint -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Haptics — reserved for future security alerts -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- Foreground Service Permissions -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+
+    <!-- Notification Permission for Android 13+ -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- Battery Optimization Bypass -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+
+    <application
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="Thraksha Guardian"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.ThrakshaGuardian"
+        tools:targetApi="31">
+
+        <!-- CRITICAL: Declare not a disability tool for Play Store compliance -->
+        <meta-data
+            android:name="android.accessibilityservice"
+            android:value="isAccessibilityTool=false" />
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.ThrakshaGuardian">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Local VPN for network monitoring (Security Guardian) -->
+        <service
+            android:name=".services.ThrakshaVpnService"
+            android:permission="android.permission.BIND_VPN_SERVICE"
+            android:exported="false"
+            android:foregroundServiceType="dataSync"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.net.VpnService" />
+            </intent-filter>
+        </service>
+
+        <!-- Persistent foreground-service shell for security monitoring -->
+        <service
+            android:name=".services.CompanionForegroundService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Background on-device security monitoring."/>
+        </service>
+
+        <!-- Notification Listener for OTP detection and security monitoring -->
+        <service
+            android:name=".services.ThrakshaNotificationListener"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
+            android:exported="false"
+            android:label="Thraksha Notification Monitor">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+
+        <!-- Accessibility Service for UI Automation -->
+        <service
+            android:name=".services.ThrakshaAccessibilityService"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:exported="true"
+            android:label="Thraksha UI Monitor">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_config" />
+        </service>
+
+        <!-- Device Admin Receiver (Day 4 - Device Owner capability) -->
+        <receiver
+            android:name=".security.ThrakshaDeviceAdminReceiver"
+            android:permission="android.permission.BIND_DEVICE_ADMIN"
+            android:exported="true">
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/device_admin" />
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+                <action android:name="android.app.action.DEVICE_ADMIN_DISABLED" />
+                <action android:name="android.app.action.ACTION_PASSWORD_CHANGED" />
+                <action android:name="android.app.action.ACTION_PASSWORD_FAILED" />
+                <action android:name="android.app.action.ACTION_PASSWORD_SUCCEEDED" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>
