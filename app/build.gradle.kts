@@ -2,6 +2,8 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose") version "2.2.20"
+    id("com.google.devtools.ksp")
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 android {
@@ -80,15 +82,32 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
+
+    // Room (KSP-first; room-ktx merged into room-runtime as of 2.7)
+    implementation("androidx.room:room-runtime:2.8.4")
+    ksp("androidx.room:room-compiler:2.8.4")
+
+    // androidx.sqlite — pinned to match Room's transitive pin AND SQLCipher's SupportSQLiteOpenHelper API
+    implementation("androidx.sqlite:sqlite:2.6.2")
+    implementation("androidx.sqlite:sqlite-framework:2.6.2")
+
+    // SQLCipher — encrypted DB; native .so bundled in the AAR (arm64/armv7/x86/x86_64)
+    implementation("net.zetetic:sqlcipher-android:4.17.0@aar")
+
+    // JSON — signed rulepack schema (Kotlin-2.2-built runtime)
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
 
     // Unit tests
     testImplementation("junit:junit:4.13.2")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1")
 
     // Instrumented tests
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("androidx.test:core-ktx:1.6.1")
+    androidTestImplementation("androidx.test:runner:1.6.2")
     androidTestImplementation(composeBom)
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
 }

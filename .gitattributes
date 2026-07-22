@@ -1,0 +1,5 @@
+# Signed rulepack assets are integrity-checked by an RSA signature over their exact bytes.
+# Never apply line-ending conversion to them, or the signature verification breaks on checkout.
+app/src/main/assets/rulepack.json        -text
+app/src/main/assets/rulepack.sig         -text
+app/src/main/assets/rulepack_public.key  -text

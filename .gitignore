@@ -32,3 +32,7 @@ google-services.json
 
 # IDE local state — contains device identifiers (e.g. deploymentTargetSelector.xml holds the ADB serial)
 .idea/
+
+# Rulepack signing PRIVATE key — never commit (the PUBLIC key ships as a non-.pem asset: rulepack_public.key)
+keys/
+*.pem
