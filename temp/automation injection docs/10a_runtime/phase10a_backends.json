@@ -1,0 +1,55 @@
+{
+  "CPU4": {
+    "backend": "CPU4",
+    "loadMillis": 1501,
+    "phase": "LOADED",
+    "detail": "Loaded in 755 ms",
+    "pssKbLoaded": 628137,
+    "latenciesMs": [
+      10380,
+      9965,
+      9803
+    ],
+    "failures": 0,
+    "outputs": [
+      "{\"result\":\"INTENT\",\n\"routine\":\"MEETING\",\n\"durationMinutes\":null,\n\"targetApp\":\"com.samsung.android.calendar\",\n\"reasonCode\":\"UNSAFE_VALUE\"}",
+      "{\"result\":\"CLARIFY\",\n\"durationMinutes\":30,\n\"targetApp\":\"com.google.android.apps.maps\",\n\"reasonCode\":\"AMBIGUOUS_ROUTINE\"}",
+      "{\"result\":\"UNSUPPORTED\",\"routine\":\"DRIVING\",\"durationMinutes\":null,\n\"targetApp\":\"com.samsung.android.calendar\",\n\"reasonCode\":\"OUT_OF_SCOPE\"}"
+    ],
+    "meanLatencyMs": 10049.333333333334
+  },
+  "CPU8": {
+    "backend": "CPU8",
+    "loadMillis": 1474,
+    "phase": "LOADED",
+    "detail": "Loaded in 746 ms",
+    "pssKbLoaded": 627912,
+    "latenciesMs": [
+      10802,
+      10446,
+      10354
+    ],
+    "failures": 0,
+    "outputs": [
+      "{\"result\":\"INTENT\",\n\"routine\":\"MEETING\",\n\"durationMinutes\":null,\n\"targetApp\":\"com.samsung.android.calendar\",\n\"reasonCode\":\"UNSAFE_VALUE\"}",
+      "{\"result\":\"CLARIFY\",\n\"durationMinutes\":30,\n\"targetApp\":\"com.google.android.apps.maps\",\n\"reasonCode\":\"AMBIGUOUS_ROUTINE\"}",
+      "{\"result\":\"UNSUPPORTED\",\"routine\":\"DRIVING\",\"durationMinutes\":null,\n\"targetApp\":\"com.samsung.android.calendar\",\n\"reasonCode\":\"OUT_OF_SCOPE\"}"
+    ],
+    "meanLatencyMs": 10534
+  },
+  "GPU": {
+    "backend": "GPU",
+    "loadMillis": 10341,
+    "phase": "LOADED",
+    "detail": "Loaded in 9636 ms",
+    "pssKbLoaded": 588731,
+    "latenciesMs": [],
+    "failures": 3,
+    "outputs": [
+      "ERROR: LiteRtLmJniException: Failed to call nativeSendMessage: UNKNOWN: UNKNOWN: Can not find OpenCL library on this device",
+      "ERROR: LiteRtLmJniException: Failed to call nativeSendMessage: UNKNOWN: UNKNOWN: Can not find OpenCL library on this device",
+      "ERROR: LiteRtLmJniException: Failed to call nativeSendMessage: UNKNOWN: UNKNOWN: Can not find OpenCL library on this device"
+    ],
+    "meanLatencyMs": -1
+  }
+}

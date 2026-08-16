@@ -1,0 +1,675 @@
+
+# THRAKSHA — PHASE 12.1 IMPLEMENTATION GUIDE
+
+## PRIVATE ALPHA RC2 — REAL APP VISIBILITY + PERMANENT SIGNING + FINAL WORDING FIX
+
+## 1. PURPOSE
+
+Phase 12.1 converts the Phase 12 RC1 into the first Thraksha APK intended for genuine everyday-phone private-alpha use.
+
+Only three issues are in scope:
+
+1. **Release scanner visibility**
+
+   * release APK must be able to discover and scan relevant third-party installed apps.
+
+2. **Permanent private-alpha signing identity**
+
+   * replace temporary Android debug signing with a dedicated Thraksha signing key.
+
+3. **Consumer wording correction**
+
+   * remove the Samsung-facing “eyes and ears active 24/7” overclaim and verify other nearby wording remains accurate.
+
+Then build and verify:
+
+`thraksha-guardian-1.0-privatealpha-rc2.apk`
+
+Do not add features.
+
+---
+
+# 2. BASELINE
+
+Treat Phase 12 RC1 as known-good.
+
+Preserve:
+
+* Phase 1–8.1 security architecture
+* ThreatPack / Rulepack
+* scanner/evidence model
+* Network Guard
+* User ACT
+* audit chain
+* Phase 9 automation
+* snapshot/restore
+* Phase 10 local AI
+* SafetyPolicy / Planner / explicit START
+* Phase 11B UI
+* Phase 12 model-memory fix
+* release hardening already completed.
+
+Only change what RC2 requires.
+
+---
+
+# 3. TASK ORDER
+
+Execute sequentially:
+
+### TASK A
+
+Release package visibility
+
+### TASK B
+
+Private-alpha signing identity
+
+### TASK C
+
+Wording correction + RC2 build + verification
+
+Do not build the final RC2 until A and B are resolved.
+
+---
+
+# TASK A — RELEASE PACKAGE VISIBILITY
+
+## 4. PROBLEM
+
+RC1 release build discovered approximately:
+
+`322 packages`
+
+while debug discovered approximately:
+
+`441 packages`
+
+and RC1 could not see relevant third-party installed applications.
+
+This materially reduces Protect/scanner usefulness.
+
+Determine the exact cause and fix it for the private-alpha release build.
+
+---
+
+# 5. PACKAGE VISIBILITY AUDIT
+
+Inspect:
+
+* main manifest
+* debug manifest
+* release manifest
+* product flavors if any
+* merged manifest output
+* existing `<queries>`
+* `QUERY_ALL_PACKAGES`
+* scanner discovery implementation.
+
+Document:
+
+`temp/phase12_1/PHASE12_1_PACKAGE_VISIBILITY.md`
+
+Record exactly why debug and release differ.
+
+Do not assume the permission is the only cause until verified.
+
+---
+
+# 6. PRIVATE-ALPHA VISIBILITY POLICY
+
+For the sideloaded private-alpha security build, configure package visibility sufficient for Thraksha's real-app scanner.
+
+If `QUERY_ALL_PACKAGES` is technically required, add it only where appropriate for the private-alpha scanner build.
+
+Document clearly:
+
+* why the security scanner requires broad visibility;
+* that scanning installed apps is a core product function;
+* that Google Play distribution policy review is a separate future requirement;
+* that this change does not imply Play Store approval.
+
+Do not hide the permission.
+
+---
+
+# 7. VERIFY PACKAGE INVENTORY
+
+On the S20 FE compare:
+
+### Ground truth
+
+installed packages visible via development verification.
+
+### Thraksha release scanner
+
+packages discovered inside the RC2 candidate.
+
+Record:
+
+* total packages;
+* system packages;
+* third-party/user-installed packages;
+* visibility differences;
+* packages intentionally excluded;
+* packages still invisible.
+
+The important acceptance criterion is not necessarily identical numerical counts.
+
+It is:
+
+> Thraksha's release scanner can genuinely discover and evaluate the third-party applications relevant to its security purpose.
+
+---
+
+# 8. REAL THIRD-PARTY SCAN
+
+Select several genuine installed third-party apps.
+
+Verify Thraksha can:
+
+* discover package;
+* read permitted metadata;
+* identify declared permissions/capabilities;
+* calculate APK fingerprint where supported;
+* evaluate ThreatPack;
+* evaluate generic rules;
+* display DECLARED / GRANTED / OBSERVED honestly;
+* produce WATCHING / REVIEW/etc. without fake behavior claims.
+
+No real app may be automatically suspended/quarantined.
+
+Advice Mode remains the everyday-phone default.
+
+---
+
+# 9. VISIBILITY REGRESSION
+
+Verify:
+
+* GoodCaller
+* VillainCaller
+* real scanner
+* ThreatPack
+* evidence progression
+* User ACT
+* package visibility tests.
+
+Do not proceed if broad visibility breaks scanner correctness or causes unsupported claims.
+
+---
+
+# TASK B — PRIVATE-ALPHA SIGNING
+
+## 10. PURPOSE
+
+RC1 currently uses:
+
+`CN=Android Debug`
+
+RC2 needs a dedicated Thraksha signing identity.
+
+This signing key will become the identity used for future private-alpha updates.
+
+---
+
+# 11. IMPORTANT USER CHECKPOINT
+
+Claude Code must **STOP before generating the signing key** and tell the user:
+
+> `SIGNING KEY CREATION REQUIRED`
+
+At that point I will create/approve the permanent Thraksha private-alpha keystore.
+
+Do not silently generate passwords.
+
+Do not put signing secrets into source code.
+
+Do not commit a keystore.
+
+---
+
+# 12. WHEN THE USER CREATES THE KEY
+
+The user creates the key **after Claude finishes Task A and prepares the signing configuration**, but **before RC2 is built**.
+
+That is the correct timing.
+
+---
+
+# 13. WHERE TO STORE THE KEY
+
+The real signing keystore must be stored **outside the Git repository**.
+
+Example concept:
+
+`C:\Users\<user>\secure\thraksha\thraksha-private-alpha.jks`
+
+or another private secure directory.
+
+Do NOT store it under:
+
+* project root
+* `app/`
+* `temp/`
+* `model/`
+* `tools/`
+* `.claude/`
+* Git-tracked locations.
+
+Also create at least one secure backup outside the development laptop before treating it as permanent.
+
+Do not put the backup inside the repository.
+
+---
+
+# 14. PASSWORD HANDLING
+
+Signing passwords must NOT appear in:
+
+* `build.gradle.kts`
+* source files
+* manifest
+* `gradle.properties` committed to Git
+* temp docs
+* Claude prompts
+* screenshots
+* logs intended for sharing.
+
+Prefer:
+
+* environment variables;
+* untracked local properties;
+* secure credential mechanism.
+
+Claude may prepare placeholders/configuration but must never invent and commit credentials.
+
+---
+
+# 15. SIGNING CONFIGURATION
+
+Implement a safe release signing configuration.
+
+Conceptually consume:
+
+* keystore path
+* store password
+* key alias
+* key password
+
+from local/untracked sources.
+
+If credentials are absent:
+
+release build should fail clearly rather than fall back silently to debug signing.
+
+No silent debug-key fallback.
+
+---
+
+# 16. SIGNER VERIFICATION
+
+After RC2 build verify independently:
+
+* signer certificate subject
+* SHA-256 certificate fingerprint
+* APK signature schemes
+* `debuggable=false`
+* application ID
+* versionName/versionCode.
+
+Record in:
+
+`temp/phase12_1/PHASE12_1_SIGNING.md`
+
+The signer must NOT report:
+
+`CN=Android Debug`.
+
+---
+
+# 17. KEY CONTINUITY WARNING
+
+Document prominently:
+
+> Future Thraksha private-alpha APK updates must use this same signing key.
+
+Loss of the signing key means future builds cannot update the installed app under the same package identity.
+
+Do not rotate casually.
+
+---
+
+# TASK C — WORDING + RC2
+
+## 18. WORDING DEFECT
+
+Locate the UI text that resulted in the Samsung-facing wording equivalent to:
+
+`eyes and ears active 24/7`
+
+or any similar overclaim.
+
+Replace it with accurate consumer language.
+
+Prefer wording such as:
+
+`Protection monitoring is available while Thraksha is active.`
+
+or another statement that matches real runtime behavior.
+
+Do not imply continuous surveillance or always-on capability unless technically true.
+
+---
+
+# 19. ABSOLUTE-CLAIM SWEEP
+
+Run a targeted UI/text audit for wording such as:
+
+* always protected
+* 100% secure
+* fully secure
+* virus free
+* monitoring 24/7
+* blocks all threats
+* connection secure
+* device safe
+
+Replace only genuinely misleading wording.
+
+Do not rewrite the whole UI.
+
+---
+
+# 20. RC2 VERSIONING
+
+Create:
+
+`thraksha-guardian-1.0-privatealpha-rc2.apk`
+
+Use an incremented Android `versionCode` if RC2 is intended to update future RC2+ installs.
+
+Choose a coherent version scheme and document it.
+
+Do not silently reuse RC1 version identity if update testing requires progression.
+
+---
+
+# 21. BUILD RC2
+
+Build the private-alpha release candidate.
+
+Record:
+
+* filename
+* SHA-256
+* size
+* versionName
+* versionCode
+* package name
+* signer subject
+* signer SHA-256 fingerprint
+* debuggable status
+* ABI contents
+* model packaging status.
+
+Create:
+
+`temp/phase12_1/PHASE12_1_RC2_ARTIFACT.md`
+
+---
+
+# 22. APK CONTENT AUDIT
+
+Inspect the RC2 APK.
+
+Verify absence of:
+
+* signing private key
+* signing password
+* Stitch credentials
+* MCP config
+* Claude config
+* `temp/`
+* development screenshots
+* evaluation files
+* model weights unless intentionally packaged
+* test hooks
+* test-only failure mechanisms
+* developer-only artifacts.
+
+---
+
+# 23. FRESH INSTALL TEST
+
+Because RC1 used a different signer, do not expect RC2 to update RC1.
+
+Safely:
+
+1. ensure no active routine;
+2. restore device settings;
+3. deactivate Device Admin if active;
+4. document any data that will be lost;
+5. uninstall RC1;
+6. install RC2 fresh.
+
+Then perform normal onboarding.
+
+---
+
+# 24. RC2 REAL SCAN
+
+This is the main proof.
+
+Run Scan Device.
+
+Verify:
+
+* third-party applications visible;
+* package inventory substantially improved;
+* real apps analyzed;
+* findings based on genuine evidence;
+* known-threat match still works;
+* no automatic arbitrary-app containment;
+* reduced visibility warning no longer appears incorrectly if full intended visibility exists.
+
+Create:
+
+`temp/phase12_1/PHASE12_1_REAL_SCAN.md`
+
+---
+
+# 25. AUTOMATION CHECK
+
+Run:
+
+`Meeting Mode — 30 minutes`
+
+Verify:
+
+`Preview`
+
+→ `START`
+
+→ actual Android changes
+
+→ verified actions
+
+→ `STOP & RESTORE`
+
+→ original settings restored.
+
+Do not rerun the entire multi-hour Phase 12 soak unless a regression appears.
+
+---
+
+# 26. AI CHECK
+
+With radios disabled:
+
+ask:
+
+`I have a meeting for 45 minutes.`
+
+Verify:
+
+* local AI works;
+* structured intent valid;
+* plan preview appears;
+* no auto-execution;
+* explicit START still required.
+
+Restore connectivity afterward.
+
+---
+
+# 27. REBOOT CHECK
+
+Reboot once.
+
+Verify:
+
+* no unexpected auto-start;
+* model file still available;
+* app launches;
+* encrypted DB/audit valid;
+* scanner still sees intended real apps;
+* no device settings unexpectedly modified.
+
+---
+
+# 28. REGRESSION SET
+
+Run affected regressions:
+
+* clean build
+* unit suite
+* S20 FE instrumented suite
+* Device Owner AVD where signer/build changes permit
+* scanner
+* package visibility
+* ThreatPack
+* Rulepack
+* evidence
+* User ACT
+* Network Guard
+* automation restore
+* local AI
+* audit chain.
+
+No need to repeat exploratory AI model evaluation.
+
+---
+
+# 29. PRIVATE ALPHA SAFETY MODE
+
+Confirm RC2 defaults to:
+
+**Advice Mode**
+
+for an ordinary personal installation.
+
+Do not provision Device Owner.
+
+Do not automatically quarantine arbitrary real apps.
+
+---
+
+# 30. REQUIRED DOCUMENTS
+
+Use:
+
+```text
+temp/
+├── THRAKSHA_DEMO_IMPLEMENTATION_PHASE_12_1_RC2.md
+├── THRAKSHA_DEMO_PHASE_12_1_PROGRESS.md
+└── phase12_1/
+    ├── PHASE12_1_PACKAGE_VISIBILITY.md
+    ├── PHASE12_1_SIGNING.md
+    ├── PHASE12_1_RC2_ARTIFACT.md
+    ├── PHASE12_1_REAL_SCAN.md
+    └── screenshots/
+```
+
+---
+
+# 31. FINAL ACCEPTANCE
+
+Phase 12.1 PASS requires:
+
+* release scanner sees relevant real third-party apps;
+* package visibility limitation addressed;
+* broad visibility use documented;
+* proper Thraksha private-alpha signing identity used;
+* no debug signing;
+* private signing material absent from repo/APK;
+* signing key stored externally;
+* wording overclaim fixed;
+* `debuggable=false`;
+* real release scan works;
+* Advice Mode default preserved;
+* offline AI works;
+* automation START/restore works;
+* reboot safe;
+* audit valid;
+* regressions green;
+* device ends clean;
+* nothing committed automatically.
+
+---
+
+# 32. STOP CONDITIONS
+
+STOP if:
+
+* scanner still cannot see relevant third-party apps;
+* `QUERY_ALL_PACKAGES` does not solve the actual visibility issue;
+* release signer falls back to Android Debug;
+* signing credentials would need to enter source control;
+* signing key is lost/unavailable;
+* RC2 cannot install cleanly;
+* scanning modifies real apps;
+* automation fails to restore;
+* AI requires network;
+* security regressions appear;
+* release APK contains development secrets.
+
+---
+
+# 33. FINAL OUTPUT
+
+At completion report:
+
+1. package visibility before/after;
+2. number of relevant third-party apps visible;
+3. signing identity/fingerprint;
+4. RC2 APK SHA-256;
+5. real scan result;
+6. automation restore result;
+7. offline AI result;
+8. reboot result;
+9. tests;
+10. unresolved limitations;
+11. final device state;
+12. git status;
+13. whether RC2 is safe for everyday-phone private-alpha installation.
+
+Final verdict:
+
+**PASS — RC2 REAL-WORLD PRIVATE ALPHA READY**
+
+or:
+
+**FAIL — RC2 NOT READY**
+
+### Important for you
+
+You **do not need to create the signing key right now**.
+
+Start Claude with this Phase 12.1 plan. It should first solve and verify **scanner visibility** and prepare the signing configuration.
+
+Then it must stop and tell you:
+
+**`SIGNING KEY CREATION REQUIRED`**
+
+At that moment, come back here. I’ll guide you through creating the keystore and storing/backing it up safely, step by step.

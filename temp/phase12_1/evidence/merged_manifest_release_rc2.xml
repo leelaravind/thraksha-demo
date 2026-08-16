@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.thraksha.guardian"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="26"
+        android:targetSdkVersion="36" />
+
+    <!-- Connectivity — used by the local VpnService network checkpoint -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Haptics — reserved for future security alerts -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- Foreground Service Permissions -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+
+    <!-- Notification Permission for Android 13+ -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- Battery Optimization Bypass -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+
+    <!--
+         Phase 9 automation (capability matrix §2). Both special accesses are granted
+         only by the user in Android settings; declaring them merely makes the toggles
+         available. Exact alarms drive routine-duration expiry where the OS permits.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+
+    <!--
+        Broad package visibility (Android 11+ / targetSdk 36) — Phase 12.1 Task A.
+
+        Thraksha's core product function is scanning the applications actually installed
+        on the owner's device. Under Android 11+ visibility filtering an app without this
+        permission sees only itself, its declared <queries>, and the packages the platform
+        force-makes-visible. On the S20 FE that is 322 of 441 packages — 319 system
+        packages plus Thraksha and the two declared demo decoys, and NONE of the 23
+        genuine user-installed third-party apps. A security scanner that cannot see the
+        user's real apps cannot do its job, so the permission is required, not convenient.
+
+        Scope of the grant: read-only. AppInventory (the only PackageManager caller in the
+        security path) enumerates packages and reads declared metadata. Nothing in the scan
+        path installs, suspends, disables or otherwise modifies any package.
+
+        Play policy: QUERY_ALL_PACKAGES is a restricted permission. Device-security and
+        anti-malware apps are among Google Play's permitted use cases, but Play eligibility
+        requires a separate declaration and review that this private-alpha build makes no
+        claim to. This is a sideloaded, owner-installed build. See
+        temp/phase12_1/PHASE12_1_PACKAGE_VISIBILITY.md §Play policy.
+
+        The permission is declared here in the main manifest so debug and release behave
+        identically; before Phase 12.1 it lived in a debug-only overlay, which is exactly
+        why the RC1 release build was half-blind.
+    -->
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+
+    <!--
+        Targeted <queries> retained deliberately. It is redundant while
+        QUERY_ALL_PACKAGES is held, but it documents the controlled demo sandbox and keeps
+        the two decoy packages visible if broad visibility is ever withdrawn (e.g. for a
+        future Play-track build). Adding a new controlled sample means adding one
+        <package> entry here.
+    -->
+    <queries>
+        <package android:name="com.thraksha.demo.goodcaller" />
+        <package android:name="com.thraksha.demo.villaincaller" />
+    </queries>
+
+    <permission
+        android:name="com.thraksha.guardian.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.thraksha.guardian.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+
+    <application
+        android:name="com.thraksha.guardian.ThrakshaApplication"
+        android:allowBackup="false"
+        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:extractNativeLibs="false"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="Thraksha Guardian"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.ThrakshaGuardian" >
+
+        <!-- CRITICAL: Declare not a disability tool for Play Store compliance -->
+        <meta-data
+            android:name="android.accessibilityservice"
+            android:value="isAccessibilityTool=false" />
+
+        <activity
+            android:name="com.thraksha.guardian.MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.ThrakshaGuardian" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Local VPN for network monitoring (Security Guardian) -->
+        <service
+            android:name="com.thraksha.guardian.services.ThrakshaVpnService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="dataSync"
+            android:permission="android.permission.BIND_VPN_SERVICE" >
+            <intent-filter>
+                <action android:name="android.net.VpnService" />
+            </intent-filter>
+        </service>
+
+        <!-- Persistent foreground-service shell for security monitoring -->
+        <service
+            android:name="com.thraksha.guardian.services.CompanionForegroundService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="specialUse" >
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Background on-device security monitoring." />
+        </service>
+
+        <!-- Notification Listener for OTP detection and security monitoring -->
+        <service
+            android:name="com.thraksha.guardian.services.ThrakshaNotificationListener"
+            android:exported="false"
+            android:label="Thraksha Notification Monitor"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE" >
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+
+        <!-- Accessibility Service for UI Automation -->
+        <service
+            android:name="com.thraksha.guardian.services.ThrakshaAccessibilityService"
+            android:exported="true"
+            android:label="Thraksha UI Monitor"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE" >
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_config" />
+        </service>
+
+        <!-- Device Admin Receiver (Day 4 - Device Owner capability) -->
+        <receiver
+            android:name="com.thraksha.guardian.security.ThrakshaDeviceAdminReceiver"
+            android:exported="true"
+            android:permission="android.permission.BIND_DEVICE_ADMIN" >
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/device_admin" />
+
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+                <action android:name="android.app.action.DEVICE_ADMIN_DISABLED" />
+                <action android:name="android.app.action.ACTION_PASSWORD_CHANGED" />
+                <action android:name="android.app.action.ACTION_PASSWORD_FAILED" />
+                <action android:name="android.app.action.ACTION_PASSWORD_SUCCEEDED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Phase 9: routine-duration expiry (STOP & RESTORE when the timer fires). -->
+        <receiver
+            android:name="com.thraksha.guardian.automation.AutomationAlarmReceiver"
+            android:exported="false" />
+
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="com.thraksha.guardian.androidx-startup"
+            android:exported="false" >
+            <meta-data
+                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+                android:value="androidx.startup" />
+            <meta-data
+                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+                android:value="androidx.startup" />
+            <meta-data
+                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+                android:value="androidx.startup" />
+        </provider>
+
+        <service
+            android:name="androidx.room.MultiInstanceInvalidationService"
+            android:directBootAware="true"
+            android:exported="false" />
+
+        <receiver
+            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+            android:directBootAware="false"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.DUMP" >
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>

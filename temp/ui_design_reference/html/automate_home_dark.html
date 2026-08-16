@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Thraksha Guardian - Automate</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-dim": "#121315",
+                      "on-primary": "#003543",
+                      "primary-container": "#00d1ff",
+                      "surface-container": "#1f2022",
+                      "on-error": "#690005",
+                      "surface-container-highest": "#343537",
+                      "surface-tint": "#4cd6ff",
+                      "on-primary-fixed-variant": "#004e60",
+                      "tertiary": "#dddcde",
+                      "error": "#ffb4ab",
+                      "primary": "#a4e6ff",
+                      "primary-fixed-dim": "#4cd6ff",
+                      "on-error-container": "#ffdad6",
+                      "primary-fixed": "#b7eaff",
+                      "on-primary-container": "#00566a",
+                      "error-container": "#93000a",
+                      "tertiary-fixed-dim": "#c7c6c8",
+                      "on-tertiary-fixed-variant": "#464749",
+                      "secondary": "#bfc2ff",
+                      "on-secondary-fixed": "#00006e",
+                      "surface": "#121315",
+                      "surface-container-low": "#1b1c1e",
+                      "surface-bright": "#38393b",
+                      "inverse-surface": "#e3e2e5",
+                      "inverse-on-surface": "#303033",
+                      "secondary-fixed": "#e0e0ff",
+                      "on-secondary-fixed-variant": "#1a20d8",
+                      "on-tertiary-container": "#4e4e51",
+                      "surface-container-lowest": "#0d0e10",
+                      "on-secondary-container": "#adb2ff",
+                      "secondary-fixed-dim": "#bfc2ff",
+                      "inverse-primary": "#00677f",
+                      "tertiary-container": "#c1c0c3",
+                      "secondary-container": "#1e24db",
+                      "background": "#121315",
+                      "on-tertiary": "#303032",
+                      "outline-variant": "#3c494e",
+                      "on-background": "#e3e2e5",
+                      "surface-variant": "#343537",
+                      "surface-container-high": "#292a2c",
+                      "on-secondary": "#0000ac",
+                      "tertiary-fixed": "#e3e2e4",
+                      "on-primary-fixed": "#001f28",
+                      "outline": "#859399",
+                      "on-surface-variant": "#bbc9cf",
+                      "on-tertiary-fixed": "#1b1c1e",
+                      "on-surface": "#e3e2e5"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px",
+                      "2xl": "1rem",
+                      "3xl": "1.5rem"
+              },
+              "spacing": {
+                      "container-padding": "20px",
+                      "base": "8px",
+                      "gutter": "16px",
+                      "margin-mobile": "16px",
+                      "margin-desktop": "32px",
+                      "safe": "env(safe-area-inset-bottom)"
+              },
+              "fontFamily": {
+                      "headline-lg": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "label-md": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "headline-lg-mobile": [
+                              "Inter"
+                      ],
+                      "label-caps": [
+                              "JetBrains Mono"
+                      ]
+              },
+              "fontSize": {
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-md": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "36px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.1em",
+                                      "fontWeight": "500"
+                              }
+                      ]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        body {
+            background-color: #121315; /* surface-dim */
+            color: #e3e2e5; /* on-surface */
+        }
+        
+        /* Subtle glow for interactive cards */
+        .card-interactive:hover, .card-interactive:focus-within {
+            box-shadow: 0 0 16px rgba(0, 209, 255, 0.15); /* Primary Teal glow */
+            border-color: rgba(0, 209, 255, 0.3);
+        }
+        
+        /* Smooth transitions */
+        .transition-all-200 {
+            transition: all 200ms ease-in-out;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md antialiased min-h-screen flex flex-col pt-16 pb-20 md:pb-0">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface dark:bg-surface flex items-center px-margin-mobile h-16 w-full shadow-sm md:shadow-none" style="background-color: rgba(18, 19, 21, 0.9); backdrop-filter: blur(8px);">
+<div class="flex items-center gap-3">
+<img alt="Thraksha Logo" class="h-8 w-8 object-contain rounded-md" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoPbfwE9fWLdValewj39E0SVnFXGLAP2USr_MEVs--u_DuAwwhJ8VirxpchtJFKPseQ0NQZOQ-YczdYp7jr5G7L-jVr6NhkdaehDmZyv7n6sO4VXOvqQEDHhIe5SrWX4m6tK5TDKQft4IR7Gy2rbtOuyxhzXJTU5ZO1wjNJHbsyt3PNKgA1OgKcWpk6k7mxWrWFEGHgvXJ9z-D8p7cUKWg96TDd3mxo_qzykgFVxVhDtCw7pwjuP7qxg"/>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary tracking-tight">Thraksha Guardian</h1>
+</div>
+<!-- Desktop Nav (Hidden on Mobile) -->
+<nav class="hidden md:flex ml-auto gap-gutter items-center">
+<a class="flex items-center gap-2 text-on-surface-variant hover:text-on-surface transition-colors px-3 py-2 rounded-lg hover:bg-surface-container-highest/50" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">shield</span>
+<span class="font-label-md text-label-md">Protect</span>
+</a>
+<a class="flex items-center gap-2 text-on-surface bg-secondary-container/20 rounded-lg px-4 py-2 transition-colors" href="#">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<span class="font-label-md text-label-md text-primary-container font-semibold">Automate</span>
+</a>
+<a class="flex items-center gap-2 text-on-surface-variant hover:text-on-surface transition-colors px-3 py-2 rounded-lg hover:bg-surface-container-highest/50" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">analytics</span>
+<span class="font-label-md text-label-md">Audit</span>
+</a>
+</nav>
+</header>
+<!-- Main Content -->
+<main class="flex-grow w-full max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop py-8 flex flex-col gap-8">
+<!-- Natural Language Input Section -->
+<section class="flex flex-col gap-4">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Ask Thraksha</h2>
+<div class="relative w-full max-w-3xl card-interactive transition-all-200 rounded-2xl bg-surface-container border border-[#2D2E30] focus-within:border-primary-container overflow-hidden">
+<textarea class="w-full bg-transparent border-none text-on-surface placeholder:text-on-surface-variant font-body-lg text-body-lg p-4 focus:ring-0 resize-none outline-none" placeholder="Describe a routine you want to automate... e.g., 'Turn on focus mode when I arrive at the office'" rows="3"></textarea>
+<div class="absolute bottom-3 right-3 flex gap-2">
+<button class="p-2 rounded-full text-on-surface-variant hover:text-primary hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined">mic</span>
+</button>
+<button class="p-2 rounded-full bg-primary-container text-on-primary-container hover:bg-primary-fixed transition-colors shadow-lg">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Quick Routines Section (Bento Grid Style) -->
+<section class="flex flex-col gap-6">
+<h3 class="font-headline-md text-headline-md text-on-surface">Quick Routines</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Meeting Mode -->
+<div class="bg-surface-container rounded-3xl p-6 flex flex-col justify-between border border-transparent card-interactive transition-all-200 cursor-pointer h-48 relative overflow-hidden group">
+<div class="absolute left-0 top-6 bottom-6 w-1 bg-secondary rounded-r-full"></div>
+<div class="flex justify-between items-start z-10 pl-2">
+<div class="p-3 bg-surface-container-highest rounded-full text-secondary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">meeting_room</span>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined">more_vert</span></button>
+</div>
+<div class="z-10 pl-2">
+<h4 class="font-body-lg text-body-lg font-semibold text-on-surface mb-1">Meeting Mode</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Silences non-urgent alerts &amp; secures mic/cam.</p>
+</div>
+</div>
+<!-- Focus Mode -->
+<div class="bg-surface-container rounded-3xl p-6 flex flex-col justify-between border border-transparent card-interactive transition-all-200 cursor-pointer h-48 relative overflow-hidden group">
+<div class="absolute left-0 top-6 bottom-6 w-1 bg-primary-container rounded-r-full"></div>
+<div class="flex justify-between items-start z-10 pl-2">
+<div class="p-3 bg-surface-container-highest rounded-full text-primary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined">more_vert</span></button>
+</div>
+<div class="z-10 pl-2">
+<h4 class="font-body-lg text-body-lg font-semibold text-on-surface mb-1">Focus Mode</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Blocks social media &amp; tracks active time.</p>
+</div>
+</div>
+<!-- Driving Mode -->
+<div class="bg-surface-container rounded-3xl p-6 flex flex-col justify-between border border-transparent card-interactive transition-all-200 cursor-pointer h-48 relative overflow-hidden group">
+<div class="absolute left-0 top-6 bottom-6 w-1 bg-tertiary rounded-r-full"></div>
+<div class="flex justify-between items-start z-10 pl-2">
+<div class="p-3 bg-surface-container-highest rounded-full text-tertiary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">directions_car</span>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined">more_vert</span></button>
+</div>
+<div class="z-10 pl-2">
+<h4 class="font-body-lg text-body-lg font-semibold text-on-surface mb-1">Driving Mode</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Auto-replies and forces navigation pin.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-surface-container dark:bg-surface-container shadow-sm flex justify-around items-center h-20 w-full px-base pb-safe">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-5 py-1 hover:bg-surface-container-highest transition-all active:scale-95 duration-100 rounded-lg" href="#">
+<span class="material-symbols-outlined mb-1">shield</span>
+<span class="font-label-md text-label-md">Protect</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary-container text-on-secondary-container dark:text-on-secondary-container rounded-full px-5 py-2 hover:bg-surface-container-highest transition-all active:scale-95 duration-100 shadow-sm relative -top-2" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<span class="font-label-md text-label-md font-bold">Automate</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-5 py-1 hover:bg-surface-container-highest transition-all active:scale-95 duration-100 rounded-lg" href="#">
+<span class="material-symbols-outlined mb-1">analytics</span>
+<span class="font-label-md text-label-md">Audit</span>
+</a>
+</nav>
+</body></html>

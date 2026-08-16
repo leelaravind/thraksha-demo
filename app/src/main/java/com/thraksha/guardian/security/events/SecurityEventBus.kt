@@ -2,6 +2,7 @@ package com.thraksha.guardian.security.events
 
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 
 /**
@@ -17,6 +18,14 @@ object SecurityEventBus {
     )
 
     val events: SharedFlow<SecurityEvent> = _events.asSharedFlow()
+
+    /**
+     * Live count of active collectors. Because [events] has `replay = 0`, anything
+     * emitted before a collector subscribes is dropped. Startup-time producers (the
+     * launch security audit) wait on this reaching 1 so their first findings are not
+     * lost in the subscription window.
+     */
+    val subscriptionCount: StateFlow<Int> = _events.subscriptionCount
 
     suspend fun emit(event: SecurityEvent) = _events.emit(event)
 

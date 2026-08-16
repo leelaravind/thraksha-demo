@@ -3,3 +3,7 @@
 app/src/main/assets/rulepack.json        -text
 app/src/main/assets/rulepack.sig         -text
 app/src/main/assets/rulepack_public.key  -text
+app/src/main/assets/threatpack.json        -text
+app/src/main/assets/threatpack.sig         -text
+app/src/main/assets/threatpack_public.key  -text
+villaincaller/villain-demo.keystore        -text

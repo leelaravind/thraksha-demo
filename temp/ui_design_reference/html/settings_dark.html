@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Thraksha Guardian - Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-surface": "#e3e2e5",
+                        "on-secondary-fixed": "#00006e",
+                        "on-surface-variant": "#bbc9cf",
+                        "tertiary-fixed-dim": "#c7c6c8",
+                        "tertiary-container": "#c1c0c3",
+                        "secondary": "#bfc2ff",
+                        "surface-variant": "#343537",
+                        "outline": "#859399",
+                        "error-container": "#93000a",
+                        "surface-container-low": "#1b1c1e",
+                        "on-tertiary-container": "#4e4e51",
+                        "on-secondary": "#0000ac",
+                        "secondary-container": "#1e24db",
+                        "on-secondary-fixed-variant": "#1a20d8",
+                        "on-tertiary": "#303032",
+                        "on-tertiary-fixed-variant": "#464749",
+                        "surface-dim": "#121315",
+                        "primary-fixed-dim": "#4cd6ff",
+                        "on-primary-fixed-variant": "#004e60",
+                        "surface": "#121315",
+                        "background": "#121315",
+                        "inverse-primary": "#00677f",
+                        "tertiary-fixed": "#e3e2e4",
+                        "on-primary-container": "#00566a",
+                        "secondary-fixed-dim": "#bfc2ff",
+                        "on-secondary-container": "#adb2ff",
+                        "secondary-fixed": "#e0e0ff",
+                        "on-background": "#e3e2e5",
+                        "surface-container-lowest": "#0d0e10",
+                        "error": "#ffb4ab",
+                        "outline-variant": "#3c494e",
+                        "surface-container": "#1f2022",
+                        "surface-bright": "#38393b",
+                        "surface-container-highest": "#343537",
+                        "primary": "#a4e6ff",
+                        "surface-tint": "#4cd6ff",
+                        "on-error-container": "#ffdad6",
+                        "on-surface": "#e3e2e5",
+                        "primary-fixed": "#b7eaff",
+                        "primary-container": "#00d1ff",
+                        "on-error": "#690005",
+                        "on-tertiary-fixed": "#1b1c1e",
+                        "on-primary-fixed": "#001f28",
+                        "inverse-on-surface": "#303033",
+                        "tertiary": "#dddcde",
+                        "on-primary": "#003543",
+                        "surface-container-high": "#292a2c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "margin-desktop": "32px",
+                        "base": "8px",
+                        "gutter": "16px",
+                        "container-padding": "20px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "label-caps": ["JetBrains Mono"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #0B0C0E;
+            color: #e3e2e5;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="antialiased min-h-screen flex flex-col font-body-md text-body-md pb-24">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky bg-surface flex items-center justify-between px-margin-mobile h-16 z-40">
+<div class="flex items-center gap-3">
+<button class="text-primary hover:bg-surface-container-high transition-colors p-2 rounded-full active:scale-95 transition-transform flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">Settings</h1>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 w-full max-w-3xl mx-auto px-margin-mobile md:px-margin-desktop py-6">
+<!-- Preferences Group -->
+<section class="mb-8">
+<h2 class="font-label-caps text-label-caps text-primary uppercase mb-4 tracking-wider pl-2">Preferences</h2>
+<div class="bg-surface rounded-[24px] overflow-hidden flex flex-col border border-surface-container-low shadow-[0_4px_24px_rgba(0,0,0,0.15)]">
+<!-- Appearance -->
+<button class="w-full flex items-center justify-between p-4 hover:bg-surface-container-high transition-colors group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="palette">palette</span>
+</div>
+<span class="font-body-lg text-body-lg text-on-surface">Appearance</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="chevron_right">chevron_right</span>
+</button>
+<div class="h-[1px] w-full bg-surface-container-low ml-16"></div>
+<!-- Notifications -->
+<button class="w-full flex items-center justify-between p-4 hover:bg-surface-container-high transition-colors group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</div>
+<span class="font-body-lg text-body-lg text-on-surface">Notifications</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</section>
+<!-- Core Security Group -->
+<section class="mb-8">
+<h2 class="font-label-caps text-label-caps text-primary uppercase mb-4 tracking-wider pl-2">Core Security</h2>
+<div class="bg-surface rounded-[24px] overflow-hidden flex flex-col border border-surface-container-low shadow-[0_4px_24px_rgba(0,0,0,0.15)]">
+<!-- Protection -->
+<button class="w-full flex items-center justify-between p-4 hover:bg-surface-container-high transition-colors group relative">
+<div class="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary rounded-r-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="shield">shield</span>
+</div>
+<span class="font-body-lg text-body-lg text-on-surface">Protection</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="chevron_right">chevron_right</span>
+</button>
+<div class="h-[1px] w-full bg-surface-container-low ml-16"></div>
+<!-- Automation -->
+<button class="w-full flex items-center justify-between p-4 hover:bg-surface-container-high transition-colors group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="bolt">bolt</span>
+</div>
+<span class="font-body-lg text-body-lg text-on-surface">Automation</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="chevron_right">chevron_right</span>
+</button>
+<div class="h-[1px] w-full bg-surface-container-low ml-16"></div>
+<!-- On-device AI -->
+<button class="w-full flex items-center justify-between p-4 hover:bg-surface-container-high transition-colors group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="memory">memory</span>
+</div>
+<span class="font-body-lg text-body-lg text-on-surface">On-device AI</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</section>
+<!-- Access & Data Group -->
+<section class="mb-8">
+<h2 class="font-label-caps text-label-caps text-primary uppercase mb-4 tracking-wider pl-2">Access &amp; Data</h2>
+<div class="bg-surface rounded-[24px] overflow-hidden flex flex-col border border-surface-container-low shadow-[0_4px_24px_rgba(0,0,0,0.15)]">
+<!-- Privacy -->
+<button class="w-full flex items-center justify-between p-4 hover:bg-surface-container-high transition-colors group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="lock">lock</span>
+</div>
+<span class="font-body-lg text-body-lg text-on-surface">Privacy</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="chevron_right">chevron_right</span>
+</button>
+<div class="h-[1px] w-full bg-surface-container-low ml-16"></div>
+<!-- Permissions & Access -->
+<button class="w-full flex items-center justify-between p-4 hover:bg-surface-container-high transition-colors group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="vpn_key">vpn_key</span>
+</div>
+<span class="font-body-lg text-body-lg text-on-surface">Permissions &amp; Access</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</section>
+<!-- System Group -->
+<section>
+<div class="bg-surface rounded-[24px] overflow-hidden flex flex-col border border-surface-container-low shadow-[0_4px_24px_rgba(0,0,0,0.15)]">
+<!-- About -->
+<button class="w-full flex items-center justify-between p-4 hover:bg-surface-container-high transition-colors group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="info">info</span>
+</div>
+<span class="font-body-lg text-body-lg text-on-surface">About</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</section>
+</main>
+<!-- Navigation shell suppressed as this is a contextual "Settings" screen (dead end relative to global nav) -->
+</body></html>

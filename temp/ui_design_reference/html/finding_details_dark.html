@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Thraksha Guardian - Finding Details</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#4cd6ff",
+                        "on-surface": "#e3e2e5",
+                        "surface": "#121315",
+                        "on-primary-container": "#00566a",
+                        "error": "#ffb4ab",
+                        "surface-container": "#1f2022",
+                        "surface-dim": "#121315",
+                        "inverse-primary": "#00677f",
+                        "tertiary-fixed": "#e3e2e4",
+                        "tertiary-fixed-dim": "#c7c6c8",
+                        "inverse-on-surface": "#303033",
+                        "on-primary-fixed": "#001f28",
+                        "tertiary": "#dddcde",
+                        "surface-container-lowest": "#0d0e10",
+                        "surface-variant": "#343537",
+                        "on-error": "#690005",
+                        "error-container": "#93000a",
+                        "background": "#121315",
+                        "inverse-surface": "#e3e2e5",
+                        "primary-fixed-dim": "#4cd6ff",
+                        "secondary-fixed-dim": "#bfc2ff",
+                        "on-error-container": "#ffdad6",
+                        "on-primary": "#003543",
+                        "secondary-container": "#1e24db",
+                        "on-secondary-fixed": "#00006e",
+                        "on-tertiary-fixed-variant": "#464749",
+                        "on-secondary-fixed-variant": "#1a20d8",
+                        "on-tertiary-fixed": "#1b1c1e",
+                        "surface-container-low": "#1b1c1e",
+                        "secondary-fixed": "#e0e0ff",
+                        "tertiary-container": "#c1c0c3",
+                        "on-tertiary": "#303032",
+                        "on-surface-variant": "#bbc9cf",
+                        "surface-bright": "#38393b",
+                        "secondary": "#bfc2ff",
+                        "surface-container-high": "#292a2c",
+                        "outline-variant": "#3c494e",
+                        "primary": "#a4e6ff",
+                        "on-background": "#e3e2e5",
+                        "primary-container": "#00d1ff",
+                        "on-secondary-container": "#adb2ff",
+                        "on-secondary": "#0000ac",
+                        "on-tertiary-container": "#4e4e51",
+                        "on-primary-fixed-variant": "#004e60",
+                        "surface-container-highest": "#343537",
+                        "outline": "#859399",
+                        "primary-fixed": "#b7eaff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "base": "8px",
+                        "container-padding": "20px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-caps": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "500" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #0B0C0E;
+            color: #e3e2e5;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .glass-card {
+            background-color: rgba(22, 23, 25, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(133, 147, 153, 0.1);
+        }
+        
+        .timeline-connector {
+            position: absolute;
+            left: 20px;
+            top: 24px;
+            bottom: -24px;
+            width: 2px;
+            background: linear-gradient(to bottom, #00D1FF 0%, rgba(133, 147, 153, 0.3) 100%);
+            z-index: 0;
+        }
+        
+        .timeline-node {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .severity-indicator {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 60%;
+            width: 4px;
+            background-color: #00D1FF;
+            border-radius: 0 4px 4px 0;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="antialiased min-h-screen flex flex-col font-body-md relative overflow-x-hidden">
+<!-- Header (Transactional, minimal nav) -->
+<header class="w-full top-0 bg-surface dark:bg-surface flex justify-between items-center px-margin-mobile h-16 w-full z-50 sticky">
+<button class="text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-variant/20 dark:hover:bg-surface-variant/20 transition-colors duration-200 p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+<div class="font-headline-md text-headline-md text-on-surface dark:text-on-surface font-bold tracking-tight">Thraksha Guardian</div>
+<div class="w-10"></div> <!-- Spacer for balance -->
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col px-margin-mobile pt-8 pb-32 max-w-3xl mx-auto w-full">
+<!-- Context Header -->
+<div class="mb-10 flex flex-col items-center text-center">
+<div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(0,209,255,0.15)] border border-primary/20">
+<span class="material-symbols-outlined text-primary text-3xl" data-icon="location_on" style="font-variation-settings: 'FILL' 1;">location_on</span>
+</div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface mb-4">Location accessed in background</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-md">An app requested your location while you weren't using it.</p>
+</div>
+<!-- Affected App Section -->
+<section class="mb-8 relative rounded-xl bg-surface p-container-padding overflow-hidden shadow-lg border border-surface-variant/50">
+<div class="severity-indicator"></div>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-surface-variant flex items-center justify-center overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="A stylized, modern generic app icon representing a fitness or lifestyle application. The design should feature sleek geometric shapes in neon green and dark grey against a black background, adhering to a sophisticated dark-mode aesthetic with high contrast and smooth gradients." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCT8T_nfhbQVRBrNbT7P6v17deoQr9ctdp-yx27KXShKjo_5mVIj1Ll9Gd5cn1_SW79bRWk0wwZ2wtBCo7H85Wxx2R9nJnLOYOWL57UCBhCUOediO-jUIol2gNDEuXt7fz-cEV-hUlLURPW3OQXgnE7NoBqXM4WUX2dlVzMcEmsse334o0mAUKD3vYchvsMtb-TXYrhc5P5ZUuPRa4pztXzwmEJMIhIFVkkYZHiHPZp3HWu3yeLJDAPtQ"/>
+</div>
+<div class="flex-1">
+<h3 class="font-headline-md text-body-lg font-semibold text-on-surface">Fitness Tracker Pro</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Version 4.2.1 • Last used 2h ago</p>
+</div>
+</div>
+</section>
+<!-- Evidence Timeline -->
+<section class="mb-12">
+<h2 class="font-label-caps text-label-caps text-on-surface-variant mb-6 uppercase tracking-wider">Evidence Trail</h2>
+<div class="relative pl-2">
+<div class="timeline-connector"></div>
+<!-- Node 1: DECLARED -->
+<div class="timeline-node flex gap-6 mb-8">
+<div class="w-10 h-10 rounded-full bg-surface-container border-2 border-surface flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="description">description</span>
+</div>
+<div class="pt-2">
+<h4 class="font-label-caps text-label-caps text-primary mb-1">DECLARED</h4>
+<p class="font-body-md text-body-md text-on-surface">App manifest requests <code>ACCESS_BACKGROUND_LOCATION</code></p>
+<p class="font-label-md text-label-md text-on-surface-variant mt-1">Installation • Oct 12, 2023</p>
+</div>
+</div>
+<!-- Node 2: GRANTED -->
+<div class="timeline-node flex gap-6 mb-8">
+<div class="w-10 h-10 rounded-full bg-surface-container border-2 border-surface flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="verified_user">verified_user</span>
+</div>
+<div class="pt-2">
+<h4 class="font-label-caps text-label-caps text-primary mb-1">GRANTED</h4>
+<p class="font-body-md text-body-md text-on-surface">User granted "Allow all the time" permission</p>
+<p class="font-label-md text-label-md text-on-surface-variant mt-1">First launch • Oct 12, 2023</p>
+</div>
+</div>
+<!-- Node 3: OBSERVED -->
+<div class="timeline-node flex gap-6">
+<div class="w-10 h-10 rounded-full bg-primary/20 border-2 border-primary flex items-center justify-center shrink-0 shadow-[0_0_12px_rgba(0,209,255,0.4)]">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="my_location" style="font-variation-settings: 'FILL' 1;">my_location</span>
+</div>
+<div class="pt-2">
+<h4 class="font-label-caps text-label-caps text-primary mb-1">OBSERVED</h4>
+<p class="font-body-md text-body-md text-on-surface">Location accessed while app was in background</p>
+<div class="mt-3 bg-surface-container rounded-lg p-3 border border-surface-variant font-mono text-xs text-on-surface-variant overflow-x-auto">
+<code>System.LocationManager.getLastKnownLocation()</code><br/>
+<span class="text-on-surface">Lat: 37.7749, Lng: -122.4194</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant mt-2">Today • 14:32 PST</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Contextual Action Bar (Sticky Bottom for Transactional Flow) -->
+<div class="fixed bottom-0 w-full bg-surface/90 backdrop-blur-md border-t border-surface-variant/30 p-margin-mobile flex flex-col md:flex-row gap-4 z-50">
+<button class="w-full bg-primary text-on-primary font-body-lg text-body-lg font-semibold py-4 px-6 rounded-xl shadow-[0_4px_24px_rgba(0,209,255,0.25)] hover:bg-primary-container active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined" data-icon="settings_applications">settings_applications</span>
+            Review App Permissions
+        </button>
+<button class="w-full bg-transparent border border-surface-variant text-on-surface font-body-lg text-body-lg font-medium py-4 px-6 rounded-xl hover:bg-surface-variant/30 active:scale-[0.98] transition-all duration-200">
+            Ignore once
+        </button>
+</div>
+</body></html>

@@ -1,0 +1,35 @@
+===== RELEASE BUILD RUNTIME MEASUREMENT (Sat Aug 15 22:39:37 GMTDT 2026) =====
+--- memory (after scan of 322 packages) ---
+  Native Heap    16796    16744        4       32    17848    20452    16441     4010
+  Dalvik Heap     8323     8156       40      125     9492    16373     8187     8186
+         Native Heap:    16744                          17848
+           TOTAL PSS:   114749            TOTAL RSS:   195500       TOTAL SWAP PSS:      315
+               Views:        9         ViewRootImpl:        1
+         AppContexts:        6           Activities:        1
+            WebViews:        0
+
+--- processes / services ---
+u0_a331      31757   948 6547600 157672 0                   0 S com.thraksha.guardian
+
+--- running services ---
+  * ServiceRecord{f0331f7 u0 com.thraksha.guardian/.services.CompanionForegroundService}
+    app=ProcessRecord{f9704a 31757:com.thraksha.guardian/u0a331}
+
+--- thermal status ---
+Thermal Status: 0
+	Temperature{mValue=0.0, mType=2, mName=SUBBAT, mStatus=0}
+	Temperature{mValue=27.1, mType=0, mName=AP, mStatus=0}
+
+--- battery ---
+  status: 4
+  level: 84
+  temperature: 283
+
+--- wakelocks held by guardian ---
+  [3]   08-14 01:46:22.439 1000  OFF timeout                                  com.thraksha.guardian
+  [4]   08-14 11:04:05.998 1000  ON  power_button                             com.thraksha.guardian
+  [5]   08-14 11:31:09.152 1000  OFF timeout                                  com.thraksha.guardian
+(no output above = no wakelocks held)
+
+--- crashes / ANRs since install ---
+(no output above = no crashes)

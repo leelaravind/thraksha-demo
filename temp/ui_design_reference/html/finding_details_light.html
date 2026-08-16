@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Finding Details</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#4cd6ff",
+                        "on-surface": "#e3e2e5",
+                        "surface": "#121315",
+                        "on-primary-container": "#00566a",
+                        "error": "#ffb4ab",
+                        "surface-container": "#1f2022",
+                        "surface-dim": "#121315",
+                        "inverse-primary": "#00677f",
+                        "tertiary-fixed": "#e3e2e4",
+                        "tertiary-fixed-dim": "#c7c6c8",
+                        "inverse-on-surface": "#303033",
+                        "on-primary-fixed": "#001f28",
+                        "tertiary": "#dddcde",
+                        "surface-container-lowest": "#0d0e10",
+                        "surface-variant": "#343537",
+                        "on-error": "#690005",
+                        "error-container": "#93000a",
+                        "background": "#121315",
+                        "inverse-surface": "#e3e2e5",
+                        "primary-fixed-dim": "#4cd6ff",
+                        "secondary-fixed-dim": "#bfc2ff",
+                        "on-error-container": "#ffdad6",
+                        "on-primary": "#003543",
+                        "secondary-container": "#1e24db",
+                        "on-secondary-fixed": "#00006e",
+                        "on-tertiary-fixed-variant": "#464749",
+                        "on-secondary-fixed-variant": "#1a20d8",
+                        "on-tertiary-fixed": "#1b1c1e",
+                        "surface-container-low": "#1b1c1e",
+                        "secondary-fixed": "#e0e0ff",
+                        "tertiary-container": "#c1c0c3",
+                        "on-tertiary": "#303032",
+                        "on-surface-variant": "#bbc9cf",
+                        "surface-bright": "#38393b",
+                        "secondary": "#bfc2ff",
+                        "surface-container-high": "#292a2c",
+                        "outline-variant": "#3c494e",
+                        "primary": "#a4e6ff",
+                        "on-background": "#e3e2e5",
+                        "primary-container": "#00d1ff",
+                        "on-secondary-container": "#adb2ff",
+                        "on-secondary": "#0000ac",
+                        "on-tertiary-container": "#4e4e51",
+                        "on-primary-fixed-variant": "#004e60",
+                        "surface-container-highest": "#343537",
+                        "outline": "#859399",
+                        "primary-fixed": "#b7eaff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "base": "8px",
+                        "container-padding": "20px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-caps": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "500" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md">
+<!-- Header (Suppressed main nav as this is a transactional/detail screen with back action) -->
+<header class="flex justify-between items-center px-margin-mobile h-16 w-full bg-surface">
+<button class="text-on-surface-variant hover:bg-surface-variant/20 transition-colors duration-200 p-2 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">arrow_back</span>
+</button>
+<div class="font-headline-md text-headline-md text-on-surface font-bold tracking-tight">Thraksha Guardian</div>
+<div class="w-10"></div> <!-- Spacer for centering -->
+</header>
+<!-- Main Content -->
+<main class="flex-1 px-margin-mobile py-6 max-w-2xl mx-auto w-full">
+<!-- App Info & Alert Summary -->
+<section class="flex flex-col items-center mb-8">
+<div class="w-16 h-16 bg-surface-container rounded-2xl shadow-sm mb-4 flex items-center justify-center border border-outline-variant">
+<span class="material-symbols-outlined text-3xl text-on-surface-variant">apps</span>
+</div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-center mb-2">Location accessed in background</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant text-center">An app accessed your location data while you were not actively using it. This is normal for some apps (like navigation), but unexpected for others.</p>
+</section>
+<!-- Evidence Timeline -->
+<section class="bg-surface rounded-[24px] p-6 mb-8 border border-outline-variant/30 shadow-[0_8px_32px_-12px_rgba(0,0,0,0.5)]">
+<h2 class="font-label-caps text-label-caps text-primary mb-6">Evidence Timeline</h2>
+<div class="relative">
+<!-- Vertical Line -->
+<div class="absolute left-[15px] top-[16px] bottom-[16px] w-[2px] bg-outline-variant/50"></div>
+<!-- Event 1: Declared -->
+<div class="flex items-start mb-6 relative">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center z-10 mr-4 border border-outline-variant">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">description</span>
+</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface-variant mb-1">DECLARED • Install</div>
+<div class="font-body-lg text-body-lg text-on-surface">App requested location access capability.</div>
+</div>
+</div>
+<!-- Event 2: Granted -->
+<div class="flex items-start mb-6 relative">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center z-10 mr-4 border border-outline-variant">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">done</span>
+</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface-variant mb-1">GRANTED • Oct 12</div>
+<div class="font-body-lg text-body-lg text-on-surface">You granted "Allow all the time" permission.</div>
+</div>
+</div>
+<!-- Event 3: Observed -->
+<div class="flex items-start relative">
+<div class="w-8 h-8 rounded-full bg-primary-container/20 flex items-center justify-center z-10 mr-4 border border-primary-container">
+<span class="material-symbols-outlined text-[16px] text-primary-container" style="font-variation-settings: 'FILL' 1;">my_location</span>
+</div>
+<div>
+<div class="font-label-md text-label-md text-primary-container mb-1">OBSERVED • Just now</div>
+<div class="font-body-lg text-body-lg text-on-surface">Location pinged while app was closed.</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Primary Action -->
+<section class="flex flex-col gap-4">
+<button class="w-full bg-primary-container text-on-primary-container font-headline-md text-headline-md py-4 rounded-full flex items-center justify-center gap-2 hover:bg-primary transition-colors shadow-[0_4px_16px_rgba(0,209,255,0.2)]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">tune</span>
+                Review App Permissions
+            </button>
+<button class="w-full bg-surface text-on-surface font-body-lg text-body-lg py-4 rounded-full border border-outline-variant hover:bg-surface-variant/20 transition-colors">
+                Dismiss Alert
+            </button>
+</section>
+</main>
+</body></html>

@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuite name="com.thraksha.guardian.AuditLogInstrumentedTest" tests="92" failures="0" errors="0" skipped="23" time="65.636" timestamp="2026-08-15T22:34:52" hostname="localhost">
+  <properties>
+    <property name="device" value="thraksha_do(AVD) - 13" />
+    <property name="flavor" value="" />
+    <property name="project" value=":app" />
+  </properties>
+  <testcase name="appendedChainVerifies_thenDirectRowEditBreaksIt" classname="com.thraksha.guardian.AuditLogInstrumentedTest" time="1.701" />
+  <testcase name="auditFindingsArePersistedIntoTheHashChainedTrail" classname="com.thraksha.guardian.AuditTrailPersistenceInstrumentedTest" time="5.071" />
+  <testcase name="restore_refusesNonAllowlistedTargets" classname="com.thraksha.guardian.DeviceOwnerEnforcementInstrumentedTest" time="0.005" />
+  <testcase name="guardian_cannotTargetItself" classname="com.thraksha.guardian.DeviceOwnerEnforcementInstrumentedTest" time="0.004" />
+  <testcase name="goodCaller_isRefusedAsTarget_regardlessOfAuthority" classname="com.thraksha.guardian.DeviceOwnerEnforcementInstrumentedTest" time="0.003" />
+  <testcase name="arbitraryPackage_isRefused" classname="com.thraksha.guardian.DeviceOwnerEnforcementInstrumentedTest" time="0.007" />
+  <testcase name="deviceOwner_containsVillain_verifiesState_andRestores" classname="com.thraksha.guardian.DeviceOwnerEnforcementInstrumentedTest" time="0.183" />
+  <testcase name="withoutDeviceOwner_villainDecisionIsNotAuthorised_andNothingChanges" classname="com.thraksha.guardian.DeviceOwnerEnforcementInstrumentedTest" time="0.017">
+    <skipped />
+  </testcase>
+  <testcase name="scanDevice_analyzesUnknownApps_withHonestClassifications" classname="com.thraksha.guardian.DeviceScanInstrumentedTest" time="14.031" />
+  <testcase name="timings_areMeasured" classname="com.thraksha.guardian.DeviceScanInstrumentedTest" time="3.215" />
+  <testcase name="debugBuild_holdsFullVisibility_andDiscoversTheRegistry" classname="com.thraksha.guardian.DeviceScanInstrumentedTest" time="0.261" />
+  <testcase name="repeatScan_isDeterministic_whenDeviceStateUnchanged" classname="com.thraksha.guardian.DeviceScanInstrumentedTest" time="3.918" />
+  <testcase name="controlledSamples_goThroughTheSamePipeline" classname="com.thraksha.guardian.DeviceScanInstrumentedTest" time="2.107" />
+  <testcase name="arbitraryPackages_areFingerprintable" classname="com.thraksha.guardian.DeviceScanInstrumentedTest" time="0.471" />
+  <testcase name="guardianItself_isScannedByTheSameRules_notSpecialCased" classname="com.thraksha.guardian.DeviceScanInstrumentedTest" time="2.13" />
+  <testcase name="roundTrip_writeCloseReopenRead_andCiphertextOnDisk" classname="com.thraksha.guardian.EncryptedStoreTest" time="1.717" />
+  <testcase name="passphrase_isStableAndCorrectLength" classname="com.thraksha.guardian.EncryptedStoreTest" time="0.031" />
+  <testcase name="useAppContext" classname="com.thraksha.guardian.ExampleInstrumentedTest" time="0.004" />
+  <testcase name="configDefaults_seedAndReadBack" classname="com.thraksha.guardian.FoundationInstrumentedTest" time="0.032" />
+  <testcase name="rulepackLoader_loadsSignedDemoPack" classname="com.thraksha.guardian.FoundationInstrumentedTest" time="0.002" />
+  <testcase name="securityCapability_returnsValidLevel" classname="com.thraksha.guardian.FoundationInstrumentedTest" time="0.004" />
+  <testcase name="networkFindingFlowsThroughSecurityEventBus_andPersistsWithChainIntact" classname="com.thraksha.guardian.NetworkGuardInstrumentedTest" time="1.899" />
+  <testcase name="nonMatchingDestination_isForwardedWithoutAThreatVerdict" classname="com.thraksha.guardian.NetworkGuardInstrumentedTest" time="0.362" />
+  <testcase name="fullPowerAutoDefend_blocksDemoPacket_withoutForwarding" classname="com.thraksha.guardian.NetworkGuardInstrumentedTest" time="0.313" />
+  <testcase name="engine_producesNetworkFindingAndDecision_forDemoPacket" classname="com.thraksha.guardian.NetworkGuardInstrumentedTest" time="0.262" />
+  <testcase name="networkGuardState_lifecycleTransitions" classname="com.thraksha.guardian.NetworkGuardInstrumentedTest" time="0.004" />
+  <testcase name="threatPackNetworkIndicator_loadsThroughProductionLoader" classname="com.thraksha.guardian.NetworkGuardInstrumentedTest" time="0.233" />
+  <testcase name="vpnScope_onlyVillainCaller_neverGoodCallerOrGuardian" classname="com.thraksha.guardian.NetworkGuardInstrumentedTest" time="0.002" />
+  <testcase name="goodCallerDeclaresNoPhotoOrPackageListingCapability" classname="com.thraksha.guardian.PackageVisibilityInstrumentedTest" time="0.029" />
+  <testcase name="villainCallerDeclaresTheIntendedMismatchedCapabilities" classname="com.thraksha.guardian.PackageVisibilityInstrumentedTest" time="0.004" />
+  <testcase name="bothDecoysShareTheSameCallerIdBaselinePermissions" classname="com.thraksha.guardian.PackageVisibilityInstrumentedTest" time="0.005" />
+  <testcase name="bothDecoyPackagesAreVisibleAndClassifiedAsCallerId" classname="com.thraksha.guardian.PackageVisibilityInstrumentedTest" time="0.003" />
+  <testcase name="compareBackends" classname="com.thraksha.guardian.Phase10ABackendBenchmarkTest" time="0.013">
+    <skipped />
+  </testcase>
+  <testcase name="a01_modelIntegrityGate_verifiesTheExactPinnedArtifact" classname="com.thraksha.guardian.Phase10ARuntimeInstrumentedTest" time="0.013">
+    <skipped />
+  </testcase>
+  <testcase name="a02_tamperedModel_isRejected_andNeverLoaded" classname="com.thraksha.guardian.Phase10ARuntimeInstrumentedTest" time="0.003" />
+  <testcase name="a03_runtimeInitializes_andModelLoads" classname="com.thraksha.guardian.Phase10ARuntimeInstrumentedTest" time="0.047">
+    <skipped />
+  </testcase>
+  <testcase name="a04_firstInference_producesConstrainedJson" classname="com.thraksha.guardian.Phase10ARuntimeInstrumentedTest" time="0.017">
+    <skipped />
+  </testcase>
+  <testcase name="a05_smokeSet_isStable_andAlwaysSchemaConformant" classname="com.thraksha.guardian.Phase10ARuntimeInstrumentedTest" time="0.015">
+    <skipped />
+  </testcase>
+  <testcase name="a06_repeatedInference_isStable_withoutDriftOrLeak" classname="com.thraksha.guardian.Phase10ARuntimeInstrumentedTest" time="0.016">
+    <skipped />
+  </testcase>
+  <testcase name="a07_unloadThenReload_worksAndReleasesState" classname="com.thraksha.guardian.Phase10ARuntimeInstrumentedTest" time="0.019">
+    <skipped />
+  </testcase>
+  <testcase name="a08_writeBenchmarkFile" classname="com.thraksha.guardian.Phase10ARuntimeInstrumentedTest" time="0.005" />
+  <testcase name="runFullEvaluation" classname="com.thraksha.guardian.Phase10BEvaluationInstrumentedTest" time="0.029">
+    <skipped />
+  </testcase>
+  <testcase name="activeRoutine_isIndependentOfModelLifecycle" classname="com.thraksha.guardian.Phase10CIntegrationInstrumentedTest" time="0.028">
+    <skipped />
+  </testcase>
+  <testcase name="aiEvents_landInTheAuditChain_withoutStoringTheUserPrompt" classname="com.thraksha.guardian.Phase10CIntegrationInstrumentedTest" time="0.026">
+    <skipped />
+  </testcase>
+  <testcase name="aiMeetingRequest_previewsFirst_thenStartsOnlyOnExplicitCall_thenRestores" classname="com.thraksha.guardian.Phase10CIntegrationInstrumentedTest" time="0.014">
+    <skipped />
+  </testcase>
+  <testcase name="invalidModelHash_isRejected_andAutomationStillWorks" classname="com.thraksha.guardian.Phase10CIntegrationInstrumentedTest" time="0.02">
+    <skipped />
+  </testcase>
+  <testcase name="missingModel_reportsMissing_andAutomationStillWorks" classname="com.thraksha.guardian.Phase10CIntegrationInstrumentedTest" time="0.017">
+    <skipped />
+  </testcase>
+  <testcase name="modelOutputCanNeverCarryAnExecutorOrIntentUri" classname="com.thraksha.guardian.Phase10CIntegrationInstrumentedTest" time="0.019">
+    <skipped />
+  </testcase>
+  <testcase name="repeatedInference_isStable_andDoesNotTouchAutomation" classname="com.thraksha.guardian.Phase10CIntegrationInstrumentedTest" time="0.025">
+    <skipped />
+  </testcase>
+  <testcase name="securityAndDestructivePrompts_produceNoIntentAndNoAndroidAction" classname="com.thraksha.guardian.Phase10CIntegrationInstrumentedTest" time="0.019">
+    <skipped />
+  </testcase>
+  <testcase name="zz_writeResults" classname="com.thraksha.guardian.Phase10CIntegrationInstrumentedTest" time="0.002" />
+  <testcase name="actOptions_matchRealPrivilege_andRefuseUnsupported" classname="com.thraksha.guardian.Phase81EvidenceInstrumentedTest" time="2.547" />
+  <testcase name="appSettingsIntent_resolves_onThisDevice" classname="com.thraksha.guardian.Phase81EvidenceInstrumentedTest" time="0.003" />
+  <testcase name="deviceScan_carriesEvidence_andNeverInventsStage3" classname="com.thraksha.guardian.Phase81EvidenceInstrumentedTest" time="1.898" />
+  <testcase name="requestedVersusGranted_isARealDistinction_onThisDevice" classname="com.thraksha.guardian.Phase81EvidenceInstrumentedTest" time="0.029" />
+  <testcase name="dismiss_hidesForSessionOnly_andIsRecorded" classname="com.thraksha.guardian.Phase81EvidenceInstrumentedTest" time="3.91" />
+  <testcase name="specialAccessStates_areDetermined_forOwnPackage" classname="com.thraksha.guardian.Phase81EvidenceInstrumentedTest" time="0.003" />
+  <testcase name="verifiedStoreObservation_reachesStage3_forTheRightPackageOnly" classname="com.thraksha.guardian.Phase81EvidenceInstrumentedTest" time="0.03" />
+  <testcase name="keepWatching_isRecorded_inTheAuditChain" classname="com.thraksha.guardian.Phase81EvidenceInstrumentedTest" time="3.159" />
+  <testcase name="unsupportedObservation_staysUnavailable_onRealEvidence" classname="com.thraksha.guardian.Phase81EvidenceInstrumentedTest" time="0.008">
+    <skipped />
+  </testcase>
+  <testcase name="overlayOpQuery_isAnswerable_forAnotherPackage" classname="com.thraksha.guardian.Phase81EvidenceInstrumentedTest" time="0.046">
+    <skipped />
+  </testcase>
+  <testcase name="userActSuspend_isVerifiedActed_andReversible" classname="com.thraksha.guardian.Phase81FullPowerActInstrumentedTest" time="3.51" />
+  <testcase name="meetingMode_endToEnd_changesVerifies_thenRestoresExactPreviousState" classname="com.thraksha.guardian.Phase9AutomationInstrumentedTest" time="0.235" />
+  <testcase name="automationLifecycle_landsInTheTamperEvidentAuditChain" classname="com.thraksha.guardian.Phase9AutomationInstrumentedTest" time="1.854" />
+  <testcase name="processRecovery_reconstructsActiveRoutine_fromPersistedState" classname="com.thraksha.guardian.Phase9AutomationInstrumentedTest" time="0.259" />
+  <testcase name="blockedPlan_executesNothing_whenRequiredAccessMissing" classname="com.thraksha.guardian.Phase9AutomationInstrumentedTest" time="0.018">
+    <skipped />
+  </testcase>
+  <testcase name="requiredFailure_rollsBackAppliedActions_toRealPreviousState" classname="com.thraksha.guardian.Phase9AutomationInstrumentedTest" time="0.133" />
+  <testcase name="oneActiveRoutine_secondStartIsRefused" classname="com.thraksha.guardian.Phase9AutomationInstrumentedTest" time="0.184" />
+  <testcase name="engineNeverReportsActed_withoutMatchingRealState" classname="com.thraksha.guardian.Phase9AutomationInstrumentedTest" time="0.209" />
+  <testcase name="ringerExecutor_roundTripsRealState" classname="com.thraksha.guardian.Phase9AutomationInstrumentedTest" time="0.056" />
+  <testcase name="dndExecutor_roundTripsRealState" classname="com.thraksha.guardian.Phase9AutomationInstrumentedTest" time="0.131" />
+  <testcase name="expiryWhileProcessDead_isRestoredOnRecovery" classname="com.thraksha.guardian.Phase9AutomationInstrumentedTest" time="0.107" />
+  <testcase name="screenTimeoutExecutor_roundTripsRealState" classname="com.thraksha.guardian.Phase9AutomationInstrumentedTest" time="0.029" />
+  <testcase name="brightnessExecutor_roundTripsValueAndMode" classname="com.thraksha.guardian.Phase9AutomationInstrumentedTest" time="0.03" />
+  <testcase name="goodCaller_getsNoAdvisoryAndNoDecisionRow" classname="com.thraksha.guardian.PolicyPipelineInstrumentedTest" time="0.514" />
+  <testcase name="repeatedAudits_produceIdenticalDecisions" classname="com.thraksha.guardian.PolicyPipelineInstrumentedTest" time="0.54" />
+  <testcase name="villainCaller_isAdvised_underAdviceMode" classname="com.thraksha.guardian.PolicyPipelineInstrumentedTest" time="0.039">
+    <skipped />
+  </testcase>
+  <testcase name="decisionAndAdvisoryArePersistedIntoTheEncryptedChain" classname="com.thraksha.guardian.PolicyPipelineInstrumentedTest" time="0.012">
+    <skipped />
+  </testcase>
+  <testcase name="adviceModePerformsZeroPrivilegedActions_villainRemainsFullyOperational" classname="com.thraksha.guardian.PolicyPipelineInstrumentedTest" time="0.016">
+    <skipped />
+  </testcase>
+  <testcase name="villainCallerProducesDeterministicThreatFindings" classname="com.thraksha.guardian.SecurityAuditEngineInstrumentedTest" time="0.361" />
+  <testcase name="concurrentScansAreSerialisedAndDoNotCorruptState" classname="com.thraksha.guardian.SecurityAuditEngineInstrumentedTest" time="0.875" />
+  <testcase name="goodCallerProducesZeroThreatFindings" classname="com.thraksha.guardian.SecurityAuditEngineInstrumentedTest" time="0.492" />
+  <testcase name="findingsAreEmittedOntoTheRealSecurityEventBus" classname="com.thraksha.guardian.SecurityAuditEngineInstrumentedTest" time="0.412" />
+  <testcase name="repeatedScansAreDeterministic" classname="com.thraksha.guardian.SecurityAuditEngineInstrumentedTest" time="0.594" />
+  <testcase name="bothDecoysAreInventoriedAndClassifiedAsCallerId" classname="com.thraksha.guardian.SecurityAuditEngineInstrumentedTest" time="0.336" />
+  <testcase name="missingDecoyDoesNotCrashTheAudit" classname="com.thraksha.guardian.SecurityAuditEngineInstrumentedTest" time="0.339" />
+  <testcase name="auditRunsOnTheVerifiedRulepack" classname="com.thraksha.guardian.SecurityAuditEngineInstrumentedTest" time="0.364" />
+  <testcase name="fingerprinter_producesStableDigests_forInstalledDecoys" classname="com.thraksha.guardian.ThreatIntelInstrumentedTest" time="0.031" />
+  <testcase name="bundledThreatPack_loadsVerified_onDevice" classname="com.thraksha.guardian.ThreatIntelInstrumentedTest" time="0.466" />
+  <testcase name="corruptedBytes_produceVisibleUnavailableState_neverClean" classname="com.thraksha.guardian.ThreatIntelInstrumentedTest" time="0.002" />
+  <testcase name="scanTimings_areMeasuredAndSane" classname="com.thraksha.guardian.ThreatIntelInstrumentedTest" time="0.749" />
+  <testcase name="unifiedAudit_villainMatchesBothPillars_goodCallerCleanUnderBoth" classname="com.thraksha.guardian.ThreatIntelInstrumentedTest" time="0.488" />
+</testsuite>

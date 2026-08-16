@@ -47,4 +47,8 @@ interface AuditDao {
     /** Live feed for the dashboard (newest first). */
     @Query("SELECT * FROM audit_log ORDER BY id DESC LIMIT :limit")
     fun observeRecent(limit: Int): Flow<List<AuditEntity>>
+
+    /** Single entry lookup for the audit detail view. Read-only; the chain is untouched. */
+    @Query("SELECT * FROM audit_log WHERE id = :id LIMIT 1")
+    suspend fun byId(id: Long): AuditEntity?
 }

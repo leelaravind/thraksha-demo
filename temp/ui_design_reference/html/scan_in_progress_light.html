@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Thraksha Guardian - Scan in Progress</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-tint": "#4cd6ff",
+                    "on-surface": "#e3e2e5",
+                    "surface": "#121315",
+                    "on-primary-container": "#00566a",
+                    "error": "#ffb4ab",
+                    "surface-container": "#1f2022",
+                    "surface-dim": "#121315",
+                    "inverse-primary": "#00677f",
+                    "tertiary-fixed": "#e3e2e4",
+                    "tertiary-fixed-dim": "#c7c6c8",
+                    "inverse-on-surface": "#303033",
+                    "on-primary-fixed": "#001f28",
+                    "tertiary": "#dddcde",
+                    "surface-container-lowest": "#0d0e10",
+                    "surface-variant": "#343537",
+                    "on-error": "#690005",
+                    "error-container": "#93000a",
+                    "background": "#121315",
+                    "inverse-surface": "#e3e2e5",
+                    "primary-fixed-dim": "#4cd6ff",
+                    "secondary-fixed-dim": "#bfc2ff",
+                    "on-error-container": "#ffdad6",
+                    "on-primary": "#003543",
+                    "secondary-container": "#1e24db",
+                    "on-secondary-fixed": "#00006e",
+                    "on-tertiary-fixed-variant": "#464749",
+                    "on-secondary-fixed-variant": "#1a20d8",
+                    "on-tertiary-fixed": "#1b1c1e",
+                    "surface-container-low": "#1b1c1e",
+                    "secondary-fixed": "#e0e0ff",
+                    "tertiary-container": "#c1c0c3",
+                    "on-tertiary": "#303032",
+                    "on-surface-variant": "#bbc9cf",
+                    "surface-bright": "#38393b",
+                    "secondary": "#bfc2ff",
+                    "surface-container-high": "#292a2c",
+                    "outline-variant": "#3c494e",
+                    "primary": "#a4e6ff",
+                    "on-background": "#e3e2e5",
+                    "primary-container": "#00d1ff",
+                    "on-secondary-container": "#adb2ff",
+                    "on-secondary": "#0000ac",
+                    "on-tertiary-container": "#4e4e51",
+                    "on-primary-fixed-variant": "#004e60",
+                    "surface-container-highest": "#343537",
+                    "outline": "#859399",
+                    "primary-fixed": "#b7eaff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "base": "8px",
+                    "container-padding": "20px",
+                    "margin-mobile": "16px",
+                    "margin-desktop": "32px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "label-caps": ["JetBrains Mono"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-md": ["Inter"],
+                    "headline-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        }
+      }
+    </script>
+<style>
+        body {
+            background-color: #0B0C0E;
+            color: #e3e2e5;
+        }
+        
+        .pulse-ring {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pulse-ring::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid #00D1FF;
+            animation: pulse 2s linear infinite;
+            opacity: 0;
+        }
+
+        .pulse-ring::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid #00D1FF;
+            animation: pulse 2s linear infinite;
+            animation-delay: 1s;
+            opacity: 0;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0.8);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+        
+        .scan-item {
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInUp 0.5s forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen flex flex-col font-sans antialiased overflow-hidden">
+<!-- TopAppBar -->
+<header class="w-full top-0 bg-surface dark:bg-surface flex justify-between items-center px-margin-mobile h-16 w-full flat no shadows transition-colors duration-200 z-10 sticky">
+<button class="p-2 -ml-2 rounded-full hover:bg-surface-variant/20 dark:hover:bg-surface-variant/20 text-on-surface-variant dark:text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">shield_lock</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-on-surface dark:text-on-surface font-bold tracking-tight">EXISTING THRAKSHA LOGO</h1>
+<div class="w-10"></div> <!-- Placeholder for balance -->
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col items-center justify-center px-margin-mobile pb-margin-desktop relative">
+<!-- Animated Background Glow -->
+<div class="absolute inset-0 flex items-center justify-center opacity-20 pointer-events-none">
+<div class="w-96 h-96 bg-primary-container rounded-full blur-[100px] animate-pulse" style="animation-duration: 4s;"></div>
+</div>
+<!-- Hero Area: Scanner Animation -->
+<div class="relative z-10 flex flex-col items-center w-full max-w-md mx-auto mt-8">
+<div class="w-48 h-48 mb-12 pulse-ring">
+<div class="w-32 h-32 rounded-full bg-surface-container flex items-center justify-center z-10 shadow-[0_0_40px_rgba(0,209,255,0.1)] border border-surface-variant">
+<span class="material-symbols-outlined text-[64px] text-primary-container" style="font-variation-settings: 'FILL' 1;">security_update_good</span>
+</div>
+</div>
+<!-- Scanning Status Text -->
+<div class="text-center space-y-4 mb-16 w-full">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Scanning device...</h2>
+<div class="h-6 overflow-hidden relative w-full flex justify-center">
+<p class="font-body-lg text-body-lg text-on-surface-variant absolute w-full transition-all duration-500" id="scan-status">Checking apps configuration</p>
+</div>
+</div>
+<!-- Progress Details (Simulated) -->
+<div class="w-full bg-surface rounded-xl p-6 border border-surface-variant/50 shadow-sm mb-12">
+<div class="space-y-4">
+<div class="flex items-center gap-3 scan-item" style="animation-delay: 0.2s;">
+<span class="material-symbols-outlined text-primary-container text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">System integrity verified</span>
+</div>
+<div class="flex items-center gap-3 scan-item" style="animation-delay: 1.5s;">
+<span class="material-symbols-outlined text-primary-container text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-body-md text-body-md text-on-surface">Network protocols checked</span>
+</div>
+<div class="flex items-center gap-3 scan-item" style="animation-delay: 2.8s;">
+<span class="material-symbols-outlined text-surface-variant text-sm animate-spin">sync</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Analyzing app permissions...</span>
+</div>
+</div>
+</div>
+<!-- Action Button -->
+<button class="w-full py-4 px-6 rounded-full border border-outline-variant text-on-surface font-label-md text-label-md tracking-wide hover:bg-surface-variant/30 active:scale-95 transition-all duration-200">
+                Cancel Scan
+            </button>
+</div>
+</main>
+<script>
+        // Simple script to cycle through scanning text for atmospheric effect
+        const statuses = [
+            "Checking apps configuration",
+            "Analyzing network protocols",
+            "Verifying system integrity",
+            "Scanning file system anomalies",
+            "Reviewing background services"
+        ];
+        
+        const statusElement = document.getElementById('scan-status');
+        let currentIndex = 0;
+        
+        setInterval(() => {
+            statusElement.style.opacity = 0;
+            statusElement.style.transform = 'translateY(-10px)';
+            
+            setTimeout(() => {
+                currentIndex = (currentIndex + 1) % statuses.length;
+                statusElement.textContent = statuses[currentIndex];
+                
+                statusElement.style.transform = 'translateY(10px)';
+                
+                // Force reflow
+                void statusElement.offsetWidth;
+                
+                statusElement.style.opacity = 1;
+                statusElement.style.transform = 'translateY(0)';
+            }, 500);
+        }, 3000);
+    </script>
+</body></html>

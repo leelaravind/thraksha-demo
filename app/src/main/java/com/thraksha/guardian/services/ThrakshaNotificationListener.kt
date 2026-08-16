@@ -4,6 +4,10 @@ import android.app.Notification
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.util.Log
+import com.thraksha.guardian.security.evidence.CapabilityCatalog
+import com.thraksha.guardian.security.evidence.CapabilityObservation
+import com.thraksha.guardian.security.evidence.ObservationReliability
+import com.thraksha.guardian.security.observe.RuntimeObservationStore
 
 /**
  * Intercepts notifications for OTP detection and security monitoring.
@@ -47,6 +51,20 @@ class ThrakshaNotificationListener : NotificationListenerService() {
                 Log.d(
                     TAG,
                     "Notification posted: pkg=$packageName title=${content.title} text=${content.text}",
+                )
+                // Phase 8.1: a notification delivered to this listener is genuine,
+                // attributed Stage 3 evidence that the app posted a notification —
+                // possible only while the user has enabled this listener. Deliberately
+                // METADATA ONLY: package + timestamp; no title/text is recorded.
+                RuntimeObservationStore.record(
+                    CapabilityObservation(
+                        capabilityId = CapabilityCatalog.NOTIFICATION_POSTING,
+                        packageName = packageName,
+                        observedAt = sbn.postTime,
+                        source = "Thraksha notification listener (user-enabled)",
+                        reliability = ObservationReliability.VERIFIED,
+                        detail = "posted a notification (content not recorded)",
+                    ),
                 )
             }
 

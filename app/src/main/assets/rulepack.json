@@ -1,12 +1,95 @@
 {
-  "version": 1,
+  "version": 2,
   "rules": [
+    {
+      "id": "caller-media-permission-mismatch",
+      "name": "Caller-ID app requests photo/media access",
+      "category": "profile",
+      "severity": "HIGH",
+      "enabled": true,
+      "params": {
+        "check": "PERMISSION_NOT_IN_BASELINE",
+        "appTypes": ["CALLER_ID"],
+        "permissions": [
+          "android.permission.READ_MEDIA_IMAGES",
+          "android.permission.READ_MEDIA_VIDEO",
+          "android.permission.READ_EXTERNAL_STORAGE",
+          "android.permission.MANAGE_EXTERNAL_STORAGE"
+        ],
+        "confidence": 92,
+        "reason": "A caller-ID app identifies phone numbers against contacts and call history. Reading the device photo library is outside that role."
+      }
+    },
+    {
+      "id": "caller-package-visibility-mismatch",
+      "name": "Caller-ID app requests broad package visibility",
+      "category": "profile",
+      "severity": "HIGH",
+      "enabled": true,
+      "params": {
+        "check": "PERMISSION_NOT_IN_BASELINE",
+        "appTypes": ["CALLER_ID"],
+        "permissions": [
+          "android.permission.QUERY_ALL_PACKAGES"
+        ],
+        "confidence": 88,
+        "reason": "QUERY_ALL_PACKAGES lets an app enumerate every application installed on the device. A caller-ID app resolves phone numbers and has no need for the installed-app list."
+      }
+    },
+    {
+      "id": "caller-location-permission-mismatch",
+      "name": "Caller-ID app requests precise location",
+      "category": "privacy",
+      "severity": "MEDIUM",
+      "enabled": true,
+      "params": {
+        "check": "PERMISSION_NOT_IN_BASELINE",
+        "appTypes": ["CALLER_ID"],
+        "permissions": [
+          "android.permission.ACCESS_FINE_LOCATION",
+          "android.permission.ACCESS_BACKGROUND_LOCATION"
+        ],
+        "confidence": 74,
+        "reason": "Caller identification is performed on the phone number, not the handset's position. Precise location is outside the declared role."
+      }
+    },
+    {
+      "id": "caller-surveillance-capability-mismatch",
+      "name": "Caller-ID app requests microphone or camera",
+      "category": "privacy",
+      "severity": "HIGH",
+      "enabled": true,
+      "params": {
+        "check": "PERMISSION_NOT_IN_BASELINE",
+        "appTypes": ["CALLER_ID"],
+        "permissions": [
+          "android.permission.RECORD_AUDIO",
+          "android.permission.CAMERA"
+        ],
+        "confidence": 90,
+        "reason": "Displaying who is calling requires neither the microphone nor the camera."
+      }
+    },
+    {
+      "id": "caller-high-risk-profile",
+      "name": "Caller-ID app shows a compound profile mismatch",
+      "category": "profile",
+      "severity": "CRITICAL",
+      "enabled": true,
+      "params": {
+        "check": "PROFILE_MISMATCH_COUNT",
+        "appTypes": ["CALLER_ID"],
+        "minimumMismatches": 2,
+        "confidence": 95,
+        "reason": "Several unrelated capabilities sit outside the caller-ID role at once. Any one of them could be argued for in isolation; together they describe an app collecting far more than its stated purpose requires."
+      }
+    },
     {
       "id": "high-risk-install",
       "name": "High-risk app install",
       "category": "install",
       "severity": "HIGH",
-      "enabled": true,
+      "enabled": false,
       "params": {}
     },
     {
@@ -14,7 +97,7 @@
       "name": "Accessibility service abuse",
       "category": "privilege",
       "severity": "CRITICAL",
-      "enabled": true,
+      "enabled": false,
       "params": {}
     },
     {
@@ -22,7 +105,7 @@
       "name": "Stalkerware permission profile",
       "category": "profile",
       "severity": "CRITICAL",
-      "enabled": true,
+      "enabled": false,
       "params": {}
     },
     {
@@ -30,7 +113,7 @@
       "name": "Screen capture / projection misuse",
       "category": "privacy",
       "severity": "HIGH",
-      "enabled": true,
+      "enabled": false,
       "params": {}
     },
     {
@@ -38,7 +121,7 @@
       "name": "Malicious VPN / traffic redirection",
       "category": "network",
       "severity": "HIGH",
-      "enabled": true,
+      "enabled": false,
       "params": {}
     },
     {
@@ -46,7 +129,7 @@
       "name": "Command-and-control beaconing",
       "category": "network",
       "severity": "CRITICAL",
-      "enabled": true,
+      "enabled": false,
       "params": {}
     },
     {
@@ -54,7 +137,7 @@
       "name": "Boot / foreground persistence abuse",
       "category": "persistence",
       "severity": "MEDIUM",
-      "enabled": true,
+      "enabled": false,
       "params": {}
     },
     {
@@ -62,7 +145,7 @@
       "name": "Notification / clipboard harvesting",
       "category": "privacy",
       "severity": "HIGH",
-      "enabled": true,
+      "enabled": false,
       "params": {}
     },
     {
@@ -70,7 +153,7 @@
       "name": "SIM swap / subscription change",
       "category": "telephony",
       "severity": "CRITICAL",
-      "enabled": true,
+      "enabled": false,
       "params": {}
     },
     {
@@ -78,7 +161,7 @@
       "name": "USB debugging enabled",
       "category": "config",
       "severity": "MEDIUM",
-      "enabled": true,
+      "enabled": false,
       "params": {}
     },
     {
@@ -86,7 +169,7 @@
       "name": "2G / baseband downgrade risk",
       "category": "network",
       "severity": "MEDIUM",
-      "enabled": true,
+      "enabled": false,
       "params": {}
     },
     {
@@ -94,7 +177,7 @@
       "name": "Background location / device scanning",
       "category": "privacy",
       "severity": "MEDIUM",
-      "enabled": true,
+      "enabled": false,
       "params": {}
     }
   ]

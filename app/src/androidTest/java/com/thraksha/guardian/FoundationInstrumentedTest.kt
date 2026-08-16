@@ -24,7 +24,21 @@ class FoundationInstrumentedTest {
     fun configDefaults_seedAndReadBack() = runBlocking {
         val config = ConfigStore(context)
         config.ensureDefaults()
-        assertEquals(ExecutionMode.OBSERVE, config.getExecutionMode())
+
+        // The execution mode became a real, operator-changeable setting in Phase 5, so
+        // this can no longer assume the seeded default survives on a used device.
+        // Instead prove the setting round-trips and restore whatever was configured.
+        val configured = config.getExecutionMode()
+        assertTrue(ExecutionMode.values().contains(configured))
+        try {
+            config.setExecutionMode(ExecutionMode.OBSERVE)
+            assertEquals(ExecutionMode.OBSERVE, config.getExecutionMode())
+            config.setExecutionMode(ExecutionMode.GUIDED)
+            assertEquals(ExecutionMode.GUIDED, config.getExecutionMode())
+        } finally {
+            config.setExecutionMode(configured)
+        }
+
         val tiers = config.getTierThresholds()
         assertEquals(60, tiers.low)
         assertEquals(80, tiers.medium)
@@ -44,9 +58,10 @@ class FoundationInstrumentedTest {
     }
 
     @Test
-    fun rulepackLoader_loadsSignedPackWithTwelveRules() {
+    fun rulepackLoader_loadsSignedDemoPack() {
         val rulepack = RulepackLoader(context).load()
-        assertEquals(1, rulepack.version)
-        assertEquals(12, rulepack.rules.size)
+        assertEquals(2, rulepack.version)
+        assertEquals(17, rulepack.rules.size)
+        assertEquals(5, rulepack.rules.count { it.enabled })
     }
 }

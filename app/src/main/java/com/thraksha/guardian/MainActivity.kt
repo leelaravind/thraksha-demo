@@ -18,12 +18,15 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
+import com.thraksha.guardian.ai.LocalModelRepository
 import com.thraksha.guardian.services.CompanionForegroundService
-import com.thraksha.guardian.ui.components.StatusBarComponent
 import com.thraksha.guardian.ui.components.WhitelistingDialog
-import com.thraksha.guardian.ui.screens.DashboardScreen
+import com.thraksha.guardian.ui.design.ThemePreference
+import com.thraksha.guardian.ui.design.ThrakshaTheme
+import com.thraksha.guardian.ui.nav.ThrakshaNavHost
 import com.thraksha.guardian.ui.screens.SplashScreen
-import com.thraksha.guardian.ui.theme.ThrakshaTheme
 
 class MainActivity : ComponentActivity() {
 
@@ -44,6 +47,17 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        consumeFocusExtra(intent)
+
+        // The appearance preference lives in the encrypted config table; read it before
+        // the first frame so an explicit Light/Dark choice does not flash the other theme.
+        lifecycleScope.launch { ThemePreference.load(this@MainActivity) }
+
+        // Verify the on-device model once per process, at startup rather than only when
+        // Automate is opened. Without this, every other surface reports the model as
+        // "not installed" simply because nothing had checked yet — which is not the same
+        // thing, and Settings would state it as fact.
+        lifecycleScope.launch { LocalModelRepository.verify(this@MainActivity) }
 
         setContent {
             ThrakshaTheme {
@@ -61,33 +75,43 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        consumeFocusExtra(intent)
+    }
+
+    /** Security-notification deep link (Phase 8.1): focus the named app's evidence card. */
+    private fun consumeFocusExtra(intent: Intent?) {
+        intent?.getStringExtra(
+            com.thraksha.guardian.security.notify.SecurityNotifier.EXTRA_FOCUS_PACKAGE,
+        )?.let { com.thraksha.guardian.ui.state.UiFocus.requestFocus(it) }
+    }
+
     @Composable
     private fun MainContent() {
         LaunchedEffect(Unit) {
             checkSamsungAndStart()
         }
 
-        Scaffold(
-            topBar = { StatusBarComponent() },
-        ) { paddingValues ->
-            Box(modifier = Modifier.padding(paddingValues)) {
-                DashboardScreen()
+        // The shell owns its own scaffolding and system-bar insets; the activity only
+        // hosts it and the one start-up dialog.
+        Box(modifier = Modifier.fillMaxSize()) {
+            ThrakshaNavHost()
 
-                if (showSamsungDialog) {
-                    WhitelistingDialog(
-                        onConfirm = {
-                            showSamsungDialog = false
-                            openSamsungBatterySettings()
-                            // Continue the start-up chain so the service still runs
-                            // whether or not the user changes the battery setting.
-                            handlePermissionsAndStart()
-                        },
-                        onDismiss = {
-                            showSamsungDialog = false
-                            handlePermissionsAndStart()
-                        },
-                    )
-                }
+            if (showSamsungDialog) {
+                WhitelistingDialog(
+                    onConfirm = {
+                        showSamsungDialog = false
+                        openSamsungBatterySettings()
+                        // Continue the start-up chain so the service still runs
+                        // whether or not the user changes the battery setting.
+                        handlePermissionsAndStart()
+                    },
+                    onDismiss = {
+                        showSamsungDialog = false
+                        handlePermissionsAndStart()
+                    },
+                )
             }
         }
     }

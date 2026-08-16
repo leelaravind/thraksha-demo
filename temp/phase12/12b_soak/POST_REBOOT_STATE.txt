@@ -1,0 +1,25 @@
+===== §25 POST-REBOOT VERIFICATION Sun Aug 16 01:09:42 GMTDT 2026 =====
+boot_completed : 1
+uptime         :  01:09:43 up  1:03,  0 users,  load average: 4.26, 4.66, 3.53
+
+--- settings vs PRE-REBOOT (zen=0 bright=13 timeout=600000) ---
+zen_mode       : 0
+brightness     : 88
+bright_mode    : 1
+screen_timeout : 600000
+
+--- did Thraksha auto-start on boot? (expect 0 processes) ---
+processes      : 0
+services       : 0
+
+--- app still installed + model still present? ---
+package        : package:com.thraksha.guardian
+model file     : -rw-rw---- 1 u0_a404 sdcard_rw 2588147712 2026-08-15 12:43 gemma-4-E2B-it.litertlm
+
+--- device admin / suspended packages (expect none) ---
+owners         : no owners
+guardian admin : 1
+villain susp   : suspended=false
+
+--- crashes since boot ---
+crash entries  : 0

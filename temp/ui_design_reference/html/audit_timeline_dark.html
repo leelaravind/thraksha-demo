@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Thraksha Guardian - Audit</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#121315",
+                        "on-primary": "#003543",
+                        "primary-container": "#00d1ff",
+                        "surface-container": "#1f2022",
+                        "on-error": "#690005",
+                        "surface-container-highest": "#343537",
+                        "surface-tint": "#4cd6ff",
+                        "on-primary-fixed-variant": "#004e60",
+                        "tertiary": "#dddcde",
+                        "error": "#ffb4ab",
+                        "primary": "#a4e6ff",
+                        "primary-fixed-dim": "#4cd6ff",
+                        "on-error-container": "#ffdad6",
+                        "primary-fixed": "#b7eaff",
+                        "on-primary-container": "#00566a",
+                        "error-container": "#93000a",
+                        "tertiary-fixed-dim": "#c7c6c8",
+                        "on-tertiary-fixed-variant": "#464749",
+                        "secondary": "#bfc2ff",
+                        "on-secondary-fixed": "#00006e",
+                        "surface": "#121315",
+                        "surface-container-low": "#1b1c1e",
+                        "surface-bright": "#38393b",
+                        "inverse-surface": "#e3e2e5",
+                        "inverse-on-surface": "#303033",
+                        "secondary-fixed": "#e0e0ff",
+                        "on-secondary-fixed-variant": "#1a20d8",
+                        "on-tertiary-container": "#4e4e51",
+                        "surface-container-lowest": "#0d0e10",
+                        "on-secondary-container": "#adb2ff",
+                        "secondary-fixed-dim": "#bfc2ff",
+                        "inverse-primary": "#00677f",
+                        "tertiary-container": "#c1c0c3",
+                        "secondary-container": "#1e24db",
+                        "background": "#121315",
+                        "on-tertiary": "#303032",
+                        "outline-variant": "#3c494e",
+                        "on-background": "#e3e2e5",
+                        "surface-variant": "#343537",
+                        "surface-container-high": "#292a2c",
+                        "on-secondary": "#0000ac",
+                        "tertiary-fixed": "#e3e2e4",
+                        "on-primary-fixed": "#001f28",
+                        "outline": "#859399",
+                        "on-surface-variant": "#bbc9cf",
+                        "on-tertiary-fixed": "#1b1c1e",
+                        "on-surface": "#e3e2e5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "20px",
+                        "base": "8px",
+                        "gutter": "16px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "label-caps": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #0B0C0E;
+            color: #e3e2e5;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Timeline styling */
+        .timeline-container {
+            position: relative;
+        }
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            left: 23px; /* Center of the icon */
+            top: 40px;
+            bottom: 0;
+            width: 2px;
+            background-color: #2D2E30;
+            z-index: 0;
+        }
+        
+        .timeline-item {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #121315;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #343537;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4e4e51;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col pt-16 pb-24 md:pb-0 md:pt-20">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface dark:bg-surface flex items-center px-margin-mobile h-16 shadow-none md:h-20 md:px-margin-desktop border-b border-surface-container-highest/30">
+<div class="flex items-center gap-3">
+<img alt="Thraksha TR Monogram Logo" class="h-8 w-8 rounded-md object-contain mix-blend-screen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoPbfwE9fWLdValewj39E0SVnFXGLAP2USr_MEVs--u_DuAwwhJ8VirxpchtJFKPseQ0NQZOQ-YczdYp7jr5G7L-jVr6NhkdaehDmZyv7n6sO4VXOvqQEDHhIe5SrWX4m6tK5TDKQft4IR7Gy2rbtOuyxhzXJTU5ZO1wjNJHbsyt3PNKgA1OgKcWpk6k7mxWrWFEGHgvXJ9z-D8p7cUKWg96TDd3mxo_qzykgFVxVhDtCw7pwjuP7qxg"/>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary tracking-tight">Thraksha Guardian</h1>
+</div>
+<!-- Desktop Nav items (Hidden on mobile) -->
+<nav class="hidden md:flex ml-auto gap-8 items-center h-full">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-5 py-2 hover:bg-surface-container-highest/50 transition-colors duration-200 rounded-full group" href="#">
+<span class="material-symbols-outlined mb-1 group-hover:text-on-surface transition-colors" data-icon="shield">shield</span>
+<span class="font-label-md text-label-md group-hover:text-on-surface transition-colors">Protect</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-5 py-2 hover:bg-surface-container-highest/50 transition-colors duration-200 rounded-full group" href="#">
+<span class="material-symbols-outlined mb-1 group-hover:text-on-surface transition-colors" data-icon="bolt">bolt</span>
+<span class="font-label-md text-label-md group-hover:text-on-surface transition-colors">Automate</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary-container text-on-secondary-container dark:text-on-secondary-container rounded-full px-6 py-2 shadow-sm transition-all" href="#">
+<span class="material-symbols-outlined fill mb-1" data-icon="analytics">analytics</span>
+<span class="font-label-md text-label-md">Audit</span>
+</a>
+</nav>
+</header>
+<!-- Main Content Area -->
+<main class="flex-grow w-full max-w-4xl mx-auto px-margin-mobile md:px-margin-desktop py-6 flex flex-col gap-8">
+<!-- Page Header -->
+<div class="flex flex-col gap-2">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">System Audit Log</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">Chronological record of security events, automated actions, and system status updates across your monitored network.</p>
+</div>
+<!-- Filter/Controls Bar -->
+<div class="flex flex-wrap items-center gap-3 pb-4">
+<button class="flex items-center gap-2 px-4 py-2 bg-surface-container rounded-full border border-surface-container-highest hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="filter_list">filter_list</span>
+<span class="font-label-md text-label-md text-on-surface">Filter</span>
+</button>
+<div class="h-6 w-px bg-surface-container-highest mx-2"></div>
+<button class="px-4 py-1.5 bg-[#161719] border border-primary-container/30 text-primary-container rounded-full font-label-md text-label-md shadow-[0_0_10px_rgba(0,209,255,0.1)]">All Events</button>
+<button class="px-4 py-1.5 bg-transparent border border-surface-container-highest text-on-surface-variant hover:text-on-surface rounded-full font-label-md text-label-md transition-colors">Security</button>
+<button class="px-4 py-1.5 bg-transparent border border-surface-container-highest text-on-surface-variant hover:text-on-surface rounded-full font-label-md text-label-md transition-colors">Automation</button>
+</div>
+<!-- Timeline Section -->
+<div class="timeline-container pb-12">
+<!-- Date Header -->
+<div class="mb-6 relative z-10 pl-14">
+<span class="inline-block px-3 py-1 bg-surface-container-highest rounded-md font-label-caps text-label-caps text-on-surface-variant">TODAY</span>
+</div>
+<!-- Event 1: Critical/Action -->
+<div class="timeline-item flex gap-4 mb-8 group">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-error-container flex items-center justify-center border-4 border-[#0B0C0E] relative z-10 shadow-[0_4px_16px_rgba(0,0,0,0.3)]">
+<span class="material-symbols-outlined text-on-error-container" data-icon="gpp_maybe">gpp_maybe</span>
+</div>
+<div class="flex-grow bg-[#161719] rounded-xl p-4 border-l-4 border-error hover:shadow-[0_4px_24px_rgba(0,0,0,0.2)] transition-shadow cursor-pointer relative overflow-hidden">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline-md text-[18px] leading-tight text-on-surface">Network Guard Alert</h3>
+<span class="font-label-caps text-label-caps text-on-surface-variant whitespace-nowrap ml-4">14:32</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Unrecognized local connection attempt monitored and blocked.</p>
+<div class="flex items-center justify-between mt-auto pt-3 border-t border-surface-container-highest/50">
+<div class="flex gap-2">
+<span class="px-2 py-0.5 bg-error-container/20 text-error rounded text-[10px] uppercase tracking-wider font-semibold">High Severity</span>
+<span class="px-2 py-0.5 bg-surface-container-highest rounded text-[10px] uppercase tracking-wider font-semibold text-on-surface-variant">IP: 192.168.1.104</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- Event 2: Automation/Info -->
+<div class="timeline-item flex gap-4 mb-8 group">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center border-4 border-[#0B0C0E] relative z-10 shadow-[0_4px_16px_rgba(0,0,0,0.3)]">
+<span class="material-symbols-outlined text-on-secondary-container" data-icon="smart_toy">smart_toy</span>
+</div>
+<div class="flex-grow bg-[#161719] rounded-xl p-4 border-l-4 border-secondary-container hover:shadow-[0_4px_24px_rgba(0,0,0,0.2)] transition-shadow cursor-pointer">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline-md text-[18px] leading-tight text-on-surface">Automation Started</h3>
+<span class="font-label-caps text-label-caps text-on-surface-variant whitespace-nowrap ml-4">11:00</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Meeting Mode active. Notifications suppressed and background sync paused.</p>
+<div class="flex items-center justify-between mt-auto pt-3 border-t border-surface-container-highest/50">
+<div class="flex gap-2">
+<span class="px-2 py-0.5 bg-secondary-container/20 text-secondary-fixed rounded text-[10px] uppercase tracking-wider font-semibold">Profile Change</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- Date Header -->
+<div class="mb-6 mt-12 relative z-10 pl-14">
+<span class="inline-block px-3 py-1 bg-surface-container-highest rounded-md font-label-caps text-label-caps text-on-surface-variant">YESTERDAY</span>
+</div>
+<!-- Event 3: Success/Routine -->
+<div class="timeline-item flex gap-4 mb-8 group">
+<div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#004e60] flex items-center justify-center border-4 border-[#0B0C0E] relative z-10 shadow-[0_4px_16px_rgba(0,0,0,0.3)]">
+<span class="material-symbols-outlined text-primary-container" data-icon="verified_user">verified_user</span>
+</div>
+<div class="flex-grow bg-[#161719] rounded-xl p-4 border-l-4 border-[#00d1ff] hover:shadow-[0_4px_24px_rgba(0,0,0,0.2)] transition-shadow cursor-pointer hover:shadow-[0_0_15px_rgba(0,209,255,0.1)]">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-headline-md text-[18px] leading-tight text-on-surface">Deep Scan Completed</h3>
+<span class="font-label-caps text-label-caps text-on-surface-variant whitespace-nowrap ml-4">23:45</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Routine system sweep finished successfully. No threats or anomalies detected.</p>
+<div class="flex items-center justify-between mt-auto pt-3 border-t border-surface-container-highest/50">
+<div class="flex gap-2">
+<span class="px-2 py-0.5 bg-[#00d1ff]/10 text-primary-container rounded text-[10px] uppercase tracking-wider font-semibold">Routine</span>
+<span class="px-2 py-0.5 bg-surface-container-highest rounded text-[10px] uppercase tracking-wider font-semibold text-on-surface-variant">Files: 142k</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors" data-icon="chevron_right">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Load More -->
+<div class="flex justify-center pb-8">
+<button class="px-6 py-2.5 bg-surface-container rounded-full border border-surface-container-highest hover:bg-surface-container-highest transition-colors font-label-md text-label-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="history">history</span>
+                Load Older Events
+            </button>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-surface-container dark:bg-surface-container shadow-sm flex justify-around items-center h-20 px-base pb-safe border-t border-surface-container-highest/20">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-5 py-1 hover:bg-surface-container-highest transition-all active:scale-95 duration-100 rounded-lg" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="shield">shield</span>
+<span class="font-label-md text-label-md">Protect</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-5 py-1 hover:bg-surface-container-highest transition-all active:scale-95 duration-100 rounded-lg" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="bolt">bolt</span>
+<span class="font-label-md text-label-md">Automate</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary-container text-on-secondary-container dark:text-on-secondary-container rounded-full px-5 py-1 hover:bg-surface-container-highest transition-all active:scale-95 duration-100" href="#">
+<span class="material-symbols-outlined fill mb-1" data-icon="analytics">analytics</span>
+<span class="font-label-md text-label-md">Audit</span>
+</a>
+</nav>
+</body></html>

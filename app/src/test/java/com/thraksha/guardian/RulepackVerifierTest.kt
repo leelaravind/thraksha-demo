@@ -11,7 +11,11 @@ import java.io.File
 
 /**
  * Off-device verification of the bundled, signed rulepack: the real asset bytes verify
- * and parse to all 12 rules, and any single-byte tamper is rejected.
+ * and parse, and any single-byte tamper is rejected.
+ *
+ * The pack is v2 (demo-aligned). It carries 5 enabled rules that have real detectors in
+ * RuleEngine, plus the original generic catalogue retained as `enabled: false` — those
+ * have no detector, so leaving them enabled would imply evaluation that never happens.
  */
 class RulepackVerifierTest {
 
@@ -25,15 +29,25 @@ class RulepackVerifierTest {
     private val publicKey = asset("rulepack_public.key").readText()
 
     @Test
-    fun validRulepack_verifiesAndParsesTwelveEnabledRules() {
+    fun validRulepack_verifiesAndParses() {
         assertTrue("signature must verify", RulepackVerifier.verify(jsonBytes, signature, publicKey))
 
         val rulepack = Json { ignoreUnknownKeys = true }
             .decodeFromString(Rulepack.serializer(), jsonBytes.decodeToString())
-        assertEquals(1, rulepack.version)
-        assertEquals(12, rulepack.rules.size)
-        assertTrue("all v1 rules enabled", rulepack.rules.all { it.enabled })
-        assertEquals(12, rulepack.rules.map { it.id }.toSet().size) // ids unique
+        assertEquals(2, rulepack.version)
+        assertEquals(17, rulepack.rules.size)
+        assertEquals("ids unique", 17, rulepack.rules.map { it.id }.toSet().size)
+
+        val enabled = rulepack.rules.filter { it.enabled }
+        assertEquals("5 demo-aligned rules are active", 5, enabled.size)
+        assertTrue(
+            "every enabled rule must declare a check its detector implements",
+            enabled.all { it.params.containsKey("check") },
+        )
+        assertTrue(
+            "disabled catalogue rules must carry no detector params",
+            rulepack.rules.filterNot { it.enabled }.all { it.params.isEmpty() },
+        )
     }
 
     @Test

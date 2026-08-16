@@ -47,15 +47,26 @@ fun WhitelistingDialog(
                     textAlign = TextAlign.Center
                 )
                 
+                // Phase 12.1 §18/§19: this dialog previously claimed Thraksha's "eyes and
+                // ears" were "active 24/7" and that exempting it "ensures the AI stays
+                // awake". Neither is true — Thraksha monitors only while its services are
+                // running, and a battery-optimisation exemption makes Android less likely
+                // to pause them, it does not guarantee anything. The wording below states
+                // what the app actually does.
                 Text(
-                    text = "To keep Thraksha's \"eyes and ears\" active 24/7, you must disable battery optimization for this app.\n\nOn the next screen, please select \"Unrestricted\" or disable optimization.",
+                    text = "Samsung's battery optimisation can pause Thraksha's background " +
+                        "services while you are not using the app. Exempting Thraksha makes " +
+                        "it less likely they are paused.\n\nOn the next screen, please select " +
+                        "\"Unrestricted\" or turn optimisation off.",
                     color = TextWhite,
                     fontSize = 14.sp,
                     textAlign = TextAlign.Center
                 )
-                
+
                 Text(
-                    text = "This ensures the AI stays awake even when your phone is in your pocket.",
+                    text = "Protection monitoring is available while Thraksha is active. " +
+                        "This setting helps it keep running — it does not guarantee " +
+                        "uninterrupted operation.",
                     color = TextSecondaryDark,
                     fontSize = 12.sp,
                     textAlign = TextAlign.Center

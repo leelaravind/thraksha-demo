@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -83,13 +84,15 @@ enum class TRLogoSize {
 @Composable
 fun Wordmark(
     modifier: Modifier = Modifier,
-    fontSize: Int = 24
+    fontSize: Int = 24,
+    color: Color = Color.Unspecified
 ) {
     Text(
         text = "THRAKSHA",
         fontSize = fontSize.sp,
         fontWeight = FontWeight.Black,
         letterSpacing = 2.sp,
+        color = color,
         modifier = modifier
     )
 }

@@ -13,7 +13,9 @@ import android.os.ParcelFileDescriptor
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.thraksha.guardian.MainActivity
-import com.thraksha.guardian.R
+import com.thraksha.guardian.security.network.NetworkGuard
+import com.thraksha.guardian.security.network.NetworkGuardEngine
+import com.thraksha.guardian.security.network.VpnScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -24,212 +26,239 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.yield
 import java.io.FileInputStream
 import java.io.FileOutputStream
-import java.io.IOException
+import java.net.DatagramPacket
+import java.net.DatagramSocket
+import java.net.InetAddress
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
- * Local VPN loopback for network traffic monitoring (Security Guardian / Day 6).
- * Establishes a TUN interface and runs a coroutine-based pass-through packet loop.
+ * Thraksha Network Guard (Phase 7). A **per-app-scoped** VpnService: only
+ * `com.thraksha.demo.villaincaller` enters the tunnel via `addAllowedApplication`, and
+ * only the RFC 5737 TEST-NET-3 demo route is claimed. There is no device-wide capture
+ * path — if scoping fails the service fails closed to [NetworkGuard.State.Error] and
+ * establishes nothing (guide §1, §7, §28).
+ *
+ * The service owns only: TUN lifecycle, the packet read loop, protected outbound
+ * forwarding / intentional drop, and the foreground notification. All threat-intel and
+ * policy logic lives in [NetworkGuardEngine]; this class renders no verdicts itself
+ * (guide §17).
+ *
+ * The old echo loop that black-holed device traffic is gone entirely.
  */
 class ThrakshaVpnService : VpnService() {
 
     private var vpnInterface: ParcelFileDescriptor? = null
     private var packetJob: Job? = null
-    private val isVpnActive = AtomicBoolean(false)
-
+    private val isActiveFlag = AtomicBoolean(false)
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+
+    private lateinit var engine: NetworkGuardEngine
 
     override fun onBind(intent: Intent?) = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         when (intent?.action) {
             ACTION_STOP -> {
-                stopVpn()
+                stopGuard(NetworkGuard.State.Disabled)
                 return START_NOT_STICKY
             }
             else -> {
-                startVpn()
+                startGuard()
                 return START_STICKY
             }
         }
     }
 
     override fun onDestroy() {
-        Log.i(TAG, "VPN service destroying")
-        stopVpn()
+        stopGuard(NetworkGuard.State.Disabled)
         serviceScope.cancel()
         super.onDestroy()
     }
 
-    private fun startVpn() {
-        if (isVpnActive.get()) {
-            Log.d(TAG, "VPN already active, ignoring start request")
-            return
-        }
-
+    private fun startGuard() {
+        if (isActiveFlag.get()) return
+        NetworkGuard.transition(NetworkGuard.State.Starting)
         try {
+            engine = NetworkGuardEngine(this)
             createNotificationChannel()
             startForegroundService()
-            establishVpnInterface()
-            startPacketProcessing()
-            isVpnActive.set(true)
-            Log.i(TAG, "VPN started: $VPN_ADDRESS/$VPN_PREFIX_LENGTH, MTU=$VPN_MTU")
-        } catch (e: Exception) {
-            Log.e(TAG, "Fatal error starting VPN: ${e.message}", e)
-            stopVpn()
+            establishScopedTunnel()
+            startPacketLoop()
+            isActiveFlag.set(true)
+            NetworkGuard.transition(
+                NetworkGuard.State.Active(
+                    scopedPackage = VpnScope.ALLOWED_PACKAGES.single(),
+                    tunnelAddress = "$VPN_ADDRESS/$VPN_PREFIX",
+                ),
+            )
+            Log.i(TAG, "Network Guard active, scoped to ${VpnScope.ALLOWED_PACKAGES}")
+        } catch (error: Exception) {
+            Log.e(TAG, "Network Guard failed to start: ${error.message}", error)
+            stopGuard(NetworkGuard.State.Error(error.message ?: "tunnel start failed"))
         }
     }
 
-    private fun establishVpnInterface() {
-        closeVpnInterface()
-        val interfaceFd = Builder()
+    /**
+     * Builds the tunnel scoped to exactly the allowed package. If
+     * `addAllowedApplication` throws (package absent / not installable), the whole start
+     * fails — there is no fallback to a broad tunnel (the §28 invariant).
+     */
+    private fun establishScopedTunnel() {
+        closeInterface()
+        val builder = Builder()
             .setSession(SESSION_NAME)
             .setMtu(VPN_MTU)
-            .addAddress(VPN_ADDRESS, VPN_PREFIX_LENGTH)
-            .addRoute(VPN_ROUTE, VPN_ROUTE_PREFIX)
-            .establish()
+            .addAddress(VPN_ADDRESS, VPN_PREFIX)
+            .addRoute(VpnScope.ROUTE_ADDRESS, VpnScope.ROUTE_PREFIX)
 
-        if (interfaceFd == null) {
-            throw IllegalStateException("VpnService.Builder.establish() returned null")
+        var scoped = 0
+        for (pkg in VpnScope.ALLOWED_PACKAGES) {
+            builder.addAllowedApplication(pkg) // throws if the package cannot be scoped
+            scoped++
+        }
+        check(scoped == VpnScope.ALLOWED_PACKAGES.size && scoped > 0) {
+            "per-app scoping incomplete ($scoped/${VpnScope.ALLOWED_PACKAGES.size}) — refusing broad tunnel"
         }
 
-        vpnInterface = interfaceFd
-        Log.i(TAG, "VPN interface established (session=$SESSION_NAME)")
+        vpnInterface = builder.establish()
+            ?: throw IllegalStateException("VpnService.Builder.establish() returned null")
+        Log.i(TAG, "Scoped TUN established (session=$SESSION_NAME)")
     }
 
-    private fun startPacketProcessing() {
+    private fun startPacketLoop() {
         packetJob?.cancel()
-        val fd = vpnInterface ?: throw IllegalStateException("VPN interface not established")
+        val fd = vpnInterface ?: throw IllegalStateException("TUN not established")
         packetJob = serviceScope.launch {
-            Log.i(TAG, "Packet processing started")
-            try {
-                processPackets(fd)
-            } catch (e: IOException) {
-                Log.e(TAG, "Packet processing I/O error: ${e.message}", e)
-                if (isActive) {
-                    handleFatalError("Packet I/O failure")
-                }
-            } catch (e: Exception) {
-                Log.e(TAG, "Packet processing error: ${e.message}", e)
-                if (isActive) {
-                    handleFatalError("Packet processing failure")
-                }
-            } finally {
-                Log.i(TAG, "Packet processing stopped")
-            }
-        }
-    }
-
-    private suspend fun processPackets(interfaceFd: ParcelFileDescriptor) {
-        val buffer = ByteArray(VPN_MTU)
-        FileInputStream(interfaceFd.fileDescriptor).use { input ->
-            FileOutputStream(interfaceFd.fileDescriptor).use { output ->
-                while (serviceScope.isActive && packetJob?.isActive == true) {
-                    val length = try {
-                        input.read(buffer)
-                    } catch (e: IOException) {
-                        if (isVpnActive.get()) {
-                            throw e
+            val buffer = ByteArray(VPN_MTU)
+            FileInputStream(fd.fileDescriptor).use { input ->
+                FileOutputStream(fd.fileDescriptor).use { _ ->
+                    while (isActive && isActiveFlag.get()) {
+                        val length = try {
+                            input.read(buffer)
+                        } catch (io: Exception) {
+                            if (isActiveFlag.get()) Log.w(TAG, "read error: ${io.message}")
+                            break
                         }
-                        break
-                    }
-
-                    when {
-                        length > 0 -> {
-                            try {
-                                output.write(buffer, 0, length)
-                            } catch (e: IOException) {
-                                Log.e(TAG, "Failed to write packet ($length bytes): ${e.message}", e)
-                                throw e
-                            }
+                        if (length <= 0) {
+                            yield()
+                            continue
                         }
-                        length == 0 -> yield()
-                        else -> break
+                        // A malformed/unsupported packet must never break the loop.
+                        runCatching { handlePacket(buffer, length) }
+                            .onFailure { Log.e(TAG, "packet handling error", it) }
                     }
                 }
             }
         }
     }
 
-    private fun handleFatalError(reason: String) {
-        Log.e(TAG, "Stopping VPN due to fatal error: $reason")
-        stopVpn()
+    private suspend fun handlePacket(buffer: ByteArray, length: Int) {
+        when (val verdict = engine.evaluate(buffer, length)) {
+            is NetworkGuardEngine.Verdict.Ignore -> NetworkGuard.recordIgnored()
+
+            is NetworkGuardEngine.Verdict.Block -> {
+                // Do NOT create the forwarding socket. Dropping is the whole action.
+                engine.publishBlockOutcome(verdict)
+                Log.i(TAG, "BLOCKED ${verdict.observation.endpoint()} (dropped before forward)")
+            }
+
+            is NetworkGuardEngine.Verdict.UserBlock -> {
+                // User-ordered block (Phase 8.1 ACT): same no-forwarding-socket path.
+                engine.publishUserBlockOutcome(verdict)
+                Log.i(TAG, "USER-BLOCKED ${verdict.observation.endpoint()} (dropped before forward)")
+            }
+
+            is NetworkGuardEngine.Verdict.Forward -> {
+                val ok = forwardUdp(verdict.observation, buffer, verdict.payload)
+                engine.publishForwardOutcome(verdict, sendSucceeded = ok)
+            }
+        }
     }
 
-    private fun stopVpn() {
+    /**
+     * Controlled outbound-only UDP forwarder (guide §10): a fresh DatagramSocket,
+     * `protect()`ed so it does not loop back into the tunnel, sends the payload to the
+     * original destination, then closes. No response path — the demo never waits for a
+     * reply. Not a general UDP VPN.
+     */
+    private fun forwardUdp(
+        observation: com.thraksha.guardian.security.network.NetworkObservation,
+        buffer: ByteArray,
+        payload: NetworkPacketWindow,
+    ): Boolean = try {
+        DatagramSocket().use { socket ->
+            check(protect(socket)) { "VpnService.protect(socket) failed" }
+            val data = buffer.copyOfRange(payload.offset, payload.offset + payload.length)
+            socket.send(
+                DatagramPacket(
+                    data,
+                    data.size,
+                    InetAddress.getByName(observation.destinationIp),
+                    observation.destinationPort,
+                ),
+            )
+        }
+        true
+    } catch (error: Exception) {
+        Log.w(TAG, "UDP forward failed: ${error.message}")
+        false
+    }
+
+    private fun stopGuard(finalState: NetworkGuard.State) {
         packetJob?.cancel()
         packetJob = null
-        closeVpnInterface()
-        isVpnActive.set(false)
-
-        try {
+        closeInterface()
+        isActiveFlag.set(false)
+        runCatching {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 stopForeground(STOP_FOREGROUND_REMOVE)
             } else {
-                @Suppress("DEPRECATION")
-                stopForeground(true)
+                @Suppress("DEPRECATION") stopForeground(true)
             }
-        } catch (e: Exception) {
-            Log.w(TAG, "stopForeground failed: ${e.message}", e)
         }
-
+        NetworkGuard.transition(finalState)
         stopSelf()
-        Log.i(TAG, "VPN stopped")
+        Log.i(TAG, "Network Guard stopped ($finalState)")
     }
 
-    private fun closeVpnInterface() {
-        try {
-            vpnInterface?.close()
-        } catch (e: IOException) {
-            Log.e(TAG, "Error closing VPN interface: ${e.message}", e)
-        } finally {
-            vpnInterface = null
-        }
+    private fun closeInterface() {
+        runCatching { vpnInterface?.close() }
+        vpnInterface = null
     }
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val channel = NotificationChannel(
-            CHANNEL_ID,
-            getString(R.string.vpn_notification_channel_name),
-            NotificationManager.IMPORTANCE_LOW,
-        ).apply {
-            description = getString(R.string.vpn_notification_channel_description)
-        }
-        manager.createNotificationChannel(channel)
+        manager.createNotificationChannel(
+            NotificationChannel(
+                CHANNEL_ID,
+                "Thraksha Network Guard",
+                NotificationManager.IMPORTANCE_LOW,
+            ).apply { description = "Monitors the scoped demo app's outbound traffic." },
+        )
     }
 
     private fun startForegroundService() {
-        val notification = buildNotification()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-            startForeground(
-                NOTIFICATION_ID,
-                notification,
-                ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC,
-            )
+            startForeground(NOTIFICATION_ID, buildNotification(), ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
         } else {
-            startForeground(NOTIFICATION_ID, notification)
+            startForeground(NOTIFICATION_ID, buildNotification())
         }
     }
 
     private fun buildNotification(): Notification {
-        val openAppIntent = Intent(this, MainActivity::class.java).apply {
+        val openApp = Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
         }
-        val pendingFlags = PendingIntent.FLAG_UPDATE_CURRENT or
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                PendingIntent.FLAG_IMMUTABLE
-            } else {
-                0
-            }
-        val contentIntent = PendingIntent.getActivity(this, 0, openAppIntent, pendingFlags)
-
+        val pending = PendingIntent.getActivity(
+            this, 0, openApp,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
+        )
         return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle(getString(R.string.vpn_notification_title))
-            .setContentText(getString(R.string.vpn_notification_text))
+            .setContentTitle("Thraksha Network Guard")
+            .setContentText("Monitoring VillainCaller network traffic")
             .setSmallIcon(android.R.drawable.ic_lock_lock)
-            .setContentIntent(contentIntent)
+            .setContentIntent(pending)
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .setOngoing(true)
             .setCategory(NotificationCompat.CATEGORY_SERVICE)
@@ -237,35 +266,31 @@ class ThrakshaVpnService : VpnService() {
     }
 
     companion object {
-        private const val TAG = "ThrakshaVPN"
-
+        private const val TAG = "ThrakshaNetworkGuard"
         private const val VPN_MTU = 1500
-        private const val VPN_ADDRESS = "10.0.0.2"
-        private const val VPN_PREFIX_LENGTH = 32
-        private const val VPN_ROUTE = "0.0.0.0"
-        private const val VPN_ROUTE_PREFIX = 0
-        private const val SESSION_NAME = "Thraksha VPN Monitor"
-
+        private const val VPN_ADDRESS = "10.113.0.2"
+        private const val VPN_PREFIX = 32
+        private const val SESSION_NAME = "Thraksha Network Guard"
         private const val NOTIFICATION_ID = 2001
-        private const val CHANNEL_ID = "thraksha_vpn"
+        private const val CHANNEL_ID = "thraksha_network_guard"
 
-        const val ACTION_STOP = "com.thraksha.guardian.vpn.STOP"
+        const val ACTION_STOP = "com.thraksha.guardian.networkguard.STOP"
+
+        /** The system VPN-consent intent, or null if consent is already held. */
+        fun prepareIntent(context: Context): Intent? = VpnService.prepare(context)
 
         fun start(context: Context) {
-            val intent = Intent(context, ThrakshaVpnService::class.java)
-            context.startForegroundService(intent)
+            context.startForegroundService(Intent(context, ThrakshaVpnService::class.java))
         }
 
         fun stop(context: Context) {
-            val intent = Intent(context, ThrakshaVpnService::class.java).apply {
-                action = ACTION_STOP
-            }
-            context.startService(intent)
+            context.startService(
+                Intent(context, ThrakshaVpnService::class.java).apply { action = ACTION_STOP },
+            )
         }
-
-        /**
-         * Returns the system VPN consent intent, or null if already approved.
-         */
-        fun prepareIntent(context: Context): Intent? = VpnService.prepare(context)
     }
 }
+
+/** Local alias so the service signature reads cleanly. */
+private typealias NetworkPacketWindow =
+    com.thraksha.guardian.security.network.NetworkPacketParser.PayloadWindow

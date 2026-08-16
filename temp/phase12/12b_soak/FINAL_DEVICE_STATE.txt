@@ -1,0 +1,16 @@
+===== §30 FINAL DEVICE STATE (post all 12B testing) — Sun Aug 16 01:30:10 GMTDT 2026 =====
+zen_mode         : 0   (baseline 0)
+brightness_mode  : 1   (baseline 1 = adaptive)
+screen_brightness: 105  (governed by adaptive mode)
+screen_timeout   : 600000   (baseline 600000)
+airplane_mode    : 0   (restored to 0)
+ringer mode      : Ringer mode: 
+device owner     : no owners
+guardian admin   : 0 (0 = not an admin)
+villain susp     : suspended=false
+VpnService       : 0 running
+services running : 1
+app installed    : package:com.thraksha.guardian
+model present    : gemma-4-E2B-it.litertlm
+crashes          : 0
+ANR files        : 0

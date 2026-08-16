@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Thraksha Guardian - Onboarding</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#4cd6ff",
+                        "on-surface": "#e3e2e5",
+                        "surface": "#121315",
+                        "on-primary-container": "#00566a",
+                        "error": "#ffb4ab",
+                        "surface-container": "#1f2022",
+                        "surface-dim": "#121315",
+                        "inverse-primary": "#00677f",
+                        "tertiary-fixed": "#e3e2e4",
+                        "tertiary-fixed-dim": "#c7c6c8",
+                        "inverse-on-surface": "#303033",
+                        "on-primary-fixed": "#001f28",
+                        "tertiary": "#dddcde",
+                        "surface-container-lowest": "#0d0e10",
+                        "surface-variant": "#343537",
+                        "on-error": "#690005",
+                        "error-container": "#93000a",
+                        "background": "#121315",
+                        "inverse-surface": "#e3e2e5",
+                        "primary-fixed-dim": "#4cd6ff",
+                        "secondary-fixed-dim": "#bfc2ff",
+                        "on-error-container": "#ffdad6",
+                        "on-primary": "#003543",
+                        "secondary-container": "#1e24db",
+                        "on-secondary-fixed": "#00006e",
+                        "on-tertiary-fixed-variant": "#464749",
+                        "on-secondary-fixed-variant": "#1a20d8",
+                        "on-tertiary-fixed": "#1b1c1e",
+                        "surface-container-low": "#1b1c1e",
+                        "secondary-fixed": "#e0e0ff",
+                        "tertiary-container": "#c1c0c3",
+                        "on-tertiary": "#303032",
+                        "on-surface-variant": "#bbc9cf",
+                        "surface-bright": "#38393b",
+                        "secondary": "#bfc2ff",
+                        "surface-container-high": "#292a2c",
+                        "outline-variant": "#3c494e",
+                        "primary": "#a4e6ff",
+                        "on-background": "#e3e2e5",
+                        "primary-container": "#00d1ff",
+                        "on-secondary-container": "#adb2ff",
+                        "on-secondary": "#0000ac",
+                        "on-tertiary-container": "#4e4e51",
+                        "on-primary-fixed-variant": "#004e60",
+                        "surface-container-highest": "#343537",
+                        "outline": "#859399",
+                        "primary-fixed": "#b7eaff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "base": "8px",
+                        "container-padding": "20px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-caps": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "500" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background antialiased h-screen flex flex-col justify-between">
+<!-- Top App Bar (Intent: Linear Onboarding - Simplified Header) -->
+<header class="flex justify-between items-center px-margin-mobile h-16 w-full bg-surface">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="shield_lock">shield_lock</span>
+<h1 class="font-headline-md text-headline-md text-on-surface font-bold tracking-tight">Thraksha Guardian</h1>
+</div>
+<button aria-label="Skip" class="text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="font-label-md text-label-md uppercase tracking-wider">Skip</span>
+</button>
+</header>
+<!-- Main Canvas -->
+<main class="flex-grow flex flex-col items-center justify-center px-margin-mobile md:px-margin-desktop py-8 max-w-2xl mx-auto w-full">
+<!-- Illustration / Graphic Area -->
+<div class="w-48 h-48 mb-8 rounded-full bg-surface-container flex items-center justify-center shadow-[0_8px_32px_rgba(0,0,0,0.15)] relative overflow-hidden">
+<!-- Subtle pulsing glow effect -->
+<div class="absolute inset-0 bg-primary-container opacity-10 rounded-full animate-pulse"></div>
+<span class="material-symbols-outlined text-[80px] text-primary z-10" data-icon="accessibility_new" style="font-variation-settings: 'FILL' 1;">accessibility_new</span>
+</div>
+<!-- Typography & Content -->
+<div class="text-center mb-12">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg mb-4 text-on-surface">Enable Accessibility</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-md mx-auto">
+                Thraksha Guardian requires Accessibility Services to monitor your device for security threats and automate protective actions silently in the background.
+            </p>
+</div>
+<!-- Instructional Steps (Bento-style list) -->
+<div class="w-full bg-surface rounded-xl p-4 md:p-6 mb-8 border border-outline-variant/30 flex flex-col gap-4">
+<h3 class="font-label-caps text-label-caps text-primary uppercase tracking-widest mb-2">How to enable</h3>
+<div class="flex items-start gap-4">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center shrink-0">
+<span class="font-label-md text-label-md text-on-surface">1</span>
+</div>
+<div>
+<h4 class="font-body-md text-body-md font-semibold text-on-surface">Open Settings</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">Tap the button below to open your device settings.</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center shrink-0">
+<span class="font-label-md text-label-md text-on-surface">2</span>
+</div>
+<div>
+<h4 class="font-body-md text-body-md font-semibold text-on-surface">Find Thraksha Guardian</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">Locate us under the 'Downloaded Apps' or 'Installed Services' section.</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center shrink-0">
+<span class="font-label-md text-label-md text-on-surface">3</span>
+</div>
+<div>
+<h4 class="font-body-md text-body-md font-semibold text-on-surface">Toggle to 'On'</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm mt-1">Switch the permission on to activate silent protection.</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Action Area (Sticky) -->
+<footer class="w-full px-margin-mobile pb-safe pt-4 pb-8 bg-background border-t border-surface-container/50">
+<div class="max-w-2xl mx-auto flex flex-col gap-3">
+<button class="w-full bg-primary-container text-on-primary-container font-headline-md text-headline-md !text-base h-14 rounded-full flex items-center justify-center gap-2 hover:bg-primary-fixed transition-colors shadow-[0_4px_16px_rgba(0,209,255,0.15)] active:scale-[0.98]">
+<span class="material-symbols-outlined text-xl" data-icon="settings">settings</span>
+                Open Android Settings
+            </button>
+<button class="w-full bg-transparent text-on-surface-variant font-body-md text-body-md h-12 rounded-full flex items-center justify-center hover:bg-surface-variant/20 transition-colors">
+                Maybe later
+            </button>
+</div>
+</footer>
+</body></html>

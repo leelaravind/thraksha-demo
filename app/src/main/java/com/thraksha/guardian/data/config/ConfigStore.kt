@@ -37,6 +37,16 @@ class ConfigStore(context: Context) {
         critical = getInt(KEY_TIER_CRITICAL, DEFAULT_TIER_CRITICAL),
     )
 
+    /**
+     * Raw string storage in the encrypted config table (Phase 9: automation run/snapshot
+     * persistence, guide §10/§22 — survives process death without a schema migration).
+     * A blank value means "cleared": the config DAO is deliberately append/replace-only.
+     */
+    suspend fun putRawValue(key: String, value: String) = putString(key, value)
+
+    suspend fun getRawValue(key: String): String? =
+        dao.get(key)?.value?.takeIf { it.isNotBlank() }
+
     suspend fun isFeatureEnabled(flag: String, default: Boolean = false): Boolean =
         dao.get(featureKey(flag))?.value?.toBooleanStrictOrNull() ?: default
 

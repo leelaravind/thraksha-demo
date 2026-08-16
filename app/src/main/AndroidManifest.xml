@@ -21,6 +21,54 @@
     <!-- Battery Optimization Bypass -->
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
+    <!-- Phase 9 automation (capability matrix §2). Both special accesses are granted
+         only by the user in Android settings; declaring them merely makes the toggles
+         available. Exact alarms drive routine-duration expiry where the OS permits. -->
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+
+    <!--
+        Broad package visibility (Android 11+ / targetSdk 36) — Phase 12.1 Task A.
+
+        Thraksha's core product function is scanning the applications actually installed
+        on the owner's device. Under Android 11+ visibility filtering an app without this
+        permission sees only itself, its declared <queries>, and the packages the platform
+        force-makes-visible. On the S20 FE that is 322 of 441 packages — 319 system
+        packages plus Thraksha and the two declared demo decoys, and NONE of the 23
+        genuine user-installed third-party apps. A security scanner that cannot see the
+        user's real apps cannot do its job, so the permission is required, not convenient.
+
+        Scope of the grant: read-only. AppInventory (the only PackageManager caller in the
+        security path) enumerates packages and reads declared metadata. Nothing in the scan
+        path installs, suspends, disables or otherwise modifies any package.
+
+        Play policy: QUERY_ALL_PACKAGES is a restricted permission. Device-security and
+        anti-malware apps are among Google Play's permitted use cases, but Play eligibility
+        requires a separate declaration and review that this private-alpha build makes no
+        claim to. This is a sideloaded, owner-installed build. See
+        temp/phase12_1/PHASE12_1_PACKAGE_VISIBILITY.md §Play policy.
+
+        The permission is declared here in the main manifest so debug and release behave
+        identically; before Phase 12.1 it lived in a debug-only overlay, which is exactly
+        why the RC1 release build was half-blind.
+    -->
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+
+    <!--
+        Targeted <queries> retained deliberately. It is redundant while
+        QUERY_ALL_PACKAGES is held, but it documents the controlled demo sandbox and keeps
+        the two decoy packages visible if broad visibility is ever withdrawn (e.g. for a
+        future Play-track build). Adding a new controlled sample means adding one
+        <package> entry here.
+    -->
+    <queries>
+        <package android:name="com.thraksha.demo.goodcaller" />
+        <package android:name="com.thraksha.demo.villaincaller" />
+    </queries>
+
     <application
         android:name=".ThrakshaApplication"
         android:allowBackup="false"
@@ -112,6 +160,11 @@
                 <action android:name="android.app.action.ACTION_PASSWORD_SUCCEEDED" />
             </intent-filter>
         </receiver>
+
+        <!-- Phase 9: routine-duration expiry (STOP & RESTORE when the timer fires). -->
+        <receiver
+            android:name=".automation.AutomationAlarmReceiver"
+            android:exported="false" />
     </application>
 
 </manifest>

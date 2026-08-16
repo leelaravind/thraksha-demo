@@ -12,8 +12,7 @@ import androidx.compose.ui.unit.dp
 import com.thraksha.guardian.ui.components.TRLogo
 import com.thraksha.guardian.ui.components.TRLogoSize
 import com.thraksha.guardian.ui.components.Wordmark
-import com.thraksha.guardian.ui.theme.DarkForestGreen
-import com.thraksha.guardian.ui.theme.TextWhite
+import androidx.compose.material3.MaterialTheme
 import kotlinx.coroutines.delay
 
 @Composable
@@ -55,7 +54,9 @@ fun SplashScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(DarkForestGreen),
+            // Theme-aware: the brand mark reads on both palettes, but the canvas and
+            // wordmark must follow the active theme or the light build is unreadable.
+            .background(MaterialTheme.colorScheme.background),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -71,6 +72,7 @@ fun SplashScreen(
 
             Wordmark(
                 fontSize = 28,
+                color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.alpha(wordmarkAlpha)
             )
         }

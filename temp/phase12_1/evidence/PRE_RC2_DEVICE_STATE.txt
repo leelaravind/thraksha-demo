@@ -1,0 +1,104 @@
+=== PHASE 12.1 — PRE-RC2 DEVICE STATE ===
+Device : Samsung Galaxy S20 FE (SM-G781B), serial RZCW40LVBJD
+Captured: Sun Aug 16 02:19:49 BST 2026 (device clock)
+
+--- INSTALLED THRAKSHA PACKAGES ---
+com.thraksha.guardian          (RC1, release build)
+com.thraksha.demo.goodcaller   (controlled decoy)
+com.thraksha.demo.villaincaller(controlled decoy)
+
+--- GUARDIAN VERSION (RC1) ---
+versionCode = 1
+versionName = 1.0
+minSdk = 26  targetSdk = 36
+
+--- DEVICE ADMIN / DEVICE OWNER ---
+dpm list-owners -> "no owners"
+No Device Owner and no Profile Owner provisioned. Advice Mode is in force.
+=> Guide §23 step 3 (deactivate Device Admin) is a NO-OP on this device.
+
+--- SETTINGS AUTOMATION CAN TOUCH (baseline for restore comparison) ---
+global.zen_mode              = 0
+system.ringer_mode           = null   (not set via settings provider; AudioManager-owned)
+system.screen_brightness     = 97
+system.screen_brightness_mode= 1      (automatic)
+system.screen_off_timeout    = 600000 (10 min)
+global.airplane_mode_on      = 0
+global.wifi_on               = 1
+global.bluetooth_on          = 1
+
+--- RUNNING THRAKSHA SERVICES ---
+ServiceRecord{ac9cab4 u0 com.thraksha.guardian/.services.CompanionForegroundService}
+  app=ProcessRecord{4e7e6ac 6425:com.thraksha.guardian/u0a404}
+No active automation routine.
+
+--- ON-DEVICE MODEL ---
+/sdcard/Android/data/com.thraksha.guardian/files/models/gemma-4-E2B-it.litertlm
+  size  = 2,588,147,712 bytes
+  mtime = 2026-08-15 12:43
+  owner = u0_a404 (Guardian's own external files dir)
+
+--- DATA THAT WILL BE DESTROYED BY THE RC1 UNINSTALL (guide §23 step 4) ---
+RC1 is debug-signed and RC2 is signed with the permanent private-alpha key. Android
+refuses an update across a signer change, so RC1 must be uninstalled. `pm uninstall`
+removes BOTH the internal data dir and the app's external files dir. Lost:
+
+1. SQLCipher-encrypted Room database (internal) — all scan history and findings.
+2. Hash-chained audit log (internal) — the entire Phase 2 audit chain on this device.
+   NOTE: the chain is per-install by design; a fresh install legitimately starts a NEW
+   chain from genesis. This is data loss, not chain tampering.
+3. ConfigStore preferences (internal) — execution mode, onboarding state, grants.
+4. /sdcard/Android/data/com.thraksha.guardian/files/models/gemma-4-E2B-it.litertlm
+   (2.4 GiB) — the external files dir is deleted with the package.
+
+MITIGATION FOR (4): an identical copy exists in the repo at
+model/gemma-4-E2B-it.litertlm, and its SHA-256 was verified to match the value the app
+enforces (LocalModelRepository.EXPECTED_SHA256):
+
+  local model/gemma-4-E2B-it.litertlm
+    = 181938105e0eefd105961417e8da75903eacda102c4fce9ce90f50b97139a63c
+  LocalModelRepository.EXPECTED_SHA256
+    = 181938105e0eefd105961417e8da75903eacda102c4fce9ce90f50b97139a63c
+  MATCH -> re-push after install will pass on-device verification.
+
+Nothing else on the phone is modified by the uninstall. No system settings are changed.
+Runtime permission grants are revoked with the package and must be re-granted during
+RC2 onboarding, which is the intended fresh-install path (guide §23).
+
+=====================================================================
+AMENDMENT — 2026-08-16 ~02:55 BST. THE ABOVE IS NOW A HISTORICAL RECORD.
+=====================================================================
+
+The S20 FE instrumented suite was run (`:app:connectedDebugAndroidTest`). AGP installs a
+debug build and then UNINSTALLS the app when the run finishes. Because RC1 was signed with
+the same Android debug key as the debug build, the debug build installed as an UPDATE over
+RC1, and AGP's post-run uninstall then removed the package entirely.
+
+Actual S20 FE state after the run:
+
+  com.thraksha.guardian          -> NOT INSTALLED
+  com.thraksha.demo.goodcaller   -> installed (untouched)
+  com.thraksha.demo.villaincaller-> installed (untouched)
+  /sdcard/Android/data/com.thraksha.guardian/files/models/ -> DELETED with the package
+
+So the guide §23 uninstall of RC1 has, in effect, already happened — earlier than planned
+and via the test runner rather than an explicit `pm uninstall`. Consequences:
+
+* Items 1-3 above (encrypted DB, audit chain, ConfigStore) are already gone. They were
+  scheduled for destruction by §23 regardless, so no data was lost that the plan intended
+  to keep.
+* Item 4, the 2.4 GiB model, is also gone and MUST BE RE-PUSHED after RC2 is installed:
+
+    adb -s RZCW40LVBJD push model/gemma-4-E2B-it.litertlm \
+      /sdcard/Android/data/com.thraksha.guardian/files/models/
+
+  The repo copy was hashed BEFORE the deletion and matches
+  LocalModelRepository.EXPECTED_SHA256 exactly, so the restored file will pass on-device
+  verification. Nothing unrecoverable was lost.
+
+* No system settings were modified. The settings baseline recorded above is still the
+  reference for post-automation restore comparison.
+* No Device Owner existed before or after; Advice Mode remains the device posture.
+
+This amendment is recorded rather than the original being rewritten, so the sequence of
+events stays auditable.

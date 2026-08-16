@@ -1,0 +1,11 @@
+===== 12B BASELINE DEVICE STATE — S20 FE RZCW40LVBJD — Sat Aug 15 23:37:39 GMTDT 2026 =====
+model/android : SM-G781B / 13
+zen_mode      : 0
+brightness    : 13
+bright_mode   : 1
+screen_timeout: 600000
+device owner  : no owners
+battery       : level:82
+villaincaller : suspended=false
+guardian ver  :     versionName=1.0
+model file    : -rw-rw---- 1 u0_a331 sdcard_rw 2588147712 2026-08-15 12:43 gemma-4-E2B-it.litertlm

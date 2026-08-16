@@ -36,3 +36,19 @@ google-services.json
 # Rulepack signing PRIVATE key — never commit (the PUBLIC key ships as a non-.pem asset: rulepack_public.key)
 keys/
 *.pem
+
+# On-device LLM weights (Phase 10) — NEVER commit. The Gemma 3 1B IT artifact is
+# ~557 MiB and is redistributed under the Gemma Terms of Use, so it is developer-
+# provisioned to the phone (see temp/PHASE10_MODEL_DELIVERY.md), never version-controlled.
+# The model DOCUMENTATION under model/ stays tracked (README.md, MODEL_ATTRIBUTION.md).
+/model/*.litertlm
+/model/*.task
+/model/*.tflite
+/model/*.bin
+
+# EXCEPTION: VillainCaller's demo signing keystore is deliberately committed. It is the
+# controlled sample's identity (password is in villaincaller/build.gradle.kts), NOT part
+# of Guardian's trust model — the threat pack's SIGNING_CERT_SHA256 indicator matches
+# this certificate, so the demo must rebuild with the same signer on every checkout.
+# Guardian's rulepack/threatpack signing keys stay private under keys/ (still ignored).
+!villaincaller/villain-demo.keystore

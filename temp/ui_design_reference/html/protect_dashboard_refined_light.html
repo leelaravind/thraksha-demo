@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Thraksha Guardian - Protect Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary": "#00677f",
+                      "surface-tint": "#00677f",
+                      "on-primary": "#ffffff",
+                      "primary-container": "#b7eaff",
+                      "on-primary-container": "#001f28",
+                      "secondary": "#575c97",
+                      "on-secondary": "#ffffff",
+                      "secondary-container": "#e0e0ff",
+                      "on-secondary-container": "#13175f",
+                      "tertiary": "#5c5b5d",
+                      "on-tertiary": "#ffffff",
+                      "tertiary-container": "#e3e2e4",
+                      "on-tertiary-container": "#19181b",
+                      "error": "#ba1a1a",
+                      "on-error": "#ffffff",
+                      "error-container": "#ffdad6",
+                      "on-error-container": "#410002",
+                      "background": "#faf9fd",
+                      "on-background": "#1a1b1c",
+                      "surface": "#faf9fd",
+                      "on-surface": "#1a1b1c",
+                      "surface-variant": "#dbe4e8",
+                      "on-surface-variant": "#3f484b",
+                      "outline": "#70787d",
+                      "outline-variant": "#bbc9cf",
+                      "shadow": "#000000",
+                      "scrim": "#000000",
+                      "inverse-surface": "#2e3032",
+                      "inverse-on-surface": "#f1f0f3",
+                      "inverse-primary": "#4cd6ff",
+                      "primary-fixed": "#b7eaff",
+                      "on-primary-fixed": "#001f28",
+                      "primary-fixed-dim": "#4cd6ff",
+                      "on-primary-fixed-variant": "#004e60",
+                      "secondary-fixed": "#e0e0ff",
+                      "on-secondary-fixed": "#13175f",
+                      "secondary-fixed-dim": "#bfc2ff",
+                      "on-secondary-fixed-variant": "#3f447d",
+                      "tertiary-fixed": "#e3e2e4",
+                      "on-tertiary-fixed": "#19181b",
+                      "tertiary-fixed-dim": "#c7c6c8",
+                      "on-tertiary-fixed-variant": "#444446",
+                      "surface-dim": "#d9d9db",
+                      "surface-bright": "#faf9fd",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-low": "#f3f3f5",
+                      "surface-container": "#ededf0",
+                      "surface-container-high": "#e8e7ea",
+                      "surface-container-highest": "#e2e2e5"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "margin-mobile": "16px",
+                      "container-padding": "20px",
+                      "gutter": "16px",
+                      "margin-desktop": "32px",
+                      "base": "8px"
+              },
+              "fontFamily": {
+                      "label-caps": [
+                              "JetBrains Mono"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "label-md": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "headline-lg-mobile": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.1em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-md": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "36px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Subtle glow for active elements */
+        .glow-primary {
+            box-shadow: 0 4px 14px rgba(0, 103, 127, 0.2);
+        }
+        
+        /* Arc visualization animation */
+        @keyframes rotate-arc {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .animate-spin-slow {
+            animation: rotate-arc 20s linear infinite;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col pt-[calc(4rem+env(safe-area-inset-top))] pb-[calc(5rem+env(safe-area-inset-bottom))] md:pb-0">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center w-full px-4 sm:px-6 h-[calc(4rem+env(safe-area-inset-top))] pt-[env(safe-area-inset-top)] fixed docked full-width top-0 z-50 bg-surface/90 backdrop-blur text-primary shadow-sm transition-colors duration-200">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined" data-icon="security">security</span>
+<span class="text-headline-md font-headline-md font-bold text-on-surface">Thraksha Guardian</span>
+</div>
+<button class="flex items-center justify-center p-2 min-h-[48px] min-w-[48px] rounded-full hover:bg-surface-container-high text-primary transition-colors duration-200">
+<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+</button>
+</header>
+<main class="flex-grow px-4 sm:px-6 py-6 w-full mx-auto md:max-w-7xl md:grid md:grid-cols-12 md:gap-gutter">
+<!-- Mobile Layout Canvas -->
+<div class="md:col-span-12 space-y-6">
+<!-- Hero Section: Device State -->
+<section class="flex flex-col items-center justify-center py-6">
+<!-- Abstract Circular Viz -->
+<div class="relative w-40 h-40 mb-4 flex items-center justify-center">
+<!-- Outer rotating ring -->
+<svg class="absolute inset-0 w-full h-full animate-spin-slow text-surface-variant" viewbox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" r="45" stroke="currentColor" stroke-dasharray="20 10" stroke-width="2"></circle>
+</svg>
+<!-- Inner static ring representing 'Enforced' state -->
+<svg class="absolute inset-0 w-full h-full text-primary" viewbox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" r="38" stroke="currentColor" stroke-dasharray="180 60" stroke-width="1.5"></circle>
+</svg>
+<!-- Center Status -->
+<div class="flex flex-col items-center z-10 text-center">
+<span class="material-symbols-outlined text-[40px] text-primary mb-1 filled" data-icon="shield_lock" data-weight="fill">shield_lock</span>
+<span class="text-label-caps font-label-caps text-on-surface-variant uppercase tracking-widest">Enforced</span>
+</div>
+</div>
+<h1 class="text-headline-lg-mobile md:text-headline-lg font-headline-lg-mobile md:font-headline-lg text-on-surface mb-2 text-center">Your device is protected</h1>
+<p class="text-body-md font-body-md text-on-surface-variant text-center mb-6">Last scan: 14 mins ago</p>
+<!-- Primary Action -->
+<button class="bg-primary text-on-primary rounded-full py-4 px-8 min-h-[48px] flex items-center gap-2 glow-primary transition-transform duration-150 hover:scale-[1.02] active:scale-95 shadow-sm">
+<span class="material-symbols-outlined" data-icon="radar">radar</span>
+<span class="text-body-lg font-body-lg font-semibold">Scan Device</span>
+</button>
+</section>
+<!-- Alerts Section (Compact) -->
+<section class="w-full">
+<div class="bg-error-container border border-error/20 rounded-2xl p-4 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between shadow-sm">
+<div class="flex gap-3 items-start sm:items-center">
+<span class="material-symbols-outlined text-error mt-0.5 sm:mt-0" data-icon="warning">warning</span>
+<div>
+<h3 class="text-body-lg font-body-lg font-semibold text-on-error-container">1 item needs your attention</h3>
+<p class="text-body-md font-body-md text-on-error-container/80">An app accessed location in the background.</p>
+</div>
+</div>
+<button class="bg-error text-on-error px-6 py-2 min-h-[40px] rounded-full text-body-md font-medium hover:bg-error/90 transition-colors shrink-0 w-full sm:w-auto">
+        Review
+    </button>
+</div>
+</section>
+<!-- Module Cards Grid -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
+<!-- Threat Intelligence -->
+<div class="bg-surface border border-outline-variant shadow-sm rounded-2xl p-5 relative overflow-hidden group hover:shadow-md transition-shadow w-full">
+<!-- Status Ribbon -->
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-tertiary-fixed-dim group-hover:bg-primary transition-colors"></div>
+<div class="flex justify-between items-start mb-4">
+<div class="bg-surface-container-high p-2 rounded-full text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="language">language</span>
+</div>
+<span class="text-label-caps font-label-caps text-on-surface-variant bg-surface-container-high px-2 py-1 rounded">CLEAN</span>
+</div>
+<h3 class="text-body-lg font-body-lg font-semibold text-on-surface mb-1">Threat Intelligence</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">Real-time protection is active.</p>
+</div>
+<!-- Network Guard -->
+<div class="bg-surface border border-outline-variant shadow-sm rounded-2xl p-5 relative overflow-hidden group hover:shadow-md transition-shadow w-full">
+<!-- Status Ribbon -->
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<div class="flex justify-between items-start mb-4">
+<div class="bg-primary-container p-2 rounded-full text-on-primary-container">
+<span class="material-symbols-outlined" data-icon="vpn_lock">vpn_lock</span>
+</div>
+<span class="text-label-caps font-label-caps text-primary bg-primary-container/30 px-2 py-1 rounded">WATCHING</span>
+</div>
+<h3 class="text-body-lg font-body-lg font-semibold text-on-surface mb-1">Network Guard</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">Your connection is secure.</p>
+</div>
+<!-- App Scanner -->
+<div class="bg-surface border border-error/20 shadow-sm rounded-2xl p-5 relative overflow-hidden group hover:shadow-md transition-shadow w-full">
+<!-- Status Ribbon -->
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-error"></div>
+<div class="flex justify-between items-start mb-4">
+<div class="bg-error-container p-2 rounded-full text-on-error-container">
+<span class="material-symbols-outlined" data-icon="apps">apps</span>
+</div>
+<span class="text-label-caps font-label-caps text-error bg-error-container/50 px-2 py-1 rounded">1 ALERT</span>
+</div>
+<h3 class="text-body-lg font-body-lg font-semibold text-on-surface mb-1">App Scanner</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">Apps are being monitored.</p>
+</div>
+<!-- Automation Status -->
+<div class="bg-surface border border-outline-variant shadow-sm rounded-2xl p-5 relative overflow-hidden group hover:shadow-md transition-shadow w-full">
+<!-- Status Ribbon -->
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-tertiary-fixed-dim"></div>
+<div class="flex justify-between items-start mb-4">
+<div class="bg-surface-container-high p-2 rounded-full text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="bolt">bolt</span>
+</div>
+<span class="text-label-caps font-label-caps text-on-surface-variant bg-surface-container-high px-2 py-1 rounded">STANDBY</span>
+</div>
+<h3 class="text-body-lg font-body-lg font-semibold text-on-surface mb-1">Automation</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">Ready for automated tasks.</p>
+</div>
+</section>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center h-[calc(5rem+env(safe-area-inset-bottom))] pb-[env(safe-area-inset-bottom)] px-2 bg-surface border-t border-outline-variant z-50">
+<!-- Protect (Active) -->
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-5 py-2 min-h-[48px] min-w-[64px] transition-transform duration-150 scale-95 active:scale-90" href="#">
+<span class="material-symbols-outlined filled" data-icon="shield" data-weight="fill">shield</span>
+<span class="text-label-md font-label-md mt-1">Protect</span>
+</a>
+<!-- Automate -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-on-surface px-5 py-2 min-h-[48px] min-w-[64px] transition-transform duration-150 scale-95 active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="bolt">bolt</span>
+<span class="text-label-md font-label-md mt-1">Automate</span>
+</a>
+<!-- Audit -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-on-surface px-5 py-2 min-h-[48px] min-w-[64px] transition-transform duration-150 scale-95 active:scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="text-label-md font-label-md mt-1">Audit</span>
+</a>
+</nav>
+</body></html>

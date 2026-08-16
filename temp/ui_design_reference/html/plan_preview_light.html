@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Thraksha Guardian - Plan Preview</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#4cd6ff",
+                        "on-surface": "#e3e2e5",
+                        "surface": "#121315",
+                        "on-primary-container": "#00566a",
+                        "error": "#ffb4ab",
+                        "surface-container": "#1f2022",
+                        "surface-dim": "#121315",
+                        "inverse-primary": "#00677f",
+                        "tertiary-fixed": "#e3e2e4",
+                        "tertiary-fixed-dim": "#c7c6c8",
+                        "inverse-on-surface": "#303033",
+                        "on-primary-fixed": "#001f28",
+                        "tertiary": "#dddcde",
+                        "surface-container-lowest": "#0d0e10",
+                        "surface-variant": "#343537",
+                        "on-error": "#690005",
+                        "error-container": "#93000a",
+                        "background": "#121315",
+                        "inverse-surface": "#e3e2e5",
+                        "primary-fixed-dim": "#4cd6ff",
+                        "secondary-fixed-dim": "#bfc2ff",
+                        "on-error-container": "#ffdad6",
+                        "on-primary": "#003543",
+                        "secondary-container": "#1e24db",
+                        "on-secondary-fixed": "#00006e",
+                        "on-tertiary-fixed-variant": "#464749",
+                        "on-secondary-fixed-variant": "#1a20d8",
+                        "on-tertiary-fixed": "#1b1c1e",
+                        "surface-container-low": "#1b1c1e",
+                        "secondary-fixed": "#e0e0ff",
+                        "tertiary-container": "#c1c0c3",
+                        "on-tertiary": "#303032",
+                        "on-surface-variant": "#bbc9cf",
+                        "surface-bright": "#38393b",
+                        "secondary": "#bfc2ff",
+                        "surface-container-high": "#292a2c",
+                        "outline-variant": "#3c494e",
+                        "primary": "#a4e6ff",
+                        "on-background": "#e3e2e5",
+                        "primary-container": "#00d1ff",
+                        "on-secondary-container": "#adb2ff",
+                        "on-secondary": "#0000ac",
+                        "on-tertiary-container": "#4e4e51",
+                        "on-primary-fixed-variant": "#004e60",
+                        "surface-container-highest": "#343537",
+                        "outline": "#859399",
+                        "primary-fixed": "#b7eaff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "base": "8px",
+                        "container-padding": "20px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-caps": ["JetBrains Mono"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "500" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md antialiased pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface text-primary dark:text-primary transition-colors duration-200 w-full top-0 flex justify-between items-center px-margin-mobile h-16 w-full z-50 sticky">
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-variant/20 dark:hover:bg-surface-variant/20 p-2 rounded-full transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-on-surface dark:text-on-surface font-bold tracking-tight">Thraksha Guardian</h1>
+</div>
+<div class="flex items-center gap-2">
+<button class="text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-variant/20 dark:hover:bg-surface-variant/20 p-2 rounded-full transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex flex-col px-margin-mobile md:px-margin-desktop py-6 gap-6 max-w-4xl mx-auto w-full">
+<!-- Header Section -->
+<section class="flex flex-col gap-2 pt-4 pb-8 border-b border-surface-variant">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Plan Preview</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Review the automation sequence before execution.</p>
+</section>
+<!-- Bento Grid Layout for Plan Details -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Step 1 Card -->
+<div class="bg-[#161719] rounded-xl p-6 flex flex-col gap-4 relative overflow-hidden group hover:shadow-[0_0_15px_rgba(0,209,255,0.15)] transition-shadow duration-300">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary-container"></div>
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center text-on-surface">
+<span class="font-label-caps text-label-caps">1</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Notifications</h3>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="notifications_off">notifications_off</span>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Mute all incoming notifications across configured devices.</p>
+</div>
+<!-- Step 2 Card -->
+<div class="bg-[#161719] rounded-xl p-6 flex flex-col gap-4 relative overflow-hidden group hover:shadow-[0_0_15px_rgba(0,209,255,0.15)] transition-shadow duration-300">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary-container"></div>
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center text-on-surface">
+<span class="font-label-caps text-label-caps">2</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Status</h3>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="do_not_disturb_on">do_not_disturb_on</span>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Set system status to "Busy" across integrated platforms.</p>
+</div>
+<!-- Step 3 Card -->
+<div class="bg-[#161719] rounded-xl p-6 flex flex-col gap-4 relative overflow-hidden group hover:shadow-[0_0_15px_rgba(0,209,255,0.15)] transition-shadow duration-300 md:col-span-2">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary-container"></div>
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center text-on-surface">
+<span class="font-label-caps text-label-caps">3</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Background Sync</h3>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="sync_disabled">sync_disabled</span>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Pause non-essential background data synchronization to conserve resources.</p>
+</div>
+</section>
+<!-- Primary Action -->
+<section class="mt-8 flex justify-center">
+<button class="bg-primary-container text-[#000000] font-headline-md text-headline-md py-4 px-12 rounded-full hover:shadow-[0_0_20px_rgba(0,209,255,0.3)] transition-all duration-300 flex items-center gap-2 active:scale-95">
+                START
+                <span class="material-symbols-outlined" data-icon="play_arrow">play_arrow</span>
+</button>
+</section>
+</main>
+<!-- BottomNavBar (Hidden on md and up, Active state logic applied based on intent) -->
+<!-- Suppressed: Task-focused flow (Plan Preview) implied by back button and primary action START -->
+</body></html>

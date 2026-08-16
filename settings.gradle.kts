@@ -24,3 +24,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "Thraksha Guardian"
 include(":app")
+
+// Controlled demo samples. Separately installable APKs with their own application IDs;
+// no decoy behaviour lives inside the Guardian app itself.
+include(":goodcaller")
+include(":villaincaller")

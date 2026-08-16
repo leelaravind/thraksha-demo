@@ -1,0 +1,199 @@
+{
+  "verify": {
+    "phase": "READY",
+    "verifyMillis": 3194,
+    "expectedSha256": "181938105e0eefd105961417e8da75903eacda102c4fce9ce90f50b97139a63c",
+    "expectedBytes": 2588147712,
+    "path": "\/storage\/emulated\/0\/Android\/data\/com.thraksha.guardian\/files\/models\/gemma-4-E2B-it.litertlm"
+  },
+  "load": {
+    "phase": "LOADED",
+    "loadMillisMeasured": 6625,
+    "loadMillisReported": 4574,
+    "pssKbBeforeLoad": 201698,
+    "pssKbAfterLoad": 1453009,
+    "pssKbDelta": 1251311,
+    "backend": "CPU"
+  },
+  "firstInference": {
+    "prompt": "Put me in meeting mode for 30 minutes.",
+    "raw": "{\"result\":\n\"INTENT\",\n\"routine\":\n\"MEETING\",\n\"reasonCode\":\nnull\n}",
+    "latencyMs": 9001,
+    "timeToFirstTokenSeconds": -1,
+    "prefillTokensPerSecond": -1,
+    "decodeTokensPerSecond": -1,
+    "prefillTokens": -1,
+    "decodeTokens": -1
+  },
+  "smoke": {
+    "count": 18,
+    "inferenceFailures": 0,
+    "nonConformant": 0,
+    "medianLatencyMs": 10079,
+    "maxLatencyMs": 10307,
+    "rows": [
+      {
+        "prompt": "Set up meeting mode",
+        "raw": "{\"result\":\n\"INTENT\",\n\"routine\":\n\"MEETING\",\n\"reasonCode\":\nnull\n}",
+        "error": null,
+        "latencyMs": 7830,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "I have a meeting for the next 45 minutes",
+        "raw": "{\"result\":\n\"INTENT\",\n\"routine\":\n\"MEETING\",\n\"reasonCode\":\nnull\n}",
+        "error": null,
+        "latencyMs": 8105,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "Board meeting for 2 hours please",
+        "raw": "{\"result\":\n\"INTENT\",\n\"routine\":\n\"MEETING\",\n\"reasonCode\":\nnull\n}",
+        "error": null,
+        "latencyMs": 8741,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "I need to focus.",
+        "raw": "{\"result\":\n\"INTENT\",\n\"routine\":\n\"FOCUS\",\n\"reasonCode\":\nnull\n}",
+        "error": null,
+        "latencyMs": 9558,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "Deep work session for 90 minutes",
+        "raw": "{\"result\":\n\"INTENT\",\n\"routine\":\n\"FOCUS\",\n\"reasonCode\":\nnull\n}",
+        "error": null,
+        "latencyMs": 10079,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "Start a pomodoro, 25 minutes",
+        "raw": "{\"result\":\n\"UNSUPPORTED\",\n\"reasonCode\":\n\"OUT_OF_SCOPE\"\n}",
+        "error": null,
+        "latencyMs": 10014,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "I'm driving",
+        "raw": "{\"result\":\n\"INTENT\",\n\"routine\":\n\"DRIVING\",\n\"reasonCode\":\nnull\n}",
+        "error": null,
+        "latencyMs": 10144,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "Set up the phone for my drive home",
+        "raw": "{\"result\":\n\"INTENT\",\n\"routine\":\n\"DRIVING\",\n\"reasonCode\":\nnull\n}",
+        "error": null,
+        "latencyMs": 10132,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "Driving mode for 40 minutes",
+        "raw": "{\"result\":\n\"INTENT\",\n\"routine\":\n\"DRIVING\",\n\"reasonCode\":\nnull\n}",
+        "error": null,
+        "latencyMs": 10154,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "asdkjhasd kjhasd kjh",
+        "raw": "{\"result\":\n\"UNSUPPORTED\",\n\"reasonCode\":\n\"NOT_AN_AUTOMATION_REQUEST\"\n}",
+        "error": null,
+        "latencyMs": 10307,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "What's the weather today?",
+        "raw": "{\"result\":\n\"UNSUPPORTED\",\n\"reasonCode\":\n\"NOT_AN_AUTOMATION_REQUEST\"\n}",
+        "error": null,
+        "latencyMs": 10259,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "🙂🙂🙂🙂🙂",
+        "raw": "{\"result\":\n\"UNSUPPORTED\",\n\"reasonCode\":\n\"NOT_AN_AUTOMATION_REQUEST\"\n}",
+        "error": null,
+        "latencyMs": 10226,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "Factory reset my phone",
+        "raw": "{\"result\":\n\"UNSUPPORTED\",\n\"reasonCode\":\n\"DESTRUCTIVE_REQUEST\"}",
+        "error": null,
+        "latencyMs": 9839,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "Turn off Network Guard",
+        "raw": "{\"result\":\n\"UNSUPPORTED\",\n\"reasonCode\":\n\"SECURITY_REQUEST\"\n}",
+        "error": null,
+        "latencyMs": 9839,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "Is WhatsApp malware?",
+        "raw": "{\"result\":\n\"UNSUPPORTED\",\n\"reasonCode\":\n\"SECURITY_REQUEST\"\n}",
+        "error": null,
+        "latencyMs": 9852,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "Set it up",
+        "raw": "{\"result\":\n\"UNSUPPORTED\",\n\"reasonCode\":\n\"OUT_OF_SCOPE\"\n}",
+        "error": null,
+        "latencyMs": 9938,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "Open some app",
+        "raw": "{\"result\":\n\"UNSUPPORTED\",\n\"reasonCode\":\n\"NOT_AN_AUTOMATION_REQUEST\"\n}",
+        "error": null,
+        "latencyMs": 10287,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "Meeting mode for a bit",
+        "raw": "{\"result\":\n\"INTENT\",\n\"routine\":\n\"MEETING\",\n\"reasonCode\":\nnull\n}",
+        "error": null,
+        "latencyMs": 10183,
+        "schemaConformant": true
+      }
+    ]
+  },
+  "repeated": {
+    "prompt": "I have a meeting for the next 45 minutes",
+    "runs": 12,
+    "latenciesMs": [
+      10140,
+      10176,
+      10088,
+      10088,
+      10195,
+      10119,
+      10129,
+      10101,
+      10115,
+      10127,
+      10145,
+      10105
+    ],
+    "medianLatencyMs": 10127,
+    "p95LatencyMs": 10176,
+    "firstHalfMeanMs": 10134.333333333334,
+    "secondHalfMeanMs": 10120.333333333334,
+    "pssKbBefore": 2931513,
+    "pssKbAfter": 2934061,
+    "pssKbGrowth": 2548,
+    "distinctOutputs": 1,
+    "outputs": [
+      "{\"result\":\n\"INTENT\",\n\"routine\":\n\"MEETING\",\n\"reasonCode\":\nnull\n}"
+    ]
+  },
+  "unloadReload": {
+    "unloadMillis": 289,
+    "reloadMillis": 5204,
+    "pssKbWhileLoaded": 2934110,
+    "pssKbAfterUnload": 1170806,
+    "pssKbReleased": 1763304
+  }
+}

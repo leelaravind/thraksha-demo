@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Thraksha Guardian - Scan Results</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-surface": "#e3e2e5",
+                        "on-secondary-fixed": "#00006e",
+                        "on-surface-variant": "#bbc9cf",
+                        "tertiary-fixed-dim": "#c7c6c8",
+                        "tertiary-container": "#c1c0c3",
+                        "secondary": "#bfc2ff",
+                        "surface-variant": "#343537",
+                        "outline": "#859399",
+                        "error-container": "#93000a",
+                        "surface-container-low": "#1b1c1e",
+                        "on-tertiary-container": "#4e4e51",
+                        "on-secondary": "#0000ac",
+                        "secondary-container": "#1e24db",
+                        "on-secondary-fixed-variant": "#1a20d8",
+                        "on-tertiary": "#303032",
+                        "on-tertiary-fixed-variant": "#464749",
+                        "surface-dim": "#121315",
+                        "primary-fixed-dim": "#4cd6ff",
+                        "on-primary-fixed-variant": "#004e60",
+                        "surface": "#121315",
+                        "background": "#121315",
+                        "inverse-primary": "#00677f",
+                        "tertiary-fixed": "#e3e2e4",
+                        "on-primary-container": "#00566a",
+                        "secondary-fixed-dim": "#bfc2ff",
+                        "on-secondary-container": "#adb2ff",
+                        "secondary-fixed": "#e0e0ff",
+                        "on-background": "#e3e2e5",
+                        "surface-container-lowest": "#0d0e10",
+                        "error": "#ffb4ab",
+                        "outline-variant": "#3c494e",
+                        "surface-container": "#1f2022",
+                        "surface-bright": "#38393b",
+                        "surface-container-highest": "#343537",
+                        "primary": "#a4e6ff",
+                        "surface-tint": "#4cd6ff",
+                        "on-error-container": "#ffdad6",
+                        "on-surface": "#e3e2e5",
+                        "primary-fixed": "#b7eaff",
+                        "primary-container": "#00d1ff",
+                        "on-error": "#690005",
+                        "on-tertiary-fixed": "#1b1c1e",
+                        "on-primary-fixed": "#001f28",
+                        "inverse-on-surface": "#303033",
+                        "tertiary": "#dddcde",
+                        "on-primary": "#003543",
+                        "surface-container-high": "#292a2c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px",
+                        "24": "1.5rem"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "margin-desktop": "32px",
+                        "base": "8px",
+                        "gutter": "16px",
+                        "container-padding": "20px",
+                        "72": "18rem"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "label-caps": ["JetBrains Mono"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #0B0C0E;
+            color: #e3e2e5;
+        }
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #121315; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #343537; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #464749; 
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="antialiased min-h-screen flex flex-col font-body-md text-body-md pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface w-full top-0 sticky z-40 transition-shadow duration-300" id="top-app-bar">
+<div class="flex items-center justify-between px-margin-mobile md:px-margin-desktop w-full h-16">
+<div class="flex items-center gap-3">
+<button aria-label="Menu" class="text-primary dark:text-primary active:scale-95 transition-transform hover:bg-surface-container-high dark:hover:bg-surface-container-high rounded-full p-2 flex items-center justify-center group">
+<span class="material-symbols-outlined group-hover:opacity-80 transition-opacity" data-icon="security" data-weight="fill" style="font-variation-settings: 'FILL' 1;">security</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary tracking-tight">Thraksha Guardian</h1>
+</div>
+<!-- Desktop Nav Cluster (Hidden on Mobile) -->
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-primary dark:text-primary font-label-md text-label-md px-3 py-2 rounded-lg hover:bg-surface-container-high transition-colors" href="#">Protect</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-label-md text-label-md px-3 py-2 rounded-lg hover:bg-surface-container-high transition-colors" href="#">Automate</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-label-md text-label-md px-3 py-2 rounded-lg hover:bg-surface-container-high transition-colors" href="#">Audit</a>
+</nav>
+<div class="flex items-center gap-2">
+<button aria-label="Settings" class="text-on-surface-variant hover:text-primary active:scale-95 transition-all p-2 rounded-full hover:bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex flex-col items-center w-full max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop pt-8 pb-12 gap-8">
+<!-- Summary Section -->
+<section class="w-full flex flex-col items-center justify-center py-8 text-center gap-4">
+<div class="w-20 h-20 rounded-full bg-surface-container-highest flex items-center justify-center mb-2 shadow-[0_4px_32px_rgba(0,0,0,0.2)]">
+<span class="material-symbols-outlined text-4xl text-primary" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface">Scan Complete</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-md">254 apps checked. 1 item needs attention.</p>
+</section>
+<!-- Findings Grid -->
+<section class="w-full max-w-4xl grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- High Level Finding Card (Needs Attention) -->
+<div class="md:col-span-12 bg-[#161719] rounded-24 relative overflow-hidden group transition-all duration-300 hover:shadow-[0_0_15px_rgba(0,209,255,0.15)] flex flex-col border border-surface-container-high">
+<!-- Status Ribbon -->
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary-container"></div>
+<div class="p-6 md:p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pl-8">
+<div class="flex items-start gap-5 w-full">
+<div class="p-3 rounded-xl bg-surface-container-high text-on-surface flex-shrink-0">
+<span class="material-symbols-outlined text-secondary" data-icon="location_on">location_on</span>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="font-headline-md text-headline-md text-on-surface">Background Location Access</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">MapQuest has been accessing your location in the background frequently over the last 24 hours.</p>
+</div>
+</div>
+<div class="w-full md:w-auto flex justify-end flex-shrink-0">
+<button class="w-full md:w-auto bg-primary-container text-on-primary-container font-label-md text-label-md px-6 py-3 rounded-full hover:bg-primary-fixed transition-colors active:scale-95 shadow-[0_4px_16px_rgba(0,0,0,0.2)]">
+                            Review
+                        </button>
+</div>
+</div>
+</div>
+<!-- Contextual Stats Bento (Clean) -->
+<div class="md:col-span-6 bg-[#161719] rounded-24 p-6 flex flex-col gap-4 border border-surface-container-high relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-surface-container-highest"></div>
+<div class="pl-2 flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-on-surface-variant">System Integrity</span>
+<span class="material-symbols-outlined text-on-surface-variant opacity-50" data-icon="verified_user">verified_user</span>
+</div>
+<div class="pl-2 flex flex-col">
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Secure</span>
+<span class="font-body-md text-body-md text-outline">OS &amp; Core modules verified</span>
+</div>
+</div>
+<!-- Contextual Stats Bento (Clean) -->
+<div class="md:col-span-6 bg-[#161719] rounded-24 p-6 flex flex-col gap-4 border border-surface-container-high relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-surface-container-highest"></div>
+<div class="pl-2 flex items-center justify-between">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Network Activity</span>
+<span class="material-symbols-outlined text-on-surface-variant opacity-50" data-icon="wifi_tethering">wifi_tethering</span>
+</div>
+<div class="pl-2 flex flex-col">
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Normal</span>
+<span class="font-body-md text-body-md text-outline">No suspicious connections</span>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden bg-surface-container dark:bg-surface-container fixed bottom-0 w-full z-50 shadow-sm flex justify-around items-center h-20 px-4 pb-2 transition-transform duration-300" id="bottom-nav-bar">
+<!-- Protect (Active) -->
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary-container text-on-secondary-container dark:text-on-secondary-container rounded-full px-5 py-1 active:scale-90 duration-200 group" href="#">
+<span class="material-symbols-outlined mb-1 group-hover:opacity-80 transition-opacity" data-icon="shield" data-weight="fill" style="font-variation-settings: 'FILL' 1;">shield</span>
+<span class="font-label-md text-label-md">Protect</span>
+</a>
+<!-- Automate (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-5 py-1 hover:bg-surface-variant dark:hover:bg-surface-variant transition-all rounded-xl active:scale-90 duration-200 group" href="#">
+<span class="material-symbols-outlined mb-1 group-hover:text-primary transition-colors" data-icon="bolt">bolt</span>
+<span class="font-label-md text-label-md">Automate</span>
+</a>
+<!-- Audit (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-5 py-1 hover:bg-surface-variant dark:hover:bg-surface-variant transition-all rounded-xl active:scale-90 duration-200 group" href="#">
+<span class="material-symbols-outlined mb-1 group-hover:text-primary transition-colors" data-icon="analytics">analytics</span>
+<span class="font-label-md text-label-md">Audit</span>
+</a>
+</nav>
+<script>
+        // Simple scroll handler to add shadow to top app bar
+        const topAppBar = document.getElementById('top-app-bar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 10) {
+                topAppBar.classList.add('shadow-md');
+            } else {
+                topAppBar.classList.remove('shadow-md');
+            }
+        });
+    </script>
+</body></html>

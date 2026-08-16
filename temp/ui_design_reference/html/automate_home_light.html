@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Automate - Thraksha Guardian</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#ded8e1",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#e9ddff",
+                        "surface-container": "#f3edf7",
+                        "on-error": "#ffffff",
+                        "surface-container-highest": "#e6e0e9",
+                        "surface-tint": "#6750a4",
+                        "on-primary-fixed-variant": "#4f378b",
+                        "tertiary": "#7d5260",
+                        "error": "#ba1a1a",
+                        "primary": "#6750a4",
+                        "primary-fixed-dim": "#d0bcff",
+                        "on-error-container": "#410002",
+                        "primary-fixed": "#e9ddff",
+                        "on-primary-container": "#21005d",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#efb8c8",
+                        "on-tertiary-fixed-variant": "#633b48",
+                        "secondary": "#625b71",
+                        "on-secondary-fixed": "#1d192b",
+                        "surface": "#fef7ff",
+                        "surface-container-low": "#f7f2fa",
+                        "surface-bright": "#fef7ff",
+                        "inverse-surface": "#322f35",
+                        "inverse-on-surface": "#f5eff7",
+                        "secondary-fixed": "#e8def8",
+                        "on-secondary-fixed-variant": "#4a4458",
+                        "on-tertiary-container": "#31111d",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-container": "#1d192b",
+                        "secondary-fixed-dim": "#ccc2dc",
+                        "inverse-primary": "#d0bcff",
+                        "tertiary-container": "#ffd8e4",
+                        "secondary-container": "#e8def8",
+                        "background": "#fef7ff",
+                        "on-tertiary": "#ffffff",
+                        "outline-variant": "#cac4d0",
+                        "on-background": "#1d1b20",
+                        "surface-variant": "#e7e0ec",
+                        "surface-container-high": "#ece6f0",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed": "#ffd8e4",
+                        "on-primary-fixed": "#21005d",
+                        "outline": "#79747e",
+                        "on-surface-variant": "#49454f",
+                        "on-tertiary-fixed": "#31111d",
+                        "on-surface": "#1d1b20"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "20px",
+                        "base": "8px",
+                        "gutter": "16px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "32px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "label-caps": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "500" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for horizontal lists */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md antialiased pb-24">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface text-primary flex items-center px-margin-mobile h-16 w-full shadow-sm transition-colors duration-200">
+<img alt="Thraksha TR Monogram Logo" class="w-8 h-8 rounded-full mr-3 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoPbfwE9fWLdValewj39E0SVnFXGLAP2USr_MEVs--u_DuAwwhJ8VirxpchtJFKPseQ0NQZOQ-YczdYp7jr5G7L-jVr6NhkdaehDmZyv7n6sO4VXOvqQEDHhIe5SrWX4m6tK5TDKQft4IR7Gy2rbtOuyxhzXJTU5ZO1wjNJHbsyt3PNKgA1OgKcWpk6k7mxWrWFEGHgvXJ9z-D8p7cUKWg96TDd3mxo_qzykgFVxVhDtCw7pwjuP7qxg"/>
+<h1 class="font-headline-md text-headline-md font-bold text-primary flex-1">Thraksha Guardian</h1>
+<button class="w-10 h-10 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container-highest/50 transition-colors duration-200">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 mt-16 px-margin-mobile flex flex-col gap-6 pt-4 md:px-margin-desktop md:max-w-4xl md:mx-auto w-full">
+<!-- Search / Ask Section -->
+<section class="flex flex-col gap-3">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">auto_awesome</span>
+<input class="w-full h-14 pl-12 pr-12 rounded-xl bg-surface-container border border-outline-variant text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all font-body-lg text-body-lg" placeholder="Ask Thraksha to automate..." type="text"/>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-primary text-on-primary hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined icon-fill">arrow_upward</span>
+</button>
+</div>
+</section>
+<!-- Active Routines (Bento Grid) -->
+<section class="flex flex-col gap-4">
+<h2 class="font-headline-md text-headline-md text-on-surface">Active Routines</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Meeting Routine Card -->
+<div class="bg-surface-container-low rounded-xl p-5 border border-outline-variant/30 flex flex-col gap-4 hover:shadow-md transition-shadow relative overflow-hidden group">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-l-xl"></div>
+<div class="flex justify-between items-start">
+<div class="w-12 h-12 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined icon-fill">groups</span>
+</div>
+<span class="px-3 py-1 bg-surface-container-highest text-on-surface-variant rounded-full font-label-md text-label-md">Running</span>
+</div>
+<div>
+<h3 class="font-headline-md text-[20px] leading-[28px] font-semibold text-on-surface mb-1">Meeting Mode</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Notifications muted, status set to busy.</p>
+</div>
+<div class="mt-2 flex gap-2">
+<button class="flex-1 py-2 rounded-lg bg-surface-container-highest text-on-surface font-label-md text-label-md hover:bg-surface-variant transition-colors">Edit</button>
+<button class="flex-1 py-2 rounded-lg bg-error-container text-on-error-container font-label-md text-label-md hover:bg-error/20 transition-colors">Stop</button>
+</div>
+</div>
+<!-- Focus Routine Card -->
+<div class="bg-surface-container-low rounded-xl p-5 border border-outline-variant/30 flex flex-col gap-4 hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start">
+<div class="w-12 h-12 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center">
+<span class="material-symbols-outlined icon-fill">self_improvement</span>
+</div>
+<span class="px-3 py-1 bg-surface-container-highest text-on-surface-variant rounded-full font-label-md text-label-md">Paused</span>
+</div>
+<div>
+<h3 class="font-headline-md text-[20px] leading-[28px] font-semibold text-on-surface mb-1">Deep Focus</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Block social apps, ambient noise on.</p>
+</div>
+<div class="mt-2">
+<button class="w-full py-2 rounded-lg bg-primary text-on-primary font-label-md text-label-md hover:bg-primary/90 transition-colors">Start</button>
+</div>
+</div>
+<!-- Driving Routine Card -->
+<div class="bg-surface-container-low rounded-xl p-5 border border-outline-variant/30 flex flex-col gap-4 hover:shadow-md transition-shadow md:col-span-2">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center">
+<span class="material-symbols-outlined icon-fill">directions_car</span>
+</div>
+<div>
+<h3 class="font-headline-md text-[18px] leading-[24px] font-semibold text-on-surface">Driving Mode</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Auto-reply to messages, navigation ready.</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</div>
+</section>
+<!-- Suggested Routines (Horizontal Scroll) -->
+<section class="flex flex-col gap-4 mt-2">
+<h2 class="font-headline-md text-headline-md text-on-surface">Suggested for you</h2>
+<div class="flex gap-4 overflow-x-auto hide-scrollbar pb-2 -mx-margin-mobile px-margin-mobile md:mx-0 md:px-0">
+<div class="min-w-[200px] bg-surface-container-low rounded-xl p-4 border border-outline-variant/30 flex flex-col gap-3 flex-shrink-0">
+<div class="w-10 h-10 rounded-full bg-surface-variant text-on-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined">nightlight</span>
+</div>
+<h3 class="font-body-lg text-body-lg font-medium text-on-surface">Wind Down</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm line-clamp-2">Dim screen, set alarm, filter blue light.</p>
+<button class="mt-auto self-start text-primary font-label-md text-label-md flex items-center gap-1 hover:underline">
+                        Add <span class="material-symbols-outlined text-[16px]">add</span>
+</button>
+</div>
+<div class="min-w-[200px] bg-surface-container-low rounded-xl p-4 border border-outline-variant/30 flex flex-col gap-3 flex-shrink-0">
+<div class="w-10 h-10 rounded-full bg-surface-variant text-on-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined">fitness_center</span>
+</div>
+<h3 class="font-body-lg text-body-lg font-medium text-on-surface">Workout</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm line-clamp-2">Start playlist, track activity, DND on.</p>
+<button class="mt-auto self-start text-primary font-label-md text-label-md flex items-center gap-1 hover:underline">
+                        Add <span class="material-symbols-outlined text-[16px]">add</span>
+</button>
+</div>
+<div class="min-w-[200px] bg-surface-container-low rounded-xl p-4 border border-outline-variant/30 flex flex-col gap-3 flex-shrink-0">
+<div class="w-10 h-10 rounded-full bg-surface-variant text-on-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined">wb_sunny</span>
+</div>
+<h3 class="font-body-lg text-body-lg font-medium text-on-surface">Morning Brief</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm line-clamp-2">Read news, show weather, calendar sync.</p>
+<button class="mt-auto self-start text-primary font-label-md text-label-md flex items-center gap-1 hover:underline">
+                        Add <span class="material-symbols-outlined text-[16px]">add</span>
+</button>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface-container text-primary-fixed-dim shadow-sm flex justify-around items-center h-20 w-full px-base pb-safe md:hidden border-t-0">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-container-highest transition-all active:scale-95 duration-100 group" href="#">
+<span class="material-symbols-outlined mb-1 group-hover:scale-110 transition-transform">shield</span>
+<span class="font-label-md text-label-md">Protect</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-5 py-1 hover:bg-surface-container-highest transition-all active:scale-95 duration-100 group" href="#">
+<span class="material-symbols-outlined mb-1 icon-fill">bolt</span>
+<span class="font-label-md text-label-md font-semibold">Automate</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-1 hover:bg-surface-container-highest transition-all active:scale-95 duration-100 group" href="#">
+<span class="material-symbols-outlined mb-1 group-hover:scale-110 transition-transform">analytics</span>
+<span class="font-label-md text-label-md">Audit</span>
+</a>
+</nav>
+</body></html>

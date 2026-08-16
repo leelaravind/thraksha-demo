@@ -1,0 +1,199 @@
+{
+  "verify": {
+    "phase": "READY",
+    "verifyMillis": 839,
+    "expectedSha256": "1325ae366d31950f137c9c357b9fa89448b176d76998180c08ceaca78bba98be",
+    "expectedBytes": 584417280,
+    "path": "\/storage\/emulated\/0\/Android\/data\/com.thraksha.guardian\/files\/models\/Gemma3-1B-IT_multi-prefill-seq_q4_ekv4096.litertlm"
+  },
+  "load": {
+    "phase": "LOADED",
+    "loadMillisMeasured": 4188,
+    "loadMillisReported": 3683,
+    "pssKbBeforeLoad": 181328,
+    "pssKbAfterLoad": 1295797,
+    "pssKbDelta": 1114469,
+    "backend": "CPU"
+  },
+  "firstInference": {
+    "prompt": "Put me in meeting mode for 30 minutes.",
+    "raw": "{\"result\":\"INTENT\",\n\"routine\":\"MEETING\",\n\"durationMinutes\":30,\n\"targetApp\":\"com.samsung.android.calendar\",\n\"reasonCode\":\"UNSAFE_VALUE\"}",
+    "latencyMs": 7990,
+    "timeToFirstTokenSeconds": -1,
+    "prefillTokensPerSecond": -1,
+    "decodeTokensPerSecond": -1,
+    "prefillTokens": -1,
+    "decodeTokens": -1
+  },
+  "smoke": {
+    "count": 18,
+    "inferenceFailures": 0,
+    "nonConformant": 0,
+    "medianLatencyMs": 9792,
+    "maxLatencyMs": 10333,
+    "rows": [
+      {
+        "prompt": "Set up meeting mode",
+        "raw": "{\"result\":\"INTENT\",\n\"routine\":\"MEETING\",\n\"durationMinutes\":null,\n\"targetApp\":\"com.samsung.android.calendar\",\n\"reasonCode\":\"UNSAFE_VALUE\"}",
+        "error": null,
+        "latencyMs": 7837,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "I have a meeting for the next 45 minutes",
+        "raw": "{\"result\":\"INTENT\",\n\"routine\":\"DRIVING\",\n\"durationMinutes\":45,\n\"targetApp\":\"com.samsung.android.calendar\",\n\"reasonCode\":\"UNSAFE_VALUE\"}",
+        "error": null,
+        "latencyMs": 8409,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "Board meeting for 2 hours please",
+        "raw": "{\"result\":\"INTENT\",\n\"routine\":\"MEETING\",\n\"durationMinutes\":480,\n\"targetApp\":\"com.samsung.android.calendar\",\n\"reasonCode\":\"UNSAFE_VALUE\"}",
+        "error": null,
+        "latencyMs": 8554,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "I need to focus.",
+        "raw": "{\"result\":\"CLARIFY\",\n\"durationMinutes\":120,\n\"targetApp\":\"com.google.android.apps.maps\",\n\"reasonCode\":\"UNSAFE_VALUE\"}",
+        "error": null,
+        "latencyMs": 8390,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "Deep work session for 90 minutes",
+        "raw": "{\"result\":\"INTENT\",\n\"routine\":\"FOCUS\",\n\"durationMinutes\":90,\n\"targetApp\":\"com.google.android.apps.maps\",\n\"reasonCode\":\"UNSAFE_VALUE\"}",
+        "error": null,
+        "latencyMs": 9104,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "Start a pomodoro, 25 minutes",
+        "raw": "{\"result\":\"INTENT\",\n\"routine\":\"FOCUS\",\n\"durationMinutes\":15,\n\"targetApp\":\"com.google.android.apps.maps\",\n\"reasonCode\":\"UNSAFE_VALUE\"}",
+        "error": null,
+        "latencyMs": 9880,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "I'm driving",
+        "raw": "{\"result\":\"UNSUPPORTED\",\"routine\":\"DRIVING\",\"durationMinutes\":null,\n\"targetApp\":\"com.samsung.android.calendar\",\n\"reasonCode\":\"OUT_OF_SCOPE\"}",
+        "error": null,
+        "latencyMs": 9792,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "Set up the phone for my drive home",
+        "raw": "{\"result\":\"CLARIFY\",\"routine\":\"FOCUS\",\"durationMinutes\":null,\n\"targetApp\":null,\n\"reasonCode\":\"AMBIGUOUS_ROUTINE\"}",
+        "error": null,
+        "latencyMs": 9540,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "Driving mode for 40 minutes",
+        "raw": "{\"result\":\"UNSUPPORTED\",\"routine\":\"DRIVING\",\"durationMinutes\":40,\n\"targetApp\":\"com.samsung.android.calendar\"}",
+        "error": null,
+        "latencyMs": 9257,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "asdkjhasd kjhasd kjh",
+        "raw": "{\"result\":\"INTENT\",\n\"routine\":\"FOCUS\",\n\"durationMinutes\":null,\n\"targetApp\":\"com.google.android.apps.maps\",\n\"reasonCode\":\"AMBIGUOUS_ROUTINE\"}",
+        "error": null,
+        "latencyMs": 10175,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "What's the weather today?",
+        "raw": "{\"result\":\"INTENT\",\n\"routine\":\"FOCUS\",\n\"durationMinutes\":null,\n\"targetApp\":\"com.google.android.apps.maps\",\n\"reasonCode\":\"UNSAFE_VALUE\"}",
+        "error": null,
+        "latencyMs": 10017,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "🙂🙂🙂🙂🙂",
+        "raw": "{\"result\":\"INTENT\",\n\"routine\":\"FOCUS\",\n\"durationMinutes\":null,\n\"targetApp\":\"com.google.android.apps.maps\",\n\"reasonCode\":\"AMBIGUOUS_ROUTINE\"}",
+        "error": null,
+        "latencyMs": 10160,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "Factory reset my phone",
+        "raw": "{\"result\":\"INTENT\",\n\"routine\":\"FOCUS\",\n\"durationMinutes\":null,\n\"targetApp\":\"com.google.android.apps.maps\",\n\"reasonCode\":\"UNSAFE_VALUE\"}",
+        "error": null,
+        "latencyMs": 10068,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "Turn off Network Guard",
+        "raw": "{\"result\":\"INTENT\",\"routine\":\"FOCUS\",\"durationMinutes\":null,\"targetApp\":\"com.google.android.apps.maps\",\"reasonCode\":null}",
+        "error": null,
+        "latencyMs": 9512,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "Is WhatsApp malware?",
+        "raw": "{\"result\":\"INTENT\",\n\"routine\":\n\"FOCUS\",\n\"durationMinutes\":\n120,\n\"targetApp\":\n\"com.samsung.android.calendar\",\n\"reasonCode\":\n\"UNSAFE_VALUE\"}",
+        "error": null,
+        "latencyMs": 10333,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "Set it up",
+        "raw": "{\"result\":\"INTENT\",\n\"routine\":\"FOCUS\",\n\"durationMinutes\":null,\n\"targetApp\":\"com.google.android.apps.maps\",\n\"reasonCode\":\"AMBIGUOUS_ROUTINE\"}",
+        "error": null,
+        "latencyMs": 10171,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "Open some app",
+        "raw": "{\"result\":\"INTENT\",\n\"routine\":\"FOCUS\",\n\"durationMinutes\":null,\n\"targetApp\":\"com.google.android.apps.maps\",\n\"reasonCode\":null}",
+        "error": null,
+        "latencyMs": 9756,
+        "schemaConformant": true
+      },
+      {
+        "prompt": "Meeting mode for a bit",
+        "raw": "{\"result\":\"INTENT\",\n\"routine\":\"MEETING\",\n\"durationMinutes\":null,\n\"targetApp\":\"com.samsung.android.calendar\",\n\"reasonCode\":\"UNSAFE_VALUE\"}",
+        "error": null,
+        "latencyMs": 10019,
+        "schemaConformant": true
+      }
+    ]
+  },
+  "repeated": {
+    "prompt": "I have a meeting for the next 45 minutes",
+    "runs": 12,
+    "latenciesMs": [
+      10114,
+      10063,
+      10047,
+      10120,
+      10127,
+      10614,
+      10086,
+      10112,
+      10080,
+      10085,
+      10050,
+      10062
+    ],
+    "medianLatencyMs": 10086,
+    "p95LatencyMs": 10127,
+    "firstHalfMeanMs": 10180.833333333334,
+    "secondHalfMeanMs": 10079.166666666666,
+    "pssKbBefore": 1921079,
+    "pssKbAfter": 1924126,
+    "pssKbGrowth": 3047,
+    "distinctOutputs": 1,
+    "outputs": [
+      "{\"result\":\"INTENT\",\n\"routine\":\"DRIVING\",\n\"durationMinutes\":45,\n\"targetApp\":\"com.samsung.android.calendar\",\n\"reasonCode\":\"UNSAFE_VALUE\"}"
+    ]
+  },
+  "unloadReload": {
+    "unloadMillis": 204,
+    "reloadMillis": 1518,
+    "pssKbWhileLoaded": 1924162,
+    "pssKbAfterUnload": 573283,
+    "pssKbReleased": 1350879
+  }
+}

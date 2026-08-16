@@ -1,0 +1,37 @@
+=== DEVICE A: S20 FE (RZCW40LVBJD) ===
+ro.product.manufacturer = samsung
+ro.product.model = SM-G781B
+ro.product.name = r8qxxx
+ro.build.version.release = 13
+ro.build.version.sdk = 33
+ro.build.version.security_patch = 2025-10-01
+ro.board.platform = kona
+ro.product.cpu.abi = arm64-v8a
+ro.product.cpu.abilist = arm64-v8a,armeabi-v7a,armeabi
+ro.hardware = qcom
+ro.soc.model = SM8250
+ro.soc.manufacturer = QTI
+ro.build.display.id = TP1A.220624.014.G781BXXSIHYJ4
+--- RAM ---
+MemTotal:        7806024 kB
+MemFree:          929188 kB
+MemAvailable:    3952712 kB
+--- storage (/data) ---
+df: 'C:/Program': No such file or directory
+df: 'Files/Git/data': No such file or directory
+Filesystem      Size Used Avail Use% Mounted on
+--- GPU ---
+      (mConsumerName=FramebufferSurface, mConnectedApi=1, mConsumerUsageBits=6656, mId=45f00000000, producer=[1063:/vendor/bin/hw/vendor.qti.hardware.display.composer-service], consumer=[1119:/system/bin/surfaceflinger])
+GLES: Qualcomm, Adreno (TM) 650, OpenGL ES 3.2 V@0502.11.5 (GIT@db7e7066a2, I1fad33e957, 1746950372) (Date:05/11/25)
+--- CPU cores ---
+8
+--- NNAPI / NPU hints ---
+feature:android.hardware.vulkan.compute
+feature:android.hardware.vulkan.level=1
+feature:android.hardware.vulkan.version=4198400
+feature:android.software.vulkan.deqp.level=132383489
+--- thermal ---
+IsStatusOverride: false
+ThermalStatusListeners:
+Thermal Status: 0
+Cached temperatures:
